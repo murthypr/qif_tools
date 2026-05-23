@@ -178,28 +178,43 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     government_country = None
     memo_updated = False
 
-    # First pass: map categories and collect government country information.
+    # FIRST PASS: Scan all lines and replace category codes while collecting Government country info.
+    # We do this in a separate pass so we know the government_country before we process the memo line,
+    # which allows the memo line to appear anywhere in the transaction (before or after the category).
     for line in transaction_lines:
         if line and line[0] in {'L', 'S'}:
+            # Extract the prefix (L or S) and the category text
             prefix = line[0]
             category = line[1:]
 
+            # Special case: Government:<Country> format
             if category.startswith('Government:'):
+                # Split "Government:US" into "Government" and "US"
                 parts = category.split(':', 1)
                 country = parts[1].strip() if len(parts) > 1 else ''
+                
+                # Always map Government categories to the unified account
                 line = prefix + 'Expenses:Government'
+                
+                # Track this replacement by original category name (e.g., "Government:US")
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
+                
+                # Remember the country code for memo prefixing (use first found)
                 if not government_country and country:
                     government_country = country
 
+            # Normal mapping: look up the category in the mappings dictionary
             elif category in mappings:
                 line = prefix + mappings[category]
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
 
         processed_lines.append(line)
 
-    # Second pass: apply Government memo prefixing once the entire transaction is known.
+    # SECOND PASS: Handle memo updates for Government categories.
+    # Now that we know if this transaction had a Government category and the country code,
+    # we can update or create the memo line with the country prefix.
     if government_country:
+        # Search for an existing memo line (starts with 'M')
         memo_line_index = None
         for index, line in enumerate(processed_lines):
             if line and line.startswith('M'):
@@ -207,11 +222,13 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
                 break
 
         if memo_line_index is not None:
+            # Existing memo found: prepend the country code if not already present
             existing_memo = processed_lines[memo_line_index][1:]
             if not existing_memo.startswith(f"#{government_country}"):
                 processed_lines[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
                 memo_updated = True
         else:
+            # No existing memo: create a new one with just the country code
             processed_lines.append('M' + f"#{government_country}")
             memo_updated = True
 
