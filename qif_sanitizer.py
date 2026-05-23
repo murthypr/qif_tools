@@ -80,32 +80,30 @@ def split_qif_transactions(qif_content):
     """
     Split QIF content into individual transactions.
     
-    In QIF format, transactions are separated by '!' characters. Each transaction
-    is a sequence of lines until the next '!' delimiter.
+    In QIF format, transactions are terminated by a line containing only '^'.
+    This function gathers lines until '^' and returns each transaction as a list
+    of lines without the terminator.
     
     Args:
         qif_content (str): The raw content of a QIF file.
         
     Returns:
-        list: A list of transaction strings, each representing a complete transaction.
+        list: A list of transactions, where each transaction is a list of lines.
     """
-    # Split by '!' delimiter but preserve the delimiters in context
-    lines = qif_content.split('\n')
+    lines = qif_content.splitlines()
     transactions = []
     current_transaction = []
     
     for line in lines:
-        if line.strip() == '!':
-            if current_transaction:
-                # Join the transaction lines and add to list
-                transactions.append('\n'.join(current_transaction))
-                current_transaction = []
+        if line.strip() == '^':
+            transactions.append(current_transaction)
+            current_transaction = []
         else:
             current_transaction.append(line)
     
-    # Don't forget the last transaction if file doesn't end with '!'
+    # Keep any trailing transaction without a terminator
     if current_transaction:
-        transactions.append('\n'.join(current_transaction))
+        transactions.append(current_transaction)
     
     return transactions
 
@@ -151,83 +149,77 @@ def read_mappings_file(mappings_file):
 
 
 
-def apply_mappings_to_transaction(transaction, mappings, replacement_counts):
+def apply_mappings_to_transaction(transaction_lines, mappings, replacement_counts):
     """
-    Apply category mappings to a single transaction.
+    Process one full QIF transaction at a time.
 
-    New behavior:
-    - If a category line (starting with `L` or `S`) matches the pattern
-      `Government:<Country>` it is mapped to the single GnuCash account
-      `Expenses:Government` and the transaction memo is prefixed with
-      `#<Country>` (or a new memo line `M#<Country>` is created if none exists).
-    - This Government handling runs BEFORE the normal mapping lookup.
-    - For all other categories, mappings from the mappings file are applied as before.
-
-    The function updates `replacement_counts` for each Quicken category that
-    was replaced (including Government entries, keyed by the original Quicken
-    category string such as `Government:US`).
+    The transaction is represented as a list of lines ending before the '^'
+    terminator. This function performs the following actions in order:
+    1. Detect category lines starting with 'L' or 'S'.
+    2. If a category is `Government:<Country>`:
+        - replace it with `Expenses:Government`
+        - extract `<Country>` for memo prefixing
+        - increment replacement counts for the original category
+    3. Apply normal category mapping from the mappings file for non-Government categories.
+    4. If a Government category was found, update the memo line even when the memo
+       appears before the category line.
 
     Args:
-        transaction (str): A single transaction as a string (lines separated by newlines).
+        transaction_lines (list[str]): One transaction's lines, excluding the terminator.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         replacement_counts (dict): Dictionary to track replacements per Quicken category.
 
     Returns:
-        str: The transaction with categories and (if applicable) memo updates applied.
+        list[str]: Processed transaction lines, ready to be joined with a '^' terminator.
     """
-    lines = transaction.split('\n')
-    result_lines = []
-
-    # Track if a Government category was found for this transaction and the country
+    processed_lines = []
     government_country = None
-    memo_applied = False
 
-    for line in lines:
-        # Process category lines that begin with 'L' or 'S'
+    # First pass: map categories and collect government country information.
+    for line in transaction_lines:
         if line and line[0] in {'L', 'S'}:
             prefix = line[0]
             category = line[1:]
 
-            # Special handling: Government:<Country>
             if category.startswith('Government:'):
-                # Extract country after the colon (allow whitespace)
                 parts = category.split(':', 1)
                 country = parts[1].strip() if len(parts) > 1 else ''
-
-                # Map to the single GnuCash account
                 line = prefix + 'Expenses:Government'
-
-                # Record replacement count keyed by the original Quicken category
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
-
-                # Remember the first government country to prefix the memo
                 if not government_country and country:
                     government_country = country
 
-            # Normal mapping lookup (only if not Government)
             elif category in mappings:
                 line = prefix + mappings[category]
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
 
-        # Memo line handling: if we have a government prefix to apply,
-        # insert it at the beginning of the memo text. Preserve existing memo.
-        if line and line.startswith('M') and government_country and not memo_applied:
-            existing_memo = line[1:]
-            line = 'M' + f"#{government_country}" + existing_memo
-            memo_applied = True
+        processed_lines.append(line)
 
-        result_lines.append(line)
+    # Second pass: apply Government memo prefixing once the entire transaction is known.
+    if government_country:
+        memo_line_index = None
+        for index, line in enumerate(processed_lines):
+            if line and line.startswith('M'):
+                memo_line_index = index
+                break
 
-    # If a government country was found but no memo line existed, create one
-    if government_country and not memo_applied:
-        result_lines.append('M' + f"#{government_country}")
+        if memo_line_index is not None:
+            existing_memo = processed_lines[memo_line_index][1:]
+            if not existing_memo.startswith(f"#{government_country}"):
+                processed_lines[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
+        else:
+            processed_lines.append('M' + f"#{government_country}")
 
-    return '\n'.join(result_lines)
+    return processed_lines
 
 
 def apply_mappings_to_qif(qif_content, mappings):
     """
     Apply category mappings to all transactions in QIF content.
+    
+    The QIF file is processed one transaction at a time. Transactions are
+    split on lines containing only '^'. Each transaction is processed as a unit
+    and then reassembled with the '^' terminator.
     
     Args:
         qif_content (str): The raw QIF file content.
@@ -244,11 +236,9 @@ def apply_mappings_to_qif(qif_content, mappings):
         for txn in transactions
     ]
     
-    # Reconstruct the QIF file with '!' delimiters between transactions
-    # and a final '!' at the end
-    result = '\n!\n'.join(mapped_transactions)
+    result = '\n^\n'.join('\n'.join(txn) for txn in mapped_transactions)
     if result:
-        result += '\n!'
+        result += '\n^'
     
     return result, replacement_counts
 
