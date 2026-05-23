@@ -1,0 +1,17 @@
+# QuickenCategory = GnuCashAccountName
+#
+# Format explanation:
+# - Each line defines a mapping from a Quicken category to a GnuCash account name
+# - Syntax: QuickenCategory = GnuCashAccountName
+# - Whitespace around the '=' is ignored
+# - Lines starting with '#' are comments and will be ignored
+# - Empty lines are also ignored
+# - Categories not listed here will remain unchanged in the output
+#
+# Example mappings (uncomment and modify as needed):
+# Groceries = Expenses:Groceries
+# Utilities = Expenses:Utilities
+# Salary = Income:Salary
+# Transfer = Transfers:Checking
+_401EmployerContrib = Income:Salary:401K Employer Contribution
+_401EmployerContribSpouse = Income:Salary:401K Employer Contribution - Spouse
