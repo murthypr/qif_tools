@@ -150,37 +150,78 @@ def read_mappings_file(mappings_file):
     return mappings
 
 
+
 def apply_mappings_to_transaction(transaction, mappings, replacement_counts):
     """
     Apply category mappings to a single transaction.
-    
-    This function searches for QIF category lines (lines starting with 'L' or 'S')
-    and replaces the category value using the provided mappings dictionary.
-    The original line prefix ('L' or 'S') is preserved.
-    Categories that are not in the mappings are left unchanged.
-    Replacement counts are incremented for each mapped category.
-    
+
+    New behavior:
+    - If a category line (starting with `L` or `S`) matches the pattern
+      `Government:<Country>` it is mapped to the single GnuCash account
+      `Expenses:Government` and the transaction memo is prefixed with
+      `#<Country>` (or a new memo line `M#<Country>` is created if none exists).
+    - This Government handling runs BEFORE the normal mapping lookup.
+    - For all other categories, mappings from the mappings file are applied as before.
+
+    The function updates `replacement_counts` for each Quicken category that
+    was replaced (including Government entries, keyed by the original Quicken
+    category string such as `Government:US`).
+
     Args:
         transaction (str): A single transaction as a string (lines separated by newlines).
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         replacement_counts (dict): Dictionary to track replacements per Quicken category.
-        
+
     Returns:
-        str: The transaction with categories replaced according to the mappings.
+        str: The transaction with categories and (if applicable) memo updates applied.
     """
     lines = transaction.split('\n')
     result_lines = []
-    
+
+    # Track if a Government category was found for this transaction and the country
+    government_country = None
+    memo_applied = False
+
     for line in lines:
+        # Process category lines that begin with 'L' or 'S'
         if line and line[0] in {'L', 'S'}:
             prefix = line[0]
             category = line[1:]
-            if category in mappings:
+
+            # Special handling: Government:<Country>
+            if category.startswith('Government:'):
+                # Extract country after the colon (allow whitespace)
+                parts = category.split(':', 1)
+                country = parts[1].strip() if len(parts) > 1 else ''
+
+                # Map to the single GnuCash account
+                line = prefix + 'Expenses:Government'
+
+                # Record replacement count keyed by the original Quicken category
+                replacement_counts[category] = replacement_counts.get(category, 0) + 1
+
+                # Remember the first government country to prefix the memo
+                if not government_country and country:
+                    government_country = country
+
+            # Normal mapping lookup (only if not Government)
+            elif category in mappings:
                 line = prefix + mappings[category]
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
-        
+
+        # Memo line handling: if we have a government prefix to apply,
+        # insert it at the beginning of the memo text. Preserve existing memo.
+        if line and line.startswith('M') and government_country and not memo_applied:
+            existing_memo = line[1:]
+            line = 'M' + f"#{government_country}" + existing_memo
+            memo_applied = True
+
         result_lines.append(line)
-    
+
+    # If a government country was found but no memo line existed, create one
+    if government_country and not memo_applied:
+        result_lines.append('M' + f"#{government_country}")
+
     return '\n'.join(result_lines)
 
 
@@ -298,13 +339,14 @@ def main(input_qif_file):
     
     # Print replacement summary
     if replacement_counts:
-        print("Replacement summary:")
+        print("\n\nReplacement summary:")
         for quicken_category, count in sorted(replacement_counts.items()):
             if count > 0:
                 gnucash_account = mappings.get(quicken_category, "<unknown>")
                 print(f"{quicken_category}: found and replaced {count} instances with {gnucash_account}")
     else:
         print("No mapped category replacements were found.")
+    print("End of Replacement summary.\n\n")
     
     # Generate output filename and write file
     output_filename = generate_output_filename(input_qif_file)
