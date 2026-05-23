@@ -170,10 +170,13 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
         replacement_counts (dict): Dictionary to track replacements per Quicken category.
 
     Returns:
-        list[str]: Processed transaction lines, ready to be joined with a '^' terminator.
+        tuple: A tuple of (processed_lines, memo_updated) where:
+            - processed_lines (list[str]): Processed transaction lines with '^' terminator.
+            - memo_updated (bool): True if a memo line was created or modified for Government category.
     """
     processed_lines = []
     government_country = None
+    memo_updated = False
 
     # First pass: map categories and collect government country information.
     for line in transaction_lines:
@@ -207,10 +210,12 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
             existing_memo = processed_lines[memo_line_index][1:]
             if not existing_memo.startswith(f"#{government_country}"):
                 processed_lines[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
+                memo_updated = True
         else:
             processed_lines.append('M' + f"#{government_country}")
+            memo_updated = True
 
-    return processed_lines
+    return processed_lines, memo_updated
 
 
 def apply_mappings_to_qif(qif_content, mappings):
@@ -226,21 +231,27 @@ def apply_mappings_to_qif(qif_content, mappings):
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         
     Returns:
-        tuple: A tuple containing the QIF content with all categories mapped and
-               the replacement counts dictionary.
+        tuple: A tuple containing:
+            - QIF content with all categories mapped
+            - replacement counts dictionary
+            - total memo updates count
     """
     transactions = split_qif_transactions(qif_content)
     replacement_counts = {}
-    mapped_transactions = [
-        apply_mappings_to_transaction(txn, mappings, replacement_counts)
-        for txn in transactions
-    ]
+    total_memo_updates = 0
+    processed_transactions = []
     
-    result = '\n^\n'.join('\n'.join(txn) for txn in mapped_transactions)
+    for txn in transactions:
+        processed_lines, memo_updated = apply_mappings_to_transaction(txn, mappings, replacement_counts)
+        processed_transactions.append(processed_lines)
+        if memo_updated:
+            total_memo_updates += 1
+    
+    result = '\n^\n'.join('\n'.join(txn) for txn in processed_transactions)
     if result:
         result += '\n^'
     
-    return result, replacement_counts
+    return result, replacement_counts, total_memo_updates
 
 
 def generate_output_filename(input_file):
@@ -323,9 +334,12 @@ def main(input_qif_file):
     # Apply mappings
     print("Applying category mappings...")
     start_time = time.perf_counter()
-    sanitized_content, replacement_counts = apply_mappings_to_qif(qif_content, mappings)
+    sanitized_content, replacement_counts, total_memo_updates = apply_mappings_to_qif(qif_content, mappings)
     end_time = time.perf_counter()
     elapsed_seconds = end_time - start_time
+    
+    # Calculate total replacements
+    total_replacements = sum(replacement_counts.values())
     
     # Print replacement summary
     if replacement_counts:
@@ -334,6 +348,8 @@ def main(input_qif_file):
             if count > 0:
                 gnucash_account = mappings.get(quicken_category, "<unknown>")
                 print(f"{quicken_category}: found and replaced {count} instances with {gnucash_account}")
+        print(f"\nTotal replacements across all categories: {total_replacements}")
+        print(f"Total memo updates across all transactions: {total_memo_updates}")
     else:
         print("No mapped category replacements were found.")
     print("End of Replacement summary.\n\n")
