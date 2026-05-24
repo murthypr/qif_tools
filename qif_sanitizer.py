@@ -149,19 +149,88 @@ def read_mappings_file(mappings_file):
 
 
 
+def process_category_tags(transaction_lines):
+    """
+    Extract tags from category lines and move them to memo lines.
+
+    This function processes category lines (L or S) that contain a slash (/).
+    The part before the slash is the category; the part after is the tag.
+    The tag is moved to the beginning of the memo line (or a new memo is created).
+
+    Example:
+        Input:  LRent/Lake Oswego
+        Output: LRent with "#Lake Oswego " prepended to memo
+
+    Args:
+        transaction_lines (list[str]): One transaction's lines, excluding the terminator.
+
+    Returns:
+        tuple: A tuple of (processed_lines, tag_updated) where:
+            - processed_lines (list[str]): Processed transaction lines.
+            - tag_updated (bool): True if a tag was extracted and memo was updated.
+    """
+    processed_lines = []
+    extracted_tag = None
+    tag_updated = False
+
+    # FIRST PASS: Extract tags from category lines
+    for line in transaction_lines:
+        if line and line[0] in {'L', 'S'}:
+            prefix = line[0]
+            category_text = line[1:]
+
+            # Check if category contains a slash (tag separator)
+            if '/' in category_text:
+                parts = category_text.split('/', 1)
+                category = parts[0].strip()
+                tag = parts[1].strip()
+
+                # Rewrite the line with only the category
+                line = prefix + category
+
+                # Remember the tag for memo processing (use first found)
+                if not extracted_tag and tag:
+                    extracted_tag = tag
+
+        processed_lines.append(line)
+
+    # SECOND PASS: Handle memo updates for extracted tags
+    if extracted_tag:
+        # Search for an existing memo line (starts with 'M')
+        memo_line_index = None
+        for index, line in enumerate(processed_lines):
+            if line and line.startswith('M'):
+                memo_line_index = index
+                break
+
+        if memo_line_index is not None:
+            # Existing memo found: prepend the tag if not already present
+            existing_memo = processed_lines[memo_line_index][1:]
+            if not existing_memo.startswith(f"#{extracted_tag}"):
+                processed_lines[memo_line_index] = 'M' + f"#{extracted_tag} " + existing_memo
+                tag_updated = True
+        else:
+            # No existing memo: create a new one with just the tag
+            processed_lines.append('M' + f"#{extracted_tag}")
+            tag_updated = True
+
+    return processed_lines, tag_updated
+
+
 def apply_mappings_to_transaction(transaction_lines, mappings, replacement_counts):
     """
     Process one full QIF transaction at a time.
 
     The transaction is represented as a list of lines ending before the '^'
     terminator. This function performs the following actions in order:
-    1. Detect category lines starting with 'L' or 'S'.
-    2. If a category is `Government:<Country>`:
+    1. Extract tags from category lines (format: Category/Tag) and move to memo
+    2. Detect category lines starting with 'L' or 'S'.
+    3. If a category is `Government:<Country>`:
         - replace it with `Expenses:Government`
         - extract `<Country>` for memo prefixing
         - increment replacement counts for the original category
-    3. Apply normal category mapping from the mappings file for non-Government categories.
-    4. If a Government category was found, update the memo line even when the memo
+    4. Apply normal category mapping from the mappings file for non-Government categories.
+    5. If a Government category was found, update the memo line even when the memo
        appears before the category line.
 
     Args:
@@ -172,16 +241,20 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     Returns:
         tuple: A tuple of (processed_lines, memo_updated) where:
             - processed_lines (list[str]): Processed transaction lines with '^' terminator.
-            - memo_updated (bool): True if a memo line was created or modified for Government category.
+            - memo_updated (bool): True if a memo line was created or modified.
     """
-    processed_lines = []
+    # STEP 1: Process category tags (split Category/Tag format)
+    processed_lines, tag_updated = process_category_tags(transaction_lines)
+
+    # STEP 2: Process category mappings and Government countries
+    processed_lines_final = []
     government_country = None
-    memo_updated = False
+    memo_updated = tag_updated
 
     # FIRST PASS: Scan all lines and replace category codes while collecting Government country info.
     # We do this in a separate pass so we know the government_country before we process the memo line,
     # which allows the memo line to appear anywhere in the transaction (before or after the category).
-    for line in transaction_lines:
+    for line in processed_lines:
         if line and line[0] in {'L', 'S'}:
             # Extract the prefix (L or S) and the category text
             prefix = line[0]
@@ -208,7 +281,7 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
                 line = prefix + mappings[category]
                 replacement_counts[category] = replacement_counts.get(category, 0) + 1
 
-        processed_lines.append(line)
+        processed_lines_final.append(line)
 
     # SECOND PASS: Handle memo updates for Government categories.
     # Now that we know if this transaction had a Government category and the country code,
@@ -216,23 +289,23 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     if government_country:
         # Search for an existing memo line (starts with 'M')
         memo_line_index = None
-        for index, line in enumerate(processed_lines):
+        for index, line in enumerate(processed_lines_final):
             if line and line.startswith('M'):
                 memo_line_index = index
                 break
 
         if memo_line_index is not None:
             # Existing memo found: prepend the country code if not already present
-            existing_memo = processed_lines[memo_line_index][1:]
+            existing_memo = processed_lines_final[memo_line_index][1:]
             if not existing_memo.startswith(f"#{government_country}"):
-                processed_lines[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
+                processed_lines_final[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
                 memo_updated = True
         else:
             # No existing memo: create a new one with just the country code
-            processed_lines.append('M' + f"#{government_country}")
+            processed_lines_final.append('M' + f"#{government_country}")
             memo_updated = True
 
-    return processed_lines, memo_updated
+    return processed_lines_final, memo_updated
 
 
 def apply_mappings_to_qif(qif_content, mappings):
@@ -243,6 +316,9 @@ def apply_mappings_to_qif(qif_content, mappings):
     split on lines containing only '^'. Each transaction is processed as a unit
     and then reassembled with the '^' terminator.
     
+    This function also tracks how many tags are moved to memo lines (including
+    both Category/Tag format tags and Government country tags).
+
     Args:
         qif_content (str): The raw QIF file content.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
@@ -251,24 +327,29 @@ def apply_mappings_to_qif(qif_content, mappings):
         tuple: A tuple containing:
             - QIF content with all categories mapped
             - replacement counts dictionary
-            - total memo updates count
+            - total memo updates count (used as tag_insert_count for reporting)
     """
     transactions = split_qif_transactions(qif_content)
     replacement_counts = {}
-    total_memo_updates = 0
+    # tag_insert_count: Tracks the number of tags moved to memos
+    # This includes tags from Category/Tag format (e.g., Auto:Fuel/Prius 05 -> #Prius 05)
+    # and Government country tags (e.g., Government:US -> #US)
+    tag_insert_count = 0
     processed_transactions = []
     
     for txn in transactions:
         processed_lines, memo_updated = apply_mappings_to_transaction(txn, mappings, replacement_counts)
         processed_transactions.append(processed_lines)
+        # Increment tag counter when a memo was created or updated with a tag prefix
         if memo_updated:
-            total_memo_updates += 1
+            tag_insert_count += 1
     
     result = '\n^\n'.join('\n'.join(txn) for txn in processed_transactions)
     if result:
         result += '\n^'
     
-    return result, replacement_counts, total_memo_updates
+    # Return the tag_insert_count for reporting in the summary
+    return result, replacement_counts, tag_insert_count
 
 
 def generate_output_filename(input_file):
@@ -351,7 +432,7 @@ def main(input_qif_file):
     # Apply mappings
     print("Applying category mappings...")
     start_time = time.perf_counter()
-    sanitized_content, replacement_counts, total_memo_updates = apply_mappings_to_qif(qif_content, mappings)
+    sanitized_content, replacement_counts, tag_insert_count = apply_mappings_to_qif(qif_content, mappings)
     end_time = time.perf_counter()
     elapsed_seconds = end_time - start_time
     
@@ -366,7 +447,9 @@ def main(input_qif_file):
                 gnucash_account = mappings.get(quicken_category, "<unknown>")
                 print(f"{quicken_category}: found and replaced {count} instances with {gnucash_account}")
         print(f"\nTotal replacements across all categories: {total_replacements}")
-        print(f"Total memo updates across all transactions: {total_memo_updates}")
+        # tag_insert_count: Number of transactions where tags were moved to memo lines
+        # This includes Category/Tag format tags (e.g., #Prius 05) and Government tags (e.g., #US)
+        print(f"Moved {tag_insert_count} tags to memos.")
     else:
         print("No mapped category replacements were found.")
     print("End of Replacement summary.\n\n")
