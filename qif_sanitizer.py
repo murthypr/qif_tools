@@ -9,6 +9,7 @@ transaction records, leaving unmapped categories unchanged.
 """
 
 import os
+import re
 import time
 
 
@@ -148,6 +149,47 @@ def read_mappings_file(mappings_file):
     return mappings
 
 
+def sanitize_tag(tag):
+    """
+    Normalize a tag for use in memo lines.
+
+    Normalization rules applied in order:
+    1. Replace all whitespace characters (spaces, tabs, newlines) with underscores
+    2. Convert to TitleCase (capitalize first letter of each word after underscore)
+    3. Remove all non-alphanumeric characters except underscores
+
+    This ensures tags are safe for use in memo fields and have a consistent format.
+    Tags are normalized to contain only letters, numbers, and underscores.
+
+    Example transformations:
+        "Lake Oswego" → "Lake_Oswego"
+        "Prius 05" → "Prius_05"
+        "US" → "Us"
+        "San Francisco/Bay Area" → "San_Francisco_Bay_Area"
+
+    Args:
+        tag (str): The raw tag string from a category or Government field
+        
+    Returns:
+        str: The sanitized tag suitable for memo prefixes (e.g., "#Lake_Oswego")
+    """
+    if not tag:
+        return tag
+
+    # Step 1: Replace all whitespace characters with underscores
+    sanitized = re.sub(r'\s+', '_', tag)
+
+    # Step 2: Convert to TitleCase by capitalizing first letter of each word (separated by _)
+    words = sanitized.split('_')
+    words = [word.capitalize() if word else '' for word in words]
+    sanitized = '_'.join(words)
+
+    # Step 3: Keep only alphanumeric characters and underscores
+    # Remove any special characters (/, -, &, etc.) that might cause issues
+    sanitized = re.sub(r'[^a-zA-Z0-9_]', '', sanitized)
+
+    return sanitized
+
 
 def process_category_tags(transaction_lines):
     """
@@ -204,14 +246,16 @@ def process_category_tags(transaction_lines):
                 break
 
         if memo_line_index is not None:
-            # Existing memo found: prepend the tag if not already present
+            # Existing memo found: prepend the sanitized tag if not already present
             existing_memo = processed_lines[memo_line_index][1:]
-            if not existing_memo.startswith(f"#{extracted_tag}"):
-                processed_lines[memo_line_index] = 'M' + f"#{extracted_tag} " + existing_memo
+            sanitized_tag = sanitize_tag(extracted_tag)
+            if not existing_memo.startswith(f"#{sanitized_tag}"):
+                processed_lines[memo_line_index] = 'M' + f"#{sanitized_tag} " + existing_memo
                 tag_updated = True
         else:
-            # No existing memo: create a new one with just the tag
-            processed_lines.append('M' + f"#{extracted_tag}")
+            # No existing memo: create a new one with the sanitized tag
+            sanitized_tag = sanitize_tag(extracted_tag)
+            processed_lines.append('M' + f"#{sanitized_tag}")
             tag_updated = True
 
     return processed_lines, tag_updated
@@ -295,14 +339,16 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
                 break
 
         if memo_line_index is not None:
-            # Existing memo found: prepend the country code if not already present
+            # Existing memo found: prepend the sanitized country code if not already present
             existing_memo = processed_lines_final[memo_line_index][1:]
-            if not existing_memo.startswith(f"#{government_country}"):
-                processed_lines_final[memo_line_index] = 'M' + f"#{government_country} " + existing_memo
+            sanitized_country = sanitize_tag(government_country)
+            if not existing_memo.startswith(f"#{sanitized_country}"):
+                processed_lines_final[memo_line_index] = 'M' + f"#{sanitized_country} " + existing_memo
                 memo_updated = True
         else:
-            # No existing memo: create a new one with just the country code
-            processed_lines_final.append('M' + f"#{government_country}")
+            # No existing memo: create a new one with the sanitized country code
+            sanitized_country = sanitize_tag(government_country)
+            processed_lines_final.append('M' + f"#{sanitized_country}")
             memo_updated = True
 
     return processed_lines_final, memo_updated
