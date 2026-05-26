@@ -6,11 +6,16 @@ replace Quicken categories with GnuCash account names, and write sanitized QIF f
 
 The tool reads category mappings from a configuration file and applies them to
 transaction records, leaving unmapped categories unchanged.
+
+Supports both single-file and directory-based batch processing:
+- Single-file mode: Process one QIF file specified as a command-line argument
+- Directory mode: Automatically scan INPUT_DIR from config and process all .qif/.QIF files
 """
 
 import os
 import re
 import time
+from pathlib import Path
 
 
 def load_config(config_file="qif_sanitizer.config"):
@@ -55,6 +60,91 @@ def load_config(config_file="qif_sanitizer.config"):
         raise ValueError("Configuration must include 'MAPPINGS_FILE' variable.")
     
     return config
+
+
+def get_qif_files(input_dir):
+    """
+    Scan a directory for all QIF files (.qif and .QIF extensions).
+    
+    This function searches the specified directory for files ending in .qif or .QIF
+    and returns them in sorted order (case-insensitive, with .QIF before .qif).
+    
+    Args:
+        input_dir (str): Path to the directory to scan.
+        
+    Returns:
+        list: A sorted list of absolute paths to QIF files found in the directory.
+              Returns an empty list if no QIF files are found.
+        
+    Raises:
+        FileNotFoundError: If the input directory does not exist.
+        NotADirectoryError: If the input path is not a directory.
+    """
+    input_path = Path(input_dir)
+    
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input directory '{input_dir}' does not exist.")
+    
+    if not input_path.is_dir():
+        raise NotADirectoryError(f"'{input_dir}' is not a directory.")
+    
+    # Find all files ending with .qif or .QIF (case-insensitive)
+    qif_files = []
+    for file_path in input_path.iterdir():
+        if file_path.is_file() and file_path.suffix.lower() == '.qif':
+            qif_files.append(str(file_path.absolute()))
+    
+    # Sort files for consistent processing order
+    return sorted(qif_files)
+
+
+def process_file(input_path, output_path, mappings):
+    """
+    Process a single QIF file: load, sanitize, and write output.
+    
+    This function encapsulates the core sanitization logic for a single file:
+    1. Load the QIF file
+    2. Apply category mappings
+    3. Write the sanitized content to the output file (overwriting if it exists)
+    4. Return per-file statistics for reporting and aggregation
+    
+    Args:
+        input_path (str): Absolute path to the input QIF file.
+        output_path (str): Absolute path to the output file to write.
+        mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
+        
+    Returns:
+        dict: Statistics about the processing, including:
+            - 'transactions_processed': Number of transactions processed in this file
+            - 'category_replacements': Total number of category replacements made
+            - 'memo_tags_added': Number of memo tags created or updated
+            - 'replacement_details': Dictionary with per-category replacement counts
+            
+    Raises:
+        FileNotFoundError: If the input file is not found.
+        IOError: If the output file cannot be written.
+    """
+    # Load QIF file
+    qif_content = load_qif_file(input_path)
+    
+    # Apply mappings and collect per-file statistics
+    sanitized_content, replacement_counts, tag_insert_count, transactions_processed = apply_mappings_to_qif(qif_content, mappings)
+    
+    # Write sanitized QIF to output location
+    write_sanitized_qif(sanitized_content, output_path)
+    
+    # Calculate total category replacements for this file
+    total_replacements = sum(replacement_counts.values())
+    
+    return {
+        'transactions_processed': transactions_processed,
+        'category_replacements': total_replacements,
+        'memo_tags_added': tag_insert_count,
+        'replacement_details': replacement_counts
+    }
+
+
+
 
 
 def load_qif_file(qif_file):
@@ -362,11 +452,13 @@ def apply_mappings_to_qif(qif_content, mappings):
     split on lines containing only '^'. Each transaction is processed as a unit
     and then reassembled with the '^' terminator.
     
-    This function also tracks how many tags are moved to memo lines (including
-    both Category/Tag format tags and Government country tags).
+    This function also tracks per-file counters for:
+      - transactions processed
+      - category replacements
+      - memo tags added
 
     Args:
-        qif_content (str): The raw QIF file content.
+        qif_content (str): The raw content of a QIF file.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         
     Returns:
@@ -374,6 +466,7 @@ def apply_mappings_to_qif(qif_content, mappings):
             - QIF content with all categories mapped
             - replacement counts dictionary
             - total memo updates count (used as tag_insert_count for reporting)
+            - transactions processed count
     """
     transactions = split_qif_transactions(qif_content)
     replacement_counts = {}
@@ -382,11 +475,13 @@ def apply_mappings_to_qif(qif_content, mappings):
     # and Government country tags (e.g., Government:US -> #US)
     tag_insert_count = 0
     processed_transactions = []
+    transactions_processed = 0
     
     for txn in transactions:
+        # Count each transaction. This counter resets for each file and is returned per-file.
+        transactions_processed += 1
         processed_lines, memo_updated = apply_mappings_to_transaction(txn, mappings, replacement_counts)
         processed_transactions.append(processed_lines)
-        # Increment tag counter when a memo was created or updated with a tag prefix
         if memo_updated:
             tag_insert_count += 1
     
@@ -394,8 +489,8 @@ def apply_mappings_to_qif(qif_content, mappings):
     if result:
         result += '\n^'
     
-    # Return the tag_insert_count for reporting in the summary
-    return result, replacement_counts, tag_insert_count
+    # Return the tag_insert_count and transaction count for reporting
+    return result, replacement_counts, tag_insert_count, transactions_processed
 
 
 def generate_output_filename(input_file):
@@ -416,7 +511,7 @@ def generate_output_filename(input_file):
     """
     base_name = os.path.basename(input_file)
     name, ext = os.path.splitext(base_name)
-    return f"{name}-sanitized-v1.QIF"
+    return f"{name}-sanitized-v2.QIF"
 
 
 def write_sanitized_qif(qif_content, output_file):
@@ -439,96 +534,217 @@ def write_sanitized_qif(qif_content, output_file):
         f.write(qif_content)
 
 
-def main(input_qif_file):
+def main(input_qif_file=None):
     """
-    Main function to sanitize a QIF file.
+    Main function to sanitize QIF files.
     
-    This function orchestrates the sanitization process:
-    1. Loads the configuration file
-    2. Reads the category mappings
-    3. Loads the input QIF file
-    4. Applies category mappings to all transactions
-    5. Generates the output filename
-    6. Writes the sanitized QIF to disk
+    This function supports two operating modes:
+    
+    1. Directory Mode (batch processing):
+       - Automatically activated if INPUT_DIR is set in qif_sanitizer.config
+       - Scans INPUT_DIR for all .qif/.QIF files
+       - Processes each file in sorted order
+       - Writes sanitized files to OUTPUT_DIR
+       - Progress messages show: "N out of M: Processing <filename>..."
+       - Input file argument is ignored in this mode
+    
+    2. Single-File Mode (legacy behavior):
+       - Activated if INPUT_DIR is empty in config
+       - Processes the file specified in input_qif_file argument
+       - Writes output to the same directory as the input file
+       - Generates output filename with "-sanitized-v2" suffix
     
     Args:
-        input_qif_file (str): Path to the input QIF file to sanitize.
+        input_qif_file (str, optional): Path to the input QIF file for single-file mode.
+                                        Ignored if INPUT_DIR is set in config.
         
     Returns:
-        str: Path to the generated output file.
+        str or list: In single-file mode, returns path to the output file.
+                     In directory mode, returns list of output file paths.
         
     Raises:
-        FileNotFoundError: If input file or config/mappings files are not found.
+        FileNotFoundError: If input file, config, or mappings files are not found.
         ValueError: If configuration is invalid.
     """
     # Load configuration
     config = load_config()
     mappings_file = config['MAPPINGS_FILE']
+    input_dir = config.get('INPUT_DIR', '').strip()
+    output_dir = config.get('OUTPUT_DIR', '').strip()
     
-    # Read mappings
+    # Read mappings (once for all files)
     print(f"Loading mappings from: {mappings_file}")
     mappings = read_mappings_file(mappings_file)
     print(f"Loaded {len(mappings)} category mappings")
     
-    # Load QIF file
-    print(f"Loading QIF file: {input_qif_file}")
-    qif_content = load_qif_file(input_qif_file)
-    print(f"QIF file loaded ({len(qif_content)} bytes)")
-    
-    # Apply mappings
-    print("Applying category mappings...")
-    start_time = time.perf_counter()
-    sanitized_content, replacement_counts, tag_insert_count = apply_mappings_to_qif(qif_content, mappings)
-    end_time = time.perf_counter()
-    elapsed_seconds = end_time - start_time
-    
-    # Calculate total replacements
-    total_replacements = sum(replacement_counts.values())
-    
-    # Print replacement summary
-    if replacement_counts:
-        print("\n\nReplacement summary:")
-        for quicken_category, count in sorted(replacement_counts.items()):
-            if count > 0:
-                gnucash_account = mappings.get(quicken_category, "<unknown>")
-                print(f"{quicken_category}: found and replaced {count} instances with {gnucash_account}")
-        print(f"\nTotal replacements across all categories: {total_replacements}")
-        # tag_insert_count: Number of transactions where tags were moved to memo lines
-        # This includes Category/Tag format tags (e.g., #Prius 05) and Government tags (e.g., #US)
-        print(f"Moved {tag_insert_count} tags to memos.")
+    # Check if directory mode is enabled
+    if input_dir:
+        # ===== DIRECTORY MODE (Batch Processing) =====
+        # Scan INPUT_DIR for all QIF files and process them in sorted order
+        try:
+            qif_files = get_qif_files(input_dir)
+        except (FileNotFoundError, NotADirectoryError) as e:
+            print(f"Error scanning directory: {e}")
+            return []
+        
+        file_count = len(qif_files)
+        
+        if file_count == 0:
+            print(f"No QIF files found in {input_dir}")
+            return []
+        
+        # Progress message: report how many files will be processed
+        print(f"\nFound {file_count} files. Will be processing them...")
+        print()
+        
+        output_paths = []
+        total_transactions = 0
+        total_category_replacements = 0
+        total_memo_tags_added = 0
+        start_time = time.perf_counter()
+        
+        # Process each file in sorted order
+        for file_index, input_path in enumerate(qif_files, 1):
+            input_filename = os.path.basename(input_path)
+            
+            # Progress message: starting a file
+            print(f"{file_index} out of {file_count}: Processing {input_filename}...")
+            
+            try:
+                # Generate output filename using OUTPUT_DIR
+                output_filename = generate_output_filename(input_path)
+                
+                if output_dir:
+                    # Use specified OUTPUT_DIR
+                    output_path = os.path.join(output_dir, output_filename)
+                    Path(output_dir).mkdir(parents=True, exist_ok=True)
+                else:
+                    # Fall back to input directory if OUTPUT_DIR is not set
+                    output_path = os.path.join(input_dir, output_filename)
+                
+                # Process the file and collect per-file statistics
+                stats = process_file(input_path, output_path, mappings)
+                output_paths.append(output_path)
+                
+                total_transactions += stats['transactions_processed']
+                total_category_replacements += stats['category_replacements']
+                total_memo_tags_added += stats['memo_tags_added']
+                
+                # Progress message: completed a file
+                print(f"{file_index} out of {file_count}: Completed processing {input_filename}")
+                print(f"Stats for {input_filename}:")
+                print(f"  Transactions processed: {stats['transactions_processed']}")
+                print(f"  Category replacements: {stats['category_replacements']}")
+                print(f"  Memo tags added: {stats['memo_tags_added']}")
+                print()
+                
+            except Exception as e:
+                print(f"{file_index} out of {file_count}: ERROR processing {input_filename}: {e}")
+                print()
+                continue
+        
+        end_time = time.perf_counter()
+        elapsed_seconds = end_time - start_time
+        
+        # Print summary
+        print(f"\n{'='*60}")
+        print(f"Directory batch processing completed")
+        print(f"Processed {len(output_paths)} out of {file_count} files")
+        print(f"Overall totals:")
+        print(f"  Total transactions processed: {total_transactions}")
+        print(f"  Total category replacements: {total_category_replacements}")
+        print(f"  Total memo tags added: {total_memo_tags_added}")
+        
+        elapsed_minutes = int(elapsed_seconds // 60)
+        elapsed_secs = int(elapsed_seconds % 60)
+        if elapsed_minutes > 0:
+            print(f"Total processing time: {elapsed_minutes} min and {elapsed_secs} secs")
+        else:
+            print(f"Total processing time: {elapsed_secs} secs")
+        
+        print(f"Output directory: {output_dir if output_dir else input_dir}")
+        print(f"{'='*60}\n")
+        
+        return output_paths
     else:
-        print("No mapped category replacements were found.")
-    print("End of Replacement summary.\n\n")
-    
-    # Generate output filename and write file
-    output_filename = generate_output_filename(input_qif_file)
-    output_dir = os.path.dirname(input_qif_file) or '.'
-    output_path = os.path.join(output_dir, output_filename)
-    
-    print(f"Writing sanitized QIF to: {output_path}")
-    write_sanitized_qif(sanitized_content, output_path)
-    
-    elapsed_minutes = int(elapsed_seconds // 60)
-    elapsed_secs = int(elapsed_seconds % 60)
-    if elapsed_minutes > 0:
-        time_message = f"took {elapsed_minutes} min and {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
-    else:
-        time_message = f"took {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
-    
-    print(time_message)
-    print(f"Successfully sanitized QIF file")
-    print(f"Output file: {output_path}")
-    
-    return output_path
+        # ===== SINGLE-FILE MODE (Legacy Behavior) =====
+        if not input_qif_file:
+            raise ValueError("No input file specified and INPUT_DIR is not configured")
+        
+        output_filename = generate_output_filename(input_qif_file)
+        output_dir = os.path.dirname(input_qif_file) or '.'
+        output_path = os.path.join(output_dir, output_filename)
+        
+        print(f"Processing single file: {input_qif_file}")
+        start_time = time.perf_counter()
+        stats = process_file(input_qif_file, output_path, mappings)
+        end_time = time.perf_counter()
+        elapsed_seconds = end_time - start_time
+        
+        # Print per-file summary
+        print(f"{os.path.basename(input_qif_file)} processing complete")
+        print(f"Stats for {os.path.basename(input_qif_file)}:")
+        print(f"  Transactions processed: {stats['transactions_processed']}")
+        print(f"  Category replacements: {stats['category_replacements']}")
+        print(f"  Memo tags added: {stats['memo_tags_added']}")
+        
+        replacement_counts = stats['replacement_details']
+        if replacement_counts:
+            print("\nReplacement summary:")
+            for quicken_category, count in sorted(replacement_counts.items()):
+                if count > 0:
+                    gnucash_account = mappings.get(quicken_category, "<unknown>")
+                    print(f"{quicken_category}: found and replaced {count} instances with {gnucash_account}")
+            print(f"\nTotal replacements across all categories: {stats['category_replacements']}")
+            print(f"Moved {stats['memo_tags_added']} tags to memos.")
+        else:
+            print("No mapped category replacements were found.")
+        print("End of Replacement summary.\n")
+        
+        elapsed_minutes = int(elapsed_seconds // 60)
+        elapsed_secs = int(elapsed_seconds % 60)
+        if elapsed_minutes > 0:
+            time_message = f"took {elapsed_minutes} min and {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
+        else:
+            time_message = f"took {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
+        
+        print(time_message)
+        print(f"Successfully sanitized QIF file")
+        print(f"Output file: {output_path}")
+        print(f"Overall totals:")
+        print(f"  Total transactions processed: {stats['transactions_processed']}")
+        print(f"  Total category replacements: {stats['category_replacements']}")
+        print(f"  Total memo tags added: {stats['memo_tags_added']}")
+        
+        return output_path
 
 
 if __name__ == "__main__":
     import sys
     
-    if len(sys.argv) < 2:
-        print("Usage: python qif_sanitizer.py <input_qif_file>")
-        print("Example: python qif_sanitizer.py transactions.qif")
-        sys.exit(1)
-    
-    input_file = sys.argv[1]
-    main(input_file)
+    # Check if an input file was provided as command-line argument
+    if len(sys.argv) >= 2:
+        # Single-file mode: process the specified file
+        input_file = sys.argv[1]
+        main(input_file)
+    else:
+        # Check if directory mode is configured
+        try:
+            config = load_config()
+            input_dir = config.get('INPUT_DIR', '').strip()
+            if input_dir:
+                # Directory mode is configured: run batch processing
+                main()
+            else:
+                # No input file and no directory configured: show usage
+                print("Usage: python qif_sanitizer.py <input_qif_file>")
+                print("   or configure INPUT_DIR in qif_sanitizer.config for batch mode")
+                print("\nExample (single-file mode):")
+                print("  python qif_sanitizer.py transactions.qif")
+                print("\nExample (directory mode - configure in qif_sanitizer.config):")
+                print("  INPUT_DIR = \"/path/to/qif/files\"")
+                print("  OUTPUT_DIR = \"/path/to/output/files\"")
+                sys.exit(1)
+        except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
