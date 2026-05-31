@@ -1,0 +1,24 @@
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (local exports and generated files)
+gnucash_import_files/
+quicken_export_files/
+
+# OS
+.DS_Store
+Thumbs.db
