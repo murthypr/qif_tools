@@ -33,6 +33,7 @@ def load_config(config_file="qif_sanitizer.config"):
         ValueError: If required configuration variables are missing.
     """
     config = {}
+    current_section = None
     
     if not os.path.exists(config_file):
         raise FileNotFoundError(f"Configuration file '{config_file}' not found.")
@@ -42,6 +43,13 @@ def load_config(config_file="qif_sanitizer.config"):
             line = line.strip()
             # Skip empty lines and comments
             if not line or line.startswith('#'):
+                continue
+            
+            # Recognize section headers like [security_suffixes]
+            if line.startswith('[') and line.endswith(']'):
+                current_section = line[1:-1].strip()
+                if current_section:
+                    config.setdefault(current_section, {})
                 continue
             
             # Parse key = value pairs
@@ -54,7 +62,11 @@ def load_config(config_file="qif_sanitizer.config"):
                     value = value[1:-1]
                 elif value.startswith("'") and value.endswith("'"):
                     value = value[1:-1]
-                config[key] = value
+
+                if current_section:
+                    config.setdefault(current_section, {})[key] = value
+                else:
+                    config[key] = value
     
     if 'MAPPINGS_FILE' not in config:
         raise ValueError("Configuration must include 'MAPPINGS_FILE' variable.")
@@ -98,7 +110,7 @@ def get_qif_files(input_dir):
     return sorted(qif_files)
 
 
-def process_file(input_path, output_path, mappings):
+def process_file(input_path, output_path, mappings, security_suffixes=None):
     """
     Process a single QIF file: load, sanitize, and write output.
     
@@ -112,6 +124,7 @@ def process_file(input_path, output_path, mappings):
         input_path (str): Absolute path to the input QIF file.
         output_path (str): Absolute path to the output file to write.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
+        security_suffixes (dict, optional): Mapping of investment security names to suffixes.
         
     Returns:
         dict: Statistics about the processing, including:
@@ -119,6 +132,7 @@ def process_file(input_path, output_path, mappings):
             - 'category_replacements': Total number of category replacements made
             - 'memo_tags_added': Number of memo tags created or updated
             - 'replacement_details': Dictionary with per-category replacement counts
+            - 'suffix_counts': Dictionary with per-security suffix applications
             
     Raises:
         FileNotFoundError: If the input file is not found.
@@ -128,7 +142,9 @@ def process_file(input_path, output_path, mappings):
     qif_content = load_qif_file(input_path)
     
     # Apply mappings and collect per-file statistics
-    sanitized_content, replacement_counts, tag_insert_count, transactions_processed = apply_mappings_to_qif(qif_content, mappings)
+    sanitized_content, replacement_counts, tag_insert_count, transactions_processed, suffix_counts = apply_mappings_to_qif(
+        qif_content, mappings, security_suffixes
+    )
     
     # Write sanitized QIF to output location
     write_sanitized_qif(sanitized_content, output_path)
@@ -140,7 +156,8 @@ def process_file(input_path, output_path, mappings):
         'transactions_processed': transactions_processed,
         'category_replacements': total_replacements,
         'memo_tags_added': tag_insert_count,
-        'replacement_details': replacement_counts
+        'replacement_details': replacement_counts,
+        'suffix_counts': suffix_counts
     }
 
 
@@ -165,6 +182,49 @@ def load_qif_file(qif_file):
     
     with open(qif_file, 'r', encoding='utf-8') as f:
         return f.read()
+
+
+def apply_security_suffix(security_name, security_suffixes=None, suffix_counts=None):
+    """
+    Apply a configured suffix to an investment security name.
+
+    This helper reads the provided suffix mapping and increments the suffix counter
+    when a suffix is applied. It avoids duplicate suffixes if the security name
+    already ends with the configured suffix.
+
+    Args:
+        security_name (str): The raw security name from the QIF transaction.
+        security_suffixes (dict, optional): Mapping of security names to suffixes.
+        suffix_counts (dict, optional): Dictionary to increment per-security suffix usage.
+
+    Returns:
+        str: The modified security name, with suffix applied if configured.
+    """
+    if not security_name:
+        return security_name
+
+    normalized_name = security_name.strip()
+    if not normalized_name:
+        return security_name
+
+    suffixes = security_suffixes or {}
+    suffix = suffixes.get(normalized_name)
+    if suffix is None:
+        suffix = suffixes.get(normalized_name.upper())
+
+    if not suffix:
+        return normalized_name
+
+    already_suffixed = normalized_name.upper().endswith(suffix.upper())
+    if already_suffixed:
+        return normalized_name
+
+    modified_security_name = normalized_name + suffix
+    if suffix_counts is not None:
+        security_key = normalized_name.upper()
+        suffix_counts[security_key] = suffix_counts.get(security_key, 0) + 1
+
+    return modified_security_name
 
 
 def split_qif_transactions(qif_content):
@@ -351,26 +411,29 @@ def process_category_tags(transaction_lines):
     return processed_lines, tag_updated
 
 
-def apply_mappings_to_transaction(transaction_lines, mappings, replacement_counts):
+def apply_mappings_to_transaction(transaction_lines, mappings, replacement_counts, security_suffixes=None, suffix_counts=None):
     """
     Process one full QIF transaction at a time.
 
     The transaction is represented as a list of lines ending before the '^'
     terminator. This function performs the following actions in order:
     1. Extract tags from category lines (format: Category/Tag) and move to memo
-    2. Detect category lines starting with 'L' or 'S'.
-    3. If a category is `Government:<Country>`:
+    2. Detect investment security names and apply configured suffixes
+    3. Detect category lines starting with 'L' or 'S'.
+    4. If a category is `Government:<Country>`:
         - replace it with `Expenses:Government`
         - extract `<Country>` for memo prefixing
         - increment replacement counts for the original category
-    4. Apply normal category mapping from the mappings file for non-Government categories.
-    5. If a Government category was found, update the memo line even when the memo
+    5. Apply normal category mapping from the mappings file for non-Government categories.
+    6. If a Government category was found, update the memo line even when the memo
        appears before the category line.
 
     Args:
         transaction_lines (list[str]): One transaction's lines, excluding the terminator.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         replacement_counts (dict): Dictionary to track replacements per Quicken category.
+        security_suffixes (dict, optional): Mapping of investment security names to suffixes.
+        suffix_counts (dict, optional): Dictionary to track suffix usage per security.
 
     Returns:
         tuple: A tuple of (processed_lines, memo_updated) where:
@@ -380,7 +443,37 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     # STEP 1: Process category tags (split Category/Tag format)
     processed_lines, tag_updated = process_category_tags(transaction_lines)
 
-    # STEP 2: Process category mappings and Government countries
+    # STEP 2: Detect investment transaction types and apply security suffixes.
+    investment_action_types = {
+        'Buy', 'Sell', 'ReinvDiv', 'Div', 'IntInc', 'CapGain',
+        'MiscInc', 'MiscExp', 'ShrsIn', 'ShrsOut', 'StkSplit'
+    }
+    detected_investment_type = None
+    for line in processed_lines:
+        if line and line[0] == 'N':
+            transaction_type = line[1:].strip()
+            if transaction_type in investment_action_types:
+                detected_investment_type = transaction_type
+                break
+
+    processed_lines_with_suffixes = []
+    for line in processed_lines:
+        if detected_investment_type and line and line[0] == 'Y':
+            security_name = line[1:].strip()
+            modified_security_name = apply_security_suffix(security_name, security_suffixes, suffix_counts)
+            if modified_security_name != security_name:
+                # Preserve all other split-related fields (I, Q, etc.) unchanged.
+                line = 'Y' + modified_security_name
+                # Logging for StkSplit when a suffix was applied
+                if detected_investment_type == 'StkSplit':
+                    try:
+                        print(f"INFO: Processed StkSplit for {modified_security_name} (suffix applied)")
+                    except Exception:
+                        pass
+        processed_lines_with_suffixes.append(line)
+    processed_lines = processed_lines_with_suffixes
+
+    # STEP 3: Process category mappings and Government countries
     processed_lines_final = []
     government_country = None
     memo_updated = tag_updated
@@ -444,7 +537,7 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     return processed_lines_final, memo_updated
 
 
-def apply_mappings_to_qif(qif_content, mappings):
+def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
     """
     Apply category mappings to all transactions in QIF content.
     
@@ -460,6 +553,7 @@ def apply_mappings_to_qif(qif_content, mappings):
     Args:
         qif_content (str): The raw content of a QIF file.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
+        security_suffixes (dict, optional): Mapping of investment security names to suffixes.
         
     Returns:
         tuple: A tuple containing:
@@ -467,6 +561,7 @@ def apply_mappings_to_qif(qif_content, mappings):
             - replacement counts dictionary
             - total memo updates count (used as tag_insert_count for reporting)
             - transactions processed count
+            - suffix counts dictionary for investment security suffix applications
     """
     transactions = split_qif_transactions(qif_content)
     replacement_counts = {}
@@ -477,10 +572,14 @@ def apply_mappings_to_qif(qif_content, mappings):
     processed_transactions = []
     transactions_processed = 0
     
+    suffix_counts = {}
+
     for txn in transactions:
         # Count each transaction. This counter resets for each file and is returned per-file.
         transactions_processed += 1
-        processed_lines, memo_updated = apply_mappings_to_transaction(txn, mappings, replacement_counts)
+        processed_lines, memo_updated = apply_mappings_to_transaction(
+            txn, mappings, replacement_counts, security_suffixes, suffix_counts
+        )
         processed_transactions.append(processed_lines)
         if memo_updated:
             tag_insert_count += 1
@@ -489,8 +588,8 @@ def apply_mappings_to_qif(qif_content, mappings):
     if result:
         result += '\n^'
     
-    # Return the tag_insert_count and transaction count for reporting
-    return result, replacement_counts, tag_insert_count, transactions_processed
+    # Return the tag_insert_count, transaction count, and suffix counts for reporting
+    return result, replacement_counts, tag_insert_count, transactions_processed, suffix_counts
 
 
 def generate_output_filename(input_file):
@@ -571,6 +670,9 @@ def main(input_qif_file=None):
     mappings_file = config['MAPPINGS_FILE']
     input_dir = config.get('INPUT_DIR', '').strip()
     output_dir = config.get('OUTPUT_DIR', '').strip()
+    security_suffixes = config.get('security_suffixes', {})
+    if not isinstance(security_suffixes, dict):
+        security_suffixes = {}
     
     # Read mappings (once for all files)
     print(f"Loading mappings from: {mappings_file}")
@@ -623,7 +725,7 @@ def main(input_qif_file=None):
                     output_path = os.path.join(input_dir, output_filename)
                 
                 # Process the file and collect per-file statistics
-                stats = process_file(input_path, output_path, mappings)
+                stats = process_file(input_path, output_path, mappings, security_suffixes)
                 output_paths.append(output_path)
                 
                 total_transactions += stats['transactions_processed']
@@ -636,6 +738,12 @@ def main(input_qif_file=None):
                 print(f"  Transactions processed: {stats['transactions_processed']}")
                 print(f"  Category replacements: {stats['category_replacements']}")
                 print(f"  Memo tags added: {stats['memo_tags_added']}")
+                if stats.get('suffix_counts'):
+                    print("Investment suffix summary:")
+                    for security, count in sorted(stats['suffix_counts'].items()):
+                        if count > 0:
+                            print(f"  Added {count} suffixes for {security}")
+                    print()
                 print()
                 
             except Exception as e:
@@ -677,7 +785,7 @@ def main(input_qif_file=None):
         
         print(f"Processing single file: {input_qif_file}")
         start_time = time.perf_counter()
-        stats = process_file(input_qif_file, output_path, mappings)
+        stats = process_file(input_qif_file, output_path, mappings, security_suffixes)
         end_time = time.perf_counter()
         elapsed_seconds = end_time - start_time
         
@@ -687,6 +795,12 @@ def main(input_qif_file=None):
         print(f"  Transactions processed: {stats['transactions_processed']}")
         print(f"  Category replacements: {stats['category_replacements']}")
         print(f"  Memo tags added: {stats['memo_tags_added']}")
+        if stats.get('suffix_counts'):
+            print("Investment suffix summary:")
+            for security, count in sorted(stats['suffix_counts'].items()):
+                if count > 0:
+                    print(f"  Added {count} suffixes for {security}")
+            print()
         
         replacement_counts = stats['replacement_details']
         if replacement_counts:
