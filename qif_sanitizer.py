@@ -12,6 +12,7 @@ Supports both single-file and directory-based batch processing:
 - Directory mode: Automatically scan INPUT_DIR from config and process all .qif/.QIF files
 """
 
+import ast
 import os
 import re
 import time
@@ -58,7 +59,17 @@ def load_config(config_file="qif_sanitizer.config"):
                 key = key.strip()
                 value = value.strip()
                 # Remove quotes if present
-                if value.startswith('"') and value.endswith('"'):
+                if value.startswith('[') and value.endswith(']'):
+                    try:
+                        parsed_value = ast.literal_eval(value)
+                        if isinstance(parsed_value, list):
+                            value = [item.strip() if isinstance(item, str) else item for item in parsed_value]
+                        else:
+                            value = parsed_value
+                    except Exception:
+                        # Fallback to raw string if list parsing fails
+                        pass
+                elif value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
                 elif value.startswith("'") and value.endswith("'"):
                     value = value[1:-1]
@@ -72,6 +83,74 @@ def load_config(config_file="qif_sanitizer.config"):
         raise ValueError("Configuration must include 'MAPPINGS_FILE' variable.")
     
     return config
+
+
+def format_config_list_value(items):
+    return '[' + ', '.join(repr(item) for item in items) + ']'
+
+
+def write_config_accounts_processed(config_file, accounts_processed):
+    if not isinstance(accounts_processed, list):
+        accounts_processed = []
+
+    list_value = format_config_list_value(accounts_processed)
+    config_lines = []
+    inserted = False
+
+    with open(config_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            stripped = line.strip()
+            if stripped.startswith('ACCOUNTS_ALREADY_PROCESSED') and '=' in stripped:
+                config_lines.append(f'ACCOUNTS_ALREADY_PROCESSED = {list_value}')
+                inserted = True
+            else:
+                config_lines.append(line.rstrip('\n'))
+
+    if not inserted:
+        # Insert the new config entry before the first section header if possible.
+        output_lines = []
+        for line in config_lines:
+            if not inserted and line.strip().startswith('['):
+                output_lines.append(f'ACCOUNTS_ALREADY_PROCESSED = {list_value}')
+                inserted = True
+            output_lines.append(line)
+        config_lines = output_lines
+
+    if not inserted:
+        config_lines.append(f'ACCOUNTS_ALREADY_PROCESSED = {list_value}')
+
+    with open(config_file, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(config_lines).rstrip() + '\n')
+
+
+def get_account_name_from_filename(file_path):
+    return os.path.splitext(os.path.basename(file_path))[0].strip()
+
+
+def extract_transfer_target(category_line):
+    if not category_line or not category_line.startswith('L'):
+        return None
+
+    category_text = category_line[1:].strip()
+    if category_text.startswith('[') and ']' in category_text:
+        target = category_text[1:category_text.index(']')].strip()
+        return target
+
+    return None
+
+
+def is_transfer_to_processed_account(transaction_lines, processed_accounts):
+    if not processed_accounts:
+        return False
+
+    for line in transaction_lines:
+        if line and line.startswith('L'):
+            target_account = extract_transfer_target(line)
+            if target_account and target_account in processed_accounts:
+                return True
+            break
+
+    return False
 
 
 def get_qif_files(input_dir):
@@ -110,7 +189,7 @@ def get_qif_files(input_dir):
     return sorted(qif_files)
 
 
-def process_file(input_path, output_path, mappings, security_suffixes=None):
+def process_file(input_path, output_path, mappings, security_suffixes=None, processed_accounts=None):
     """
     Process a single QIF file: load, sanitize, and write output.
     
@@ -125,6 +204,7 @@ def process_file(input_path, output_path, mappings, security_suffixes=None):
         output_path (str): Absolute path to the output file to write.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         security_suffixes (dict, optional): Mapping of investment security names to suffixes.
+        processed_accounts (list[str], optional): List of already processed Quicken account names.
         
     Returns:
         dict: Statistics about the processing, including:
@@ -133,6 +213,7 @@ def process_file(input_path, output_path, mappings, security_suffixes=None):
             - 'memo_tags_added': Number of memo tags created or updated
             - 'replacement_details': Dictionary with per-category replacement counts
             - 'suffix_counts': Dictionary with per-security suffix applications
+            - 'skipped_transfers': Number of transfer transactions suppressed
             
     Raises:
         FileNotFoundError: If the input file is not found.
@@ -142,8 +223,8 @@ def process_file(input_path, output_path, mappings, security_suffixes=None):
     qif_content = load_qif_file(input_path)
     
     # Apply mappings and collect per-file statistics
-    sanitized_content, replacement_counts, tag_insert_count, transactions_processed, suffix_counts = apply_mappings_to_qif(
-        qif_content, mappings, security_suffixes
+    sanitized_content, replacement_counts, tag_insert_count, transactions_processed, suffix_counts, skipped_transfers = apply_mappings_to_qif(
+        qif_content, mappings, security_suffixes, processed_accounts
     )
     
     # Write sanitized QIF to output location
@@ -157,7 +238,8 @@ def process_file(input_path, output_path, mappings, security_suffixes=None):
         'category_replacements': total_replacements,
         'memo_tags_added': tag_insert_count,
         'replacement_details': replacement_counts,
-        'suffix_counts': suffix_counts
+        'suffix_counts': suffix_counts,
+        'skipped_transfers': skipped_transfers,
     }
 
 
@@ -568,7 +650,7 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     return processed_lines_final, memo_updated
 
 
-def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
+def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, processed_accounts=None):
     """
     Apply category mappings to all transactions in QIF content.
     
@@ -580,11 +662,13 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
       - transactions processed
       - category replacements
       - memo tags added
+      - suppressed transfer transactions
 
     Args:
         qif_content (str): The raw content of a QIF file.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         security_suffixes (dict, optional): Mapping of investment security names to suffixes.
+        processed_accounts (list[str], optional): Accounts already processed in prior files.
         
     Returns:
         tuple: A tuple containing:
@@ -593,6 +677,7 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
             - total memo updates count (used as tag_insert_count for reporting)
             - transactions processed count
             - suffix counts dictionary for investment security suffix applications
+            - skipped transfer transaction count
     """
     transactions = split_qif_transactions(qif_content)
     replacement_counts = {}
@@ -602,15 +687,28 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
     tag_insert_count = 0
     processed_transactions = []
     transactions_processed = 0
+    skipped_transfers = 0
     
     suffix_counts = {}
 
+    processed_accounts = processed_accounts or []
+
     for txn in transactions:
-        # Count each transaction. This counter resets for each file and is returned per-file.
-        transactions_processed += 1
+        # Phase 1: run NSellX normalization and other transaction-level transformations
+        # This ensures NSellX blocks have their L[...] and following amount line
+        # removed before we evaluate transfer suppression.
         processed_lines, memo_updated = apply_mappings_to_transaction(
             txn, mappings, replacement_counts, security_suffixes, suffix_counts
         )
+
+        # Phase 2: after normalization, suppress pure transfer transactions
+        # whose target account has already been processed.
+        if is_transfer_to_processed_account(processed_lines, processed_accounts):
+            skipped_transfers += 1
+            continue
+
+        # Count each transaction that will be written to output.
+        transactions_processed += 1
         processed_transactions.append(processed_lines)
         if memo_updated:
             tag_insert_count += 1
@@ -620,18 +718,16 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None):
         result += '\n^'
     
     # Return the tag_insert_count, transaction count, and suffix counts for reporting
-    return result, replacement_counts, tag_insert_count, transactions_processed, suffix_counts
+    return result, replacement_counts, tag_insert_count, transactions_processed, suffix_counts, skipped_transfers
 
 
 def generate_output_filename(input_file):
     """
     Generate the output filename based on the input filename.
     
-    The output filename follows the pattern:
-        <input_filename>-sanitized-v1.QIF
-    
+    The output file retains the original base filename exactly.
     For example:
-        transactions.qif -> transactions-sanitized-v1.QIF
+        transactions.qif -> transactions.qif
     
     Args:
         input_file (str): Path to the input QIF file.
@@ -639,9 +735,7 @@ def generate_output_filename(input_file):
     Returns:
         str: The generated output filename (without directory path).
     """
-    base_name = os.path.basename(input_file)
-    name, ext = os.path.splitext(base_name)
-    return f"{name}-sanitized-v2.QIF"
+    return os.path.basename(input_file)
 
 
 def write_sanitized_qif(qif_content, output_file):
@@ -682,7 +776,7 @@ def main(input_qif_file=None):
        - Activated if INPUT_DIR is empty in config
        - Processes the file specified in input_qif_file argument
        - Writes output to the same directory as the input file
-       - Generates output filename with "-sanitized-v2" suffix
+       - Uses the same base filename as the input file
     
     Args:
         input_qif_file (str, optional): Path to the input QIF file for single-file mode.
@@ -740,8 +834,17 @@ def main(input_qif_file=None):
         for file_index, input_path in enumerate(qif_files, 1):
             input_filename = os.path.basename(input_path)
             
+            # Dynamic config reload for the current input file, including transferred-account state.
+            current_config = load_config()
+            accounts_processed = current_config.get('ACCOUNTS_ALREADY_PROCESSED', [])
+            if not isinstance(accounts_processed, list):
+                accounts_processed = []
+            current_account = get_account_name_from_filename(input_path)
+
             # Progress message: starting a file
             print(f"{file_index} out of {file_count}: Processing {input_filename}...")
+            print(f"  Active account context: {current_account}")
+            print(f"  ACCOUNTS_ALREADY_PROCESSED: {accounts_processed}")
             
             try:
                 # Generate output filename using OUTPUT_DIR
@@ -756,12 +859,18 @@ def main(input_qif_file=None):
                     output_path = os.path.join(input_dir, output_filename)
                 
                 # Process the file and collect per-file statistics
-                stats = process_file(input_path, output_path, mappings, security_suffixes)
+                stats = process_file(input_path, output_path, mappings, security_suffixes, accounts_processed)
                 output_paths.append(output_path)
                 
                 total_transactions += stats['transactions_processed']
                 total_category_replacements += stats['category_replacements']
                 total_memo_tags_added += stats['memo_tags_added']
+                if stats.get('skipped_transfers'):
+                    print(f"  Skipped transfer transactions: {stats['skipped_transfers']}")
+
+                if current_account not in accounts_processed:
+                    accounts_processed.append(current_account)
+                    write_config_accounts_processed('qif_sanitizer.config', accounts_processed)
                 
                 # Progress message: completed a file
                 print(f"{file_index} out of {file_count}: Completed processing {input_filename}")
@@ -810,13 +919,21 @@ def main(input_qif_file=None):
         if not input_qif_file:
             raise ValueError("No input file specified and INPUT_DIR is not configured")
         
+        dynamic_config = load_config()
+        accounts_processed = dynamic_config.get('ACCOUNTS_ALREADY_PROCESSED', [])
+        if not isinstance(accounts_processed, list):
+            accounts_processed = []
+        current_account = get_account_name_from_filename(input_qif_file)
+
         output_filename = generate_output_filename(input_qif_file)
         output_dir = os.path.dirname(input_qif_file) or '.'
         output_path = os.path.join(output_dir, output_filename)
         
         print(f"Processing single file: {input_qif_file}")
+        print(f"  Active account context: {current_account}")
+        print(f"  ACCOUNTS_ALREADY_PROCESSED: {accounts_processed}")
         start_time = time.perf_counter()
-        stats = process_file(input_qif_file, output_path, mappings, security_suffixes)
+        stats = process_file(input_qif_file, output_path, mappings, security_suffixes, accounts_processed)
         end_time = time.perf_counter()
         elapsed_seconds = end_time - start_time
         
@@ -844,8 +961,14 @@ def main(input_qif_file=None):
             print(f"Moved {stats['memo_tags_added']} tags to memos.")
         else:
             print("No mapped category replacements were found.")
+        if stats.get('skipped_transfers'):
+            print(f"Skipped transfer transactions: {stats['skipped_transfers']}")
         print("End of Replacement summary.\n")
         
+        if current_account not in accounts_processed:
+            accounts_processed.append(current_account)
+            write_config_accounts_processed('qif_sanitizer.config', accounts_processed)
+
         elapsed_minutes = int(elapsed_seconds // 60)
         elapsed_secs = int(elapsed_seconds % 60)
         if elapsed_minutes > 0:
