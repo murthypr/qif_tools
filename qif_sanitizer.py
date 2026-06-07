@@ -440,6 +440,37 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
             - processed_lines (list[str]): Processed transaction lines with '^' terminator.
             - memo_updated (bool): True if a memo line was created or modified.
     """
+    # PREPROCESS NSellX transactions first.
+    # Normalize the action code and remove the L line plus its following amount line.
+    normalized_lines = []
+    saw_nsellx = False
+    removed_nsellx_L = False
+    skip_next_amount_line = False
+
+    for line in transaction_lines:
+        stripped_line = line.strip()
+
+        if skip_next_amount_line:
+            # Remove the amount immediately following the NSellX L line only if it is a standalone amount line.
+            if stripped_line and re.match(r'^[\$\d]', stripped_line):
+                skip_next_amount_line = False
+                continue
+            skip_next_amount_line = False
+
+        if stripped_line == 'NSellX':
+            normalized_lines.append('NSell')
+            saw_nsellx = True
+            continue
+
+        if saw_nsellx and not removed_nsellx_L and stripped_line.startswith('L'):
+            removed_nsellx_L = True
+            skip_next_amount_line = True
+            continue
+
+        normalized_lines.append(line)
+
+    transaction_lines = normalized_lines
+
     # STEP 1: Process category tags (split Category/Tag format)
     processed_lines, tag_updated = process_category_tags(transaction_lines)
 
