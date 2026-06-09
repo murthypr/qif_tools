@@ -123,6 +123,48 @@ def write_config_accounts_processed(config_file, accounts_processed):
         f.write('\n'.join(config_lines).rstrip() + '\n')
 
 
+def read_processed_accounts_file(path):
+    """
+    Read processed accounts from a simple text file, one account name per line.
+    Returns a list of account names with whitespace trimmed. If the file does
+    not exist, returns an empty list.
+    """
+    try:
+        if not path:
+            return []
+        if not os.path.exists(path):
+            return []
+        with open(path, 'r', encoding='utf-8') as f:
+            lines = [line.strip() for line in f if line.strip()]
+        return lines
+    except Exception:
+        return []
+
+
+def append_processed_account_file(path, account_name):
+    """
+    Append an account name to the processed-accounts file on its own line.
+    Creates parent directories if necessary. Does nothing if account_name is
+    already present in the file.
+    """
+    if not path or not account_name:
+        return
+
+    accounts = read_processed_accounts_file(path)
+    if account_name in accounts:
+        return
+
+    parent = os.path.dirname(path)
+    if parent and not os.path.exists(parent):
+        try:
+            os.makedirs(parent, exist_ok=True)
+        except Exception:
+            pass
+
+    with open(path, 'a', encoding='utf-8') as f:
+        f.write(account_name.rstrip('\n') + '\n')
+
+
 def get_account_name_from_filename(file_path):
     return os.path.splitext(os.path.basename(file_path))[0].strip()
 
@@ -833,18 +875,18 @@ def main(input_qif_file=None):
         # Process each file in sorted order
         for file_index, input_path in enumerate(qif_files, 1):
             input_filename = os.path.basename(input_path)
-            
+
             # Dynamic config reload for the current input file, including transferred-account state.
             current_config = load_config()
-            accounts_processed = current_config.get('ACCOUNTS_ALREADY_PROCESSED', [])
-            if not isinstance(accounts_processed, list):
-                accounts_processed = []
+            processed_accounts_file = current_config.get('PROCESSED_ACCOUNTS_FILE', 'processed_accounts.txt')
+            accounts_processed = read_processed_accounts_file(processed_accounts_file)
             current_account = get_account_name_from_filename(input_path)
 
             # Progress message: starting a file
             print(f"{file_index} out of {file_count}: Processing {input_filename}...")
             print(f"  Active account context: {current_account}")
-            print(f"  ACCOUNTS_ALREADY_PROCESSED: {accounts_processed}")
+            print(f"  PROCESSED_ACCOUNTS_FILE: {processed_accounts_file}")
+            print(f"  Accounts processed: {accounts_processed}")
             
             try:
                 # Generate output filename using OUTPUT_DIR
@@ -869,8 +911,8 @@ def main(input_qif_file=None):
                     print(f"  Skipped transfer transactions: {stats['skipped_transfers']}")
 
                 if current_account not in accounts_processed:
+                    append_processed_account_file(processed_accounts_file, current_account)
                     accounts_processed.append(current_account)
-                    write_config_accounts_processed('qif_sanitizer.config', accounts_processed)
                 
                 # Progress message: completed a file
                 print(f"{file_index} out of {file_count}: Completed processing {input_filename}")
@@ -892,7 +934,7 @@ def main(input_qif_file=None):
                 continue
         
         end_time = time.perf_counter()
-        elapsed_seconds = end_time - start_time
+        elapsed_millis = int((end_time - start_time) * 1000)
         
         # Print summary
         print(f"\n{'='*60}")
@@ -903,12 +945,7 @@ def main(input_qif_file=None):
         print(f"  Total category replacements: {total_category_replacements}")
         print(f"  Total memo tags added: {total_memo_tags_added}")
         
-        elapsed_minutes = int(elapsed_seconds // 60)
-        elapsed_secs = int(elapsed_seconds % 60)
-        if elapsed_minutes > 0:
-            print(f"Total processing time: {elapsed_minutes} min and {elapsed_secs} secs")
-        else:
-            print(f"Total processing time: {elapsed_secs} secs")
+        print(f"Total processing time: {elapsed_millis} ms")
         
         print(f"Output directory: {output_dir if output_dir else input_dir}")
         print(f"{'='*60}\n")
@@ -920,9 +957,8 @@ def main(input_qif_file=None):
             raise ValueError("No input file specified and INPUT_DIR is not configured")
         
         dynamic_config = load_config()
-        accounts_processed = dynamic_config.get('ACCOUNTS_ALREADY_PROCESSED', [])
-        if not isinstance(accounts_processed, list):
-            accounts_processed = []
+        processed_accounts_file = dynamic_config.get('PROCESSED_ACCOUNTS_FILE', 'processed_accounts.txt')
+        accounts_processed = read_processed_accounts_file(processed_accounts_file)
         current_account = get_account_name_from_filename(input_qif_file)
 
         output_filename = generate_output_filename(input_qif_file)
@@ -931,11 +967,12 @@ def main(input_qif_file=None):
         
         print(f"Processing single file: {input_qif_file}")
         print(f"  Active account context: {current_account}")
-        print(f"  ACCOUNTS_ALREADY_PROCESSED: {accounts_processed}")
+        print(f"  PROCESSED_ACCOUNTS_FILE: {processed_accounts_file}")
+        print(f"  Accounts processed: {accounts_processed}")
         start_time = time.perf_counter()
         stats = process_file(input_qif_file, output_path, mappings, security_suffixes, accounts_processed)
         end_time = time.perf_counter()
-        elapsed_seconds = end_time - start_time
+        elapsed_millis = int((end_time - start_time) * 1000)
         
         # Print per-file summary
         print(f"{os.path.basename(input_qif_file)} processing complete")
@@ -966,15 +1003,10 @@ def main(input_qif_file=None):
         print("End of Replacement summary.\n")
         
         if current_account not in accounts_processed:
+            append_processed_account_file(processed_accounts_file, current_account)
             accounts_processed.append(current_account)
-            write_config_accounts_processed('qif_sanitizer.config', accounts_processed)
 
-        elapsed_minutes = int(elapsed_seconds // 60)
-        elapsed_secs = int(elapsed_seconds % 60)
-        if elapsed_minutes > 0:
-            time_message = f"took {elapsed_minutes} min and {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
-        else:
-            time_message = f"took {elapsed_secs} secs to process the file {os.path.basename(input_qif_file)}."
+        time_message = f"took {elapsed_millis} ms to process the file {os.path.basename(input_qif_file)}."
         
         print(time_message)
         print(f"Successfully sanitized QIF file")

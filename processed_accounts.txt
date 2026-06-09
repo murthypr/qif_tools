@@ -1,0 +1,19 @@
+Checking - CapitalOne - Regular
+Checking - PremierOne - Lori
+Citi - MasterCard - Lori
+Citi - MasterCard - Murthy
+Discover - Rentals
+ESPP - Intuit
+Rentals - Checking
+Rentals - Repair Fund
+Rentals - Taxes and Insurance
+Savings - Annual Expenses 2
+Savings - Annual Expenses
+Savings - Emergency Expenses
+Savings - Emergency Fund Lori
+Savings - Premier One
+Savings - Recession Readiness
+Savings - Repair Fund 2
+Savings - Repair Fund
+Savings - The Alamo 2
+Savings - The Alamo
