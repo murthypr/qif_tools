@@ -290,7 +290,11 @@ def process_file(input_path, output_path, mappings, security_suffixes=None, proc
 
 def load_qif_file(qif_file):
     """
-    Load a QIF file into memory.
+    Load a QIF file into memory, reading line-by-line to detect decode errors.
+    
+    This function reads the file in binary mode and decodes each line individually
+    to UTF-8. If a UnicodeDecodeError occurs, the exact line number is printed before
+    re-raising the exception.
     
     Args:
         qif_file (str): Path to the QIF file to load.
@@ -300,12 +304,22 @@ def load_qif_file(qif_file):
         
     Raises:
         FileNotFoundError: If the QIF file is not found.
+        UnicodeDecodeError: If a line cannot be decoded as UTF-8.
     """
     if not os.path.exists(qif_file):
         raise FileNotFoundError(f"QIF file '{qif_file}' not found.")
     
-    with open(qif_file, 'r', encoding='utf-8') as f:
-        return f.read()
+    lines = []
+    with open(qif_file, "rb") as f:
+        for line_number, raw_line in enumerate(f, start=1):
+            try:
+                line = raw_line.decode("utf-8")
+                lines.append(line)
+            except UnicodeDecodeError as e:
+                print(f"ERROR in {qif_file} at line {line_number}: {e}")
+                raise
+    
+    return ''.join(lines)
 
 
 def apply_security_suffix(security_name, security_suffixes=None, suffix_counts=None):
