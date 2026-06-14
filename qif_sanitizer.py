@@ -304,7 +304,7 @@ def load_qif_file(qif_file):
         
     Raises:
         FileNotFoundError: If the QIF file is not found.
-        UnicodeDecodeError: If a line cannot be decoded as UTF-8.
+        UnicodeDecodeError: If a line cannot be decoded as CP1252.
     """
     if not os.path.exists(qif_file):
         raise FileNotFoundError(f"QIF file '{qif_file}' not found.")
@@ -313,7 +313,7 @@ def load_qif_file(qif_file):
     with open(qif_file, "rb") as f:
         for line_number, raw_line in enumerate(f, start=1):
             try:
-                line = raw_line.decode("utf-8")
+                line = raw_line.decode("cp1252")
                 lines.append(line)
             except UnicodeDecodeError as e:
                 print(f"ERROR in {qif_file} at line {line_number}: {e}")

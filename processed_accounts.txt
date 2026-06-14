@@ -1,9 +1,15 @@
+Cash - Lori
+Cash - Pet Transactions
+Cash - Ram
+Cash - Tara
 Checking - CapitalOne - Regular
 Checking - PremierOne - Lori
+Checking - Tara
 Citi - MasterCard - Lori
 Citi - MasterCard - Murthy
 Discover - Rentals
 ESPP - Intuit
+Kohl's Card
 Rentals - Checking
 Rentals - Repair Fund
 Rentals - Taxes and Insurance
