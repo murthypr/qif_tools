@@ -1,0 +1,21 @@
+Enhancement Plan: Split Transfer Suppression
+Problem
+Checking account split S[Cash - Ram] + Cash account transfer L[Checking - CapitalOne - Regular] both get imported ? double-counting. Root cause: Cash processed before Checking alphabetically.
+Solution: Two Phases
+Phase 1: split-transfer-scan.py (new script)
+- Scan all QIF files, find S[AccountName] lines (transfers within splits)
+- Record: source_account (filename), target_account (from S[...]), amount (from $ line)
+- Persist to split_transfers.json
+Phase 2: Modify qif_sanitizer.py
+- Load split_transfers.json at startup
+- New function is_split_transfer_transaction(): check if transfer matches a split transfer from source to current account with same amount
+- If match ? suppress; else ? existing logic
+Output Format
+{
+  "Checking - CapitalOne - Regular": [
+    {"target": "Cash - Ram", "amount": -100.00}
+  ]
+}
+Usage
+python split-transfer-scan.py   # one-time
+python qif_sanitizer.py          # uses persisted map

@@ -13,6 +13,7 @@ Supports both single-file and directory-based batch processing:
 """
 
 import ast
+import json
 import os
 import re
 import time
@@ -90,6 +91,9 @@ def format_config_list_value(items):
 
 
 def write_config_accounts_processed(config_file, accounts_processed):
+    """
+    Unsure whether this method is used anywhere.  Need to check and delete this code, if not used.
+    """
     if not isinstance(accounts_processed, list):
         accounts_processed = []
 
@@ -181,6 +185,18 @@ def extract_transfer_target(category_line):
     return None
 
 
+def extract_transfer_target_from_any_line(category_line):
+    if not category_line:
+        return None
+    prefix = category_line[0]
+    if prefix not in {'L', 'S'}:
+        return None
+    category_text = category_line[1:].strip()
+    if category_text.startswith('[') and ']' in category_text:
+        return category_text[1:category_text.index(']')].strip()
+    return None
+
+
 def is_transfer_to_processed_account(transaction_lines, processed_accounts):
     if not processed_accounts:
         return False
@@ -189,8 +205,104 @@ def is_transfer_to_processed_account(transaction_lines, processed_accounts):
         if line and line.startswith('L'):
             target_account = extract_transfer_target(line)
             if target_account and target_account in processed_accounts:
+                # Check if transaction has split lines with different categories.
+                # If so, this is a split transaction (not a pure transfer) and
+                # should be processed normally so the non-transfer splits are recorded.
+                for s_line in transaction_lines:
+                    if s_line and s_line.startswith('S'):
+                        s_target = extract_transfer_target_from_any_line(s_line)
+                        if s_target is None or s_target != target_account:
+                            return False
                 return True
             break
+
+    return False
+
+
+def extract_transfer_target_from_lines(transaction_lines):
+    """Extract transfer target from L[...] line in transaction."""
+    for line in transaction_lines:
+        if line and line.startswith('L'):
+            return extract_transfer_target(line)
+    return None
+
+
+def is_salary_transaction(transaction_lines):
+    """Check if transaction is a salary payment (L-line contains Salary)."""
+    for line in transaction_lines:
+        stripped = line.strip()
+        if stripped.startswith('L') and 'Salary' in stripped:
+            return True
+    return False
+
+
+def is_split_transfer_transaction(transaction_lines, source_account,
+                                   current_account, split_transfer_map):
+    """
+    Check if a transfer corresponds to a split transfer from source_account
+    to current_account with a matching amount and date.
+
+    Uses absolute value matching since the split map stores amounts from the
+    source account's perspective (negative) while transfer transactions in the
+    target account have positive amounts.
+
+    Args:
+        transaction_lines: List of lines in the transaction
+        source_account: Account extracted from L[SourceAccount]
+        current_account: Account being processed (from filename)
+        split_transfer_map: Dict loaded from split_transfers.json
+
+    Returns:
+        True if this is a split transfer that should be suppressed
+    """
+    if not split_transfer_map or not source_account:
+        return False
+
+    # Look up source_account in the split transfer map
+    transfers = split_transfer_map.get(source_account, [])
+    if not transfers:
+        return False
+
+    # Extract date from transaction (D line)
+    txn_date = None
+    for line in transaction_lines:
+        stripped = line.strip()
+        if stripped.startswith('D'):
+            txn_date = stripped[1:].strip()
+            break
+
+    # Extract the transfer amount from the transaction (try $ first, then T)
+    txn_amount = None
+    for line in transaction_lines:
+        stripped = line.strip()
+        if stripped.startswith('$'):
+            try:
+                amount_str = stripped[1:].replace(',', '')
+                txn_amount = float(amount_str)
+                break
+            except ValueError:
+                continue
+
+    if txn_amount is None:
+        for line in transaction_lines:
+            stripped = line.strip()
+            if stripped.startswith('T'):
+                try:
+                    amount_str = stripped[1:].replace(',', '')
+                    txn_amount = float(amount_str)
+                    break
+                except ValueError:
+                    continue
+
+    if txn_amount is None:
+        return False
+
+    # Check for matching split transfer (date + target + absolute amount)
+    for transfer in transfers:
+        if (transfer["target"] == current_account and
+            transfer.get("date") == txn_date and
+            abs(transfer["amount"]) == abs(txn_amount)):
+            return True
 
     return False
 
@@ -231,23 +343,25 @@ def get_qif_files(input_dir):
     return sorted(qif_files)
 
 
-def process_file(input_path, output_path, mappings, security_suffixes=None, processed_accounts=None):
+def process_file(input_path, output_path, mappings, security_suffixes=None,
+                  processed_accounts=None, split_transfer_map=None):
     """
     Process a single QIF file: load, sanitize, and write output.
-    
+
     This function encapsulates the core sanitization logic for a single file:
     1. Load the QIF file
     2. Apply category mappings
     3. Write the sanitized content to the output file (overwriting if it exists)
     4. Return per-file statistics for reporting and aggregation
-    
+
     Args:
         input_path (str): Absolute path to the input QIF file.
         output_path (str): Absolute path to the output file to write.
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         security_suffixes (dict, optional): Mapping of investment security names to suffixes.
         processed_accounts (list[str], optional): List of already processed Quicken account names.
-        
+        split_transfer_map (dict, optional): Map of split transfers from split_transfers.json.
+
     Returns:
         dict: Statistics about the processing, including:
             - 'transactions_processed': Number of transactions processed in this file
@@ -256,25 +370,29 @@ def process_file(input_path, output_path, mappings, security_suffixes=None, proc
             - 'replacement_details': Dictionary with per-category replacement counts
             - 'suffix_counts': Dictionary with per-security suffix applications
             - 'skipped_transfers': Number of transfer transactions suppressed
-            
+
     Raises:
         FileNotFoundError: If the input file is not found.
         IOError: If the output file cannot be written.
     """
     # Load QIF file
     qif_content = load_qif_file(input_path)
-    
+
+    # Get current account name from filename
+    current_account = get_account_name_from_filename(input_path)
+
     # Apply mappings and collect per-file statistics
     sanitized_content, replacement_counts, tag_insert_count, transactions_processed, suffix_counts, skipped_transfers = apply_mappings_to_qif(
-        qif_content, mappings, security_suffixes, processed_accounts
+        qif_content, mappings, security_suffixes, processed_accounts,
+        split_transfer_map=split_transfer_map, current_account=current_account
     )
-    
+
     # Write sanitized QIF to output location
     write_sanitized_qif(sanitized_content, output_path)
-    
+
     # Calculate total category replacements for this file
     total_replacements = sum(replacement_counts.values())
-    
+
     return {
         'transactions_processed': transactions_processed,
         'category_replacements': total_replacements,
@@ -706,14 +824,16 @@ def apply_mappings_to_transaction(transaction_lines, mappings, replacement_count
     return processed_lines_final, memo_updated
 
 
-def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, processed_accounts=None):
+def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None,
+                           processed_accounts=None, split_transfer_map=None,
+                           current_account=None):
     """
     Apply category mappings to all transactions in QIF content.
-    
+
     The QIF file is processed one transaction at a time. Transactions are
     split on lines containing only '^'. Each transaction is processed as a unit
     and then reassembled with the '^' terminator.
-    
+
     This function also tracks per-file counters for:
       - transactions processed
       - category replacements
@@ -725,7 +845,9 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, process
         mappings (dict): Dictionary mapping Quicken categories to GnuCash account names.
         security_suffixes (dict, optional): Mapping of investment security names to suffixes.
         processed_accounts (list[str], optional): Accounts already processed in prior files.
-        
+        split_transfer_map (dict, optional): Map of split transfers from split_transfers.json.
+        current_account (str, optional): Name of the account being processed (from filename).
+
     Returns:
         tuple: A tuple containing:
             - QIF content with all categories mapped
@@ -744,7 +866,7 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, process
     processed_transactions = []
     transactions_processed = 0
     skipped_transfers = 0
-    
+
     suffix_counts = {}
 
     processed_accounts = processed_accounts or []
@@ -757,7 +879,16 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, process
             txn, mappings, replacement_counts, security_suffixes, suffix_counts
         )
 
-        # Phase 2: after normalization, suppress pure transfer transactions
+        # Phase 2a: Check for split transfer suppression
+        if split_transfer_map and current_account:
+            source_account = extract_transfer_target_from_lines(processed_lines)
+            if source_account and is_split_transfer_transaction(
+                processed_lines, source_account, current_account, split_transfer_map
+            ):
+                skipped_transfers += 1
+                continue
+
+        # Phase 2b: after normalization, suppress pure transfer transactions
         # whose target account has already been processed.
         if is_transfer_to_processed_account(processed_lines, processed_accounts):
             skipped_transfers += 1
@@ -768,11 +899,11 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None, process
         processed_transactions.append(processed_lines)
         if memo_updated:
             tag_insert_count += 1
-    
+
     result = '\n^\n'.join('\n'.join(txn) for txn in processed_transactions)
     if result:
         result += '\n^'
-    
+
     # Return the tag_insert_count, transaction count, and suffix counts for reporting
     return result, replacement_counts, tag_insert_count, transactions_processed, suffix_counts, skipped_transfers
 
@@ -859,7 +990,17 @@ def main(input_qif_file=None):
     print(f"Loading mappings from: {mappings_file}")
     mappings = read_mappings_file(mappings_file)
     print(f"Loaded {len(mappings)} category mappings")
-    
+
+    # Load split transfer map
+    split_transfer_map = {}
+    split_map_file = config.get('SPLIT_TRANSFER_MAP_FILE', 'split_transfers.json')
+    if os.path.exists(split_map_file):
+        with open(split_map_file, 'r', encoding='utf-8') as f:
+            split_transfer_map = json.load(f)
+        print(f"Loaded split transfer map: {len(split_transfer_map)} accounts")
+    else:
+        print("No split_transfers.json found; split transfer suppression disabled")
+
     # Check if directory mode is enabled
     if input_dir:
         # ===== DIRECTORY MODE (Batch Processing) =====
@@ -915,7 +1056,8 @@ def main(input_qif_file=None):
                     output_path = os.path.join(input_dir, output_filename)
                 
                 # Process the file and collect per-file statistics
-                stats = process_file(input_path, output_path, mappings, security_suffixes, accounts_processed)
+                stats = process_file(input_path, output_path, mappings, security_suffixes,
+                                     accounts_processed, split_transfer_map=split_transfer_map)
                 output_paths.append(output_path)
                 
                 total_transactions += stats['transactions_processed']
@@ -984,7 +1126,8 @@ def main(input_qif_file=None):
         print(f"  PROCESSED_ACCOUNTS_FILE: {processed_accounts_file}")
         print(f"  Accounts processed: {accounts_processed}")
         start_time = time.perf_counter()
-        stats = process_file(input_qif_file, output_path, mappings, security_suffixes, accounts_processed)
+        stats = process_file(input_qif_file, output_path, mappings, security_suffixes,
+                             accounts_processed, split_transfer_map=split_transfer_map)
         end_time = time.perf_counter()
         elapsed_millis = int((end_time - start_time) * 1000)
         
