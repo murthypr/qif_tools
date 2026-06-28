@@ -1,0 +1,1757 @@
+2026-06-28 09:17:07,330  INFO      ============================================================
+2026-06-28 09:17:07,330  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 09:17:07,330  INFO      ============================================================
+2026-06-28 09:17:07,330  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 09:17:08,112  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]')
+2026-06-28 09:17:08,112  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 09:17:10,756  INFO      Found new Quicken window: HWND=463834 title='QIF Export'
+2026-06-28 09:17:10,771  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 09:17:12,728  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 09:17:12,728  INFO      Found ComboBox child: HWND=594604 class='ComboBox'
+2026-06-28 09:17:12,728  INFO      ComboBox item count: 160
+2026-06-28 09:17:15,139  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 09:17:18,421  INFO      Discovered 160 accounts
+2026-06-28 09:17:18,421  INFO      Accounts found: 160
+2026-06-28 09:17:18,421  INFO          1. *Security Deposit Liability*
+2026-06-28 09:17:18,421  INFO          2. 1 Year CD - India Investments
+2026-06-28 09:17:18,421  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 09:17:18,421  INFO          4. 1 Year CD - The Alamo
+2026-06-28 09:17:18,423  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 09:17:18,423  INFO          6. 401(K) - Modus Create
+2026-06-28 09:17:18,423  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 09:17:18,423  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 09:17:18,423  INFO          9. 401(K) - RF - PayChex
+2026-06-28 09:17:18,423  INFO         10. 401(K) - RF - Standard
+2026-06-28 09:17:18,425  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 09:17:18,425  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 09:17:18,425  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 09:17:18,425  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 09:17:18,425  INFO         15. 401(K) Intuit - Empower
+2026-06-28 09:17:18,425  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 09:17:18,425  INFO         17. 401(k) Icon
+2026-06-28 09:17:18,425  INFO         18. 401(k) InfoGain
+2026-06-28 09:17:18,425  INFO         19. 401(k) InfoGain - ING
+2026-06-28 09:17:18,425  INFO         20. 401(k) LogicWorx
+2026-06-28 09:17:18,425  INFO         21. 401(k) NetApp
+2026-06-28 09:17:18,425  INFO         22. <All account>
+2026-06-28 09:17:18,425  INFO         23. Brokerage - AG Edwards
+2026-06-28 09:17:18,425  INFO         24. CD - Meriwest
+2026-06-28 09:17:18,425  INFO         25. CD Ladder - Lori
+2026-06-28 09:17:18,425  INFO         26. CD Ladder - Ram
+2026-06-28 09:17:18,425  INFO         27. CD1@E*TradeBank
+2026-06-28 09:17:18,425  INFO         28. CD2@E*TradeBank
+2026-06-28 09:17:18,425  INFO         29. CD3@E*TradeBank
+2026-06-28 09:17:18,425  INFO         30. CDs
+2026-06-28 09:17:18,425  INFO         31. CDs - India ($s)
+2026-06-28 09:17:18,425  INFO         32. CDs - India (Rs)
+2026-06-28 09:17:18,425  INFO         33. Car - Eclipse
+2026-06-28 09:17:18,425  INFO         34. Car - Prius v2
+2026-06-28 09:17:18,425  INFO         35. Car - Prius v3
+2026-06-28 09:17:18,425  INFO         36. Car Loan
+2026-06-28 09:17:18,425  INFO         37. Cash - India
+2026-06-28 09:17:18,425  INFO         38. Cash - Lori
+2026-06-28 09:17:18,425  INFO         39. Cash - Pet Transactions
+2026-06-28 09:17:18,425  INFO         40. Cash - Ram
+2026-06-28 09:17:18,425  INFO         41. Cash - Tara
+2026-06-28 09:17:18,425  INFO         42. Checking - Annual Expenses
+2026-06-28 09:17:18,425  INFO         43. Checking - BOTS
+2026-06-28 09:17:18,425  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 09:17:18,425  INFO         45. Checking - National Mortgage
+2026-06-28 09:17:18,425  INFO         46. Checking - PremierOne - Lori
+2026-06-28 09:17:18,425  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 09:17:18,425  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 09:17:18,425  INFO         49. Checking - Tara
+2026-06-28 09:17:18,425  INFO         50. Checking - TechCU
+2026-06-28 09:17:18,425  INFO         51. Citi - MasterCard - Lori
+2026-06-28 09:17:18,425  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 09:17:18,425  INFO         53. Discover - Rentals
+2026-06-28 09:17:18,425  INFO         54. ESOP - Intuit
+2026-06-28 09:17:18,425  INFO         55. ESOP - Oracle
+2026-06-28 09:17:18,425  INFO         56. ESPP - Intuit
+2026-06-28 09:17:18,425  INFO         57. ESPP - NetApp
+2026-06-28 09:17:18,441  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 09:17:18,441  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 09:17:18,441  INFO         60. Eddie Bauer - Ram
+2026-06-28 09:17:18,441  INFO         61. Equity - eBay
+2026-06-28 09:17:18,441  INFO         62. FSA - Intuit
+2026-06-28 09:17:18,441  INFO         63. FSA - Oracle
+2026-06-28 09:17:18,441  INFO         64. FSA - RF Medical
+2026-06-28 09:17:18,441  INFO         65. FSA - RF Transit
+2026-06-28 09:17:18,441  INFO         66. FSA - eBay
+2026-06-28 09:17:18,441  INFO         67. Flex Spending Ac
+2026-06-28 09:17:18,441  INFO         68. Home - Alma
+2026-06-28 09:17:18,441  INFO         69. Home - Alma Loan
+2026-06-28 09:17:18,441  INFO         70. Home - Maitland
+2026-06-28 09:17:18,441  INFO         71. Home - Maitland Loan
+2026-06-28 09:17:18,441  INFO         72. Home - Maitland Loan 2
+2026-06-28 09:17:18,441  INFO         73. Home - Maitland Loan 3
+2026-06-28 09:17:18,441  INFO         74. Home - Maitland Loan 4
+2026-06-28 09:17:18,441  INFO         75. Home - Maitland Loan 5
+2026-06-28 09:17:18,441  INFO         76. Home - Maitland Loan 6
+2026-06-28 09:17:18,441  INFO         77. Home - Maitland Loan 7
+2026-06-28 09:17:18,441  INFO         78. Home - Nino
+2026-06-28 09:17:18,441  INFO         79. Home - Nino Loan
+2026-06-28 09:17:18,441  INFO         80. Home - Nino Loan 2
+2026-06-28 09:17:18,441  INFO         81. Home - Nino Loan 3
+2026-06-28 09:17:18,441  INFO         82. Home - Roan
+2026-06-28 09:17:18,441  INFO         83. Home - Roan Loan
+2026-06-28 09:17:18,441  INFO         84. Home - Roan Loan 2
+2026-06-28 09:17:18,441  INFO         85. Home - Roan Loan 3
+2026-06-28 09:17:18,441  INFO         86. Home - Roan Loan 4
+2026-06-28 09:17:18,441  INFO         87. Home - Roan Loan 5
+2026-06-28 09:17:18,441  INFO         88. Home - Roan Loan 6
+2026-06-28 09:17:18,441  INFO         89. Home - Roan Loan 7
+2026-06-28 09:17:18,441  INFO         90. House - India
+2026-06-28 09:17:18,441  INFO         91. IRA - Metlife Annuity
+2026-06-28 09:17:18,441  INFO         92. IRA - Vanguard - Lori
+2026-06-28 09:17:18,441  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 09:17:18,441  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 09:17:18,441  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 09:17:18,441  INFO         96. India - SBI NRE Account
+2026-06-28 09:17:18,441  INFO         97. India - SBI NRO Debit Card
+2026-06-28 09:17:18,441  INFO         98. Kohl's Card
+2026-06-28 09:17:18,441  INFO         99. Line of Credit - Premier One
+2026-06-28 09:17:18,441  INFO        100. Master Card
+2026-06-28 09:17:18,441  INFO        101. Master Card - Citi
+2026-06-28 09:17:18,441  INFO        102. Mervyn's - Lori
+2026-06-28 09:17:18,441  INFO        103. Mervyn's - Ram
+2026-06-28 09:17:18,441  INFO        104. Primary Mortgage - 2
+2026-06-28 09:17:18,441  INFO        105. Primary Mortgage - 3
+2026-06-28 09:17:18,441  INFO        106. Primary Mortgage - 4
+2026-06-28 09:17:18,441  INFO        107. Primary Mortgage - 5
+2026-06-28 09:17:18,457  INFO        108. Primary Mortgage - I
+2026-06-28 09:17:18,457  INFO        109. Private Equity - FFC LLC
+2026-06-28 09:17:18,457  INFO        110. Rentals - Checking
+2026-06-28 09:17:18,457  INFO        111. Rentals - Repair Fund
+2026-06-28 09:17:18,457  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 09:17:18,457  INFO        113. Roth IRA - AG Edwards
+2026-06-28 09:17:18,457  INFO        114. Roth IRA - Stifel
+2026-06-28 09:17:18,457  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 09:17:18,457  INFO        116. Roth IRA - Vanguard
+2026-06-28 09:17:18,457  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 09:17:18,457  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 09:17:18,457  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 09:17:18,457  INFO        120. Savings - Annual Expenses
+2026-06-28 09:17:18,457  INFO        121. Savings - Annual Expenses 2
+2026-06-28 09:17:18,457  INFO        122. Savings - ETrade (Complete)
+2026-06-28 09:17:18,457  INFO        123. Savings - Emergency Expenses
+2026-06-28 09:17:18,457  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 09:17:18,457  INFO        125. Savings - ING Lori
+2026-06-28 09:17:18,457  INFO        126. Savings - ING Ram
+2026-06-28 09:17:18,457  INFO        127. Savings - Meriwest
+2026-06-28 09:17:18,457  INFO        128. Savings - Premier One
+2026-06-28 09:17:18,457  INFO        129. Savings - Recession Readiness
+2026-06-28 09:17:18,457  INFO        130. Savings - Repair Fund
+2026-06-28 09:17:18,457  INFO        131. Savings - Repair Fund 2
+2026-06-28 09:17:18,457  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 09:17:18,457  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 09:17:18,457  INFO        134. Savings - The Alamo
+2026-06-28 09:17:18,457  INFO        135. Savings - The Alamo 2
+2026-06-28 09:17:18,457  INFO        136. Savings-TechCU
+2026-06-28 09:17:18,457  INFO        137. Sears Credit Card
+2026-06-28 09:17:18,457  INFO        138. Secondary Mortgage - 2
+2026-06-28 09:17:18,457  INFO        139. Secondary Mortgage - 3
+2026-06-28 09:17:18,457  INFO        140. Secondary Mortgage - 4
+2026-06-28 09:17:18,457  INFO        141. Secondary Mortgage - 5
+2026-06-28 09:17:18,457  INFO        142. Secondary Mortgage - I
+2026-06-28 09:17:18,457  INFO        143. Smith Barney
+2026-06-28 09:17:18,457  INFO        144. Southwest Securities
+2026-06-28 09:17:18,457  INFO        145. TD Ameritrade
+2026-06-28 09:17:18,457  INFO        146. Tara's 529
+2026-06-28 09:17:18,457  INFO        147. Treasury Direct - Lori
+2026-06-28 09:17:18,457  INFO        148. Treasury Direct - Murthy
+2026-06-28 09:17:18,457  INFO        149. US Bank Relia Card
+2026-06-28 09:17:18,457  INFO        150. Vanguard
+2026-06-28 09:17:18,457  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 09:17:18,457  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 09:17:18,457  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 09:17:18,457  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 09:17:18,457  INFO        155. Vanguard - Trust 1
+2026-06-28 09:17:18,457  INFO        156. Vanguard - Trust 2
+2026-06-28 09:17:18,457  INFO        157. Vanguard - Trust 3
+2026-06-28 09:17:18,457  INFO        158. Visa - Chase - Lori
+2026-06-28 09:17:18,457  INFO        159. Visa - Chase - Ram
+2026-06-28 09:17:18,457  INFO        160. Visa - TechFed
+2026-06-28 09:17:18,473  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 09:17:18,483  INFO      Will export 10 accounts
+2026-06-28 09:17:18,483  INFO      ----------------------------------------
+2026-06-28 09:17:18,483  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 09:17:18,483  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 09:17:21,168  INFO      Found new Quicken window: HWND=463834 title='QIF Export'
+2026-06-28 09:17:22,173  INFO      Account dropdown HWND: 594604
+2026-06-28 09:17:22,173  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:17:22,173  INFO      ComboBox has 160 items
+2026-06-28 09:17:22,478  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 09:17:25,686  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 09:17:42,325  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 09:17:42,325  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 09:17:43,830  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 09:17:43,833  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:45,836  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:47,841  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:49,843  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:51,845  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:53,848  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:55,850  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:57,853  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:17:59,856  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:01,860  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:03,862  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:05,866  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:07,869  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:09,873  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:11,876  INFO      Quicken still has 2 windows: ['(untitled)', 'Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]'] — waiting...
+2026-06-28 09:18:13,880  ERROR     Quicken still has open windows after 30s — cannot proceed, export FAILED
+2026-06-28 09:18:13,883  WARNING   Export may have failed for: *Security Deposit Liability*
+2026-06-28 09:18:15,887  ERROR     FAILED: *Security Deposit Liability* — stopping to keep Quicken stable
+2026-06-28 09:18:15,887  INFO      ============================================================
+2026-06-28 09:18:15,887  INFO      Export complete
+2026-06-28 09:18:15,887  INFO        Exported: 0
+2026-06-28 09:18:15,887  INFO        Failed:   1
+2026-06-28 09:18:15,887  INFO        Failed accounts:
+2026-06-28 09:18:15,887  INFO          - *Security Deposit Liability*
+2026-06-28 09:18:15,887  INFO      ============================================================
+2026-06-28 09:22:21,001  INFO      ============================================================
+2026-06-28 09:22:21,006  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 09:22:21,006  INFO      ============================================================
+2026-06-28 09:22:21,006  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 09:22:21,776  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]')
+2026-06-28 09:22:21,776  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 09:22:24,651  INFO      Found new Quicken window: HWND=856860 title='QIF Export'
+2026-06-28 09:22:24,659  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 09:22:26,611  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 09:22:26,611  INFO      Found ComboBox child: HWND=398318 class='ComboBox'
+2026-06-28 09:22:26,611  INFO      ComboBox item count: 160
+2026-06-28 09:22:29,015  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 09:22:32,304  INFO      Discovered 160 accounts
+2026-06-28 09:22:32,304  INFO      Accounts found: 160
+2026-06-28 09:22:32,304  INFO          1. *Security Deposit Liability*
+2026-06-28 09:22:32,304  INFO          2. 1 Year CD - India Investments
+2026-06-28 09:22:32,304  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 09:22:32,304  INFO          4. 1 Year CD - The Alamo
+2026-06-28 09:22:32,304  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 09:22:32,304  INFO          6. 401(K) - Modus Create
+2026-06-28 09:22:32,304  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 09:22:32,304  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 09:22:32,304  INFO          9. 401(K) - RF - PayChex
+2026-06-28 09:22:32,304  INFO         10. 401(K) - RF - Standard
+2026-06-28 09:22:32,304  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 09:22:32,304  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 09:22:32,304  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 09:22:32,304  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 09:22:32,304  INFO         15. 401(K) Intuit - Empower
+2026-06-28 09:22:32,304  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 09:22:32,304  INFO         17. 401(k) Icon
+2026-06-28 09:22:32,304  INFO         18. 401(k) InfoGain
+2026-06-28 09:22:32,304  INFO         19. 401(k) InfoGain - ING
+2026-06-28 09:22:32,304  INFO         20. 401(k) LogicWorx
+2026-06-28 09:22:32,304  INFO         21. 401(k) NetApp
+2026-06-28 09:22:32,304  INFO         22. <All account>
+2026-06-28 09:22:32,304  INFO         23. Brokerage - AG Edwards
+2026-06-28 09:22:32,304  INFO         24. CD - Meriwest
+2026-06-28 09:22:32,304  INFO         25. CD Ladder - Lori
+2026-06-28 09:22:32,304  INFO         26. CD Ladder - Ram
+2026-06-28 09:22:32,304  INFO         27. CD1@E*TradeBank
+2026-06-28 09:22:32,304  INFO         28. CD2@E*TradeBank
+2026-06-28 09:22:32,304  INFO         29. CD3@E*TradeBank
+2026-06-28 09:22:32,304  INFO         30. CDs
+2026-06-28 09:22:32,304  INFO         31. CDs - India ($s)
+2026-06-28 09:22:32,304  INFO         32. CDs - India (Rs)
+2026-06-28 09:22:32,304  INFO         33. Car - Eclipse
+2026-06-28 09:22:32,304  INFO         34. Car - Prius v2
+2026-06-28 09:22:32,304  INFO         35. Car - Prius v3
+2026-06-28 09:22:32,304  INFO         36. Car Loan
+2026-06-28 09:22:32,304  INFO         37. Cash - India
+2026-06-28 09:22:32,304  INFO         38. Cash - Lori
+2026-06-28 09:22:32,304  INFO         39. Cash - Pet Transactions
+2026-06-28 09:22:32,304  INFO         40. Cash - Ram
+2026-06-28 09:22:32,304  INFO         41. Cash - Tara
+2026-06-28 09:22:32,304  INFO         42. Checking - Annual Expenses
+2026-06-28 09:22:32,304  INFO         43. Checking - BOTS
+2026-06-28 09:22:32,315  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 09:22:32,315  INFO         45. Checking - National Mortgage
+2026-06-28 09:22:32,315  INFO         46. Checking - PremierOne - Lori
+2026-06-28 09:22:32,315  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 09:22:32,315  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 09:22:32,315  INFO         49. Checking - Tara
+2026-06-28 09:22:32,315  INFO         50. Checking - TechCU
+2026-06-28 09:22:32,317  INFO         51. Citi - MasterCard - Lori
+2026-06-28 09:22:32,317  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 09:22:32,317  INFO         53. Discover - Rentals
+2026-06-28 09:22:32,317  INFO         54. ESOP - Intuit
+2026-06-28 09:22:32,317  INFO         55. ESOP - Oracle
+2026-06-28 09:22:32,317  INFO         56. ESPP - Intuit
+2026-06-28 09:22:32,317  INFO         57. ESPP - NetApp
+2026-06-28 09:22:32,317  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 09:22:32,317  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 09:22:32,317  INFO         60. Eddie Bauer - Ram
+2026-06-28 09:22:32,317  INFO         61. Equity - eBay
+2026-06-28 09:22:32,317  INFO         62. FSA - Intuit
+2026-06-28 09:22:32,317  INFO         63. FSA - Oracle
+2026-06-28 09:22:32,317  INFO         64. FSA - RF Medical
+2026-06-28 09:22:32,317  INFO         65. FSA - RF Transit
+2026-06-28 09:22:32,317  INFO         66. FSA - eBay
+2026-06-28 09:22:32,317  INFO         67. Flex Spending Ac
+2026-06-28 09:22:32,317  INFO         68. Home - Alma
+2026-06-28 09:22:32,317  INFO         69. Home - Alma Loan
+2026-06-28 09:22:32,321  INFO         70. Home - Maitland
+2026-06-28 09:22:32,321  INFO         71. Home - Maitland Loan
+2026-06-28 09:22:32,321  INFO         72. Home - Maitland Loan 2
+2026-06-28 09:22:32,321  INFO         73. Home - Maitland Loan 3
+2026-06-28 09:22:32,321  INFO         74. Home - Maitland Loan 4
+2026-06-28 09:22:32,321  INFO         75. Home - Maitland Loan 5
+2026-06-28 09:22:32,321  INFO         76. Home - Maitland Loan 6
+2026-06-28 09:22:32,321  INFO         77. Home - Maitland Loan 7
+2026-06-28 09:22:32,321  INFO         78. Home - Nino
+2026-06-28 09:22:32,321  INFO         79. Home - Nino Loan
+2026-06-28 09:22:32,321  INFO         80. Home - Nino Loan 2
+2026-06-28 09:22:32,321  INFO         81. Home - Nino Loan 3
+2026-06-28 09:22:32,321  INFO         82. Home - Roan
+2026-06-28 09:22:32,321  INFO         83. Home - Roan Loan
+2026-06-28 09:22:32,321  INFO         84. Home - Roan Loan 2
+2026-06-28 09:22:32,321  INFO         85. Home - Roan Loan 3
+2026-06-28 09:22:32,321  INFO         86. Home - Roan Loan 4
+2026-06-28 09:22:32,321  INFO         87. Home - Roan Loan 5
+2026-06-28 09:22:32,321  INFO         88. Home - Roan Loan 6
+2026-06-28 09:22:32,321  INFO         89. Home - Roan Loan 7
+2026-06-28 09:22:32,321  INFO         90. House - India
+2026-06-28 09:22:32,321  INFO         91. IRA - Metlife Annuity
+2026-06-28 09:22:32,321  INFO         92. IRA - Vanguard - Lori
+2026-06-28 09:22:32,321  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 09:22:32,321  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 09:22:32,321  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 09:22:32,321  INFO         96. India - SBI NRE Account
+2026-06-28 09:22:32,321  INFO         97. India - SBI NRO Debit Card
+2026-06-28 09:22:32,321  INFO         98. Kohl's Card
+2026-06-28 09:22:32,321  INFO         99. Line of Credit - Premier One
+2026-06-28 09:22:32,321  INFO        100. Master Card
+2026-06-28 09:22:32,321  INFO        101. Master Card - Citi
+2026-06-28 09:22:32,321  INFO        102. Mervyn's - Lori
+2026-06-28 09:22:32,321  INFO        103. Mervyn's - Ram
+2026-06-28 09:22:32,321  INFO        104. Primary Mortgage - 2
+2026-06-28 09:22:32,321  INFO        105. Primary Mortgage - 3
+2026-06-28 09:22:32,321  INFO        106. Primary Mortgage - 4
+2026-06-28 09:22:32,321  INFO        107. Primary Mortgage - 5
+2026-06-28 09:22:32,321  INFO        108. Primary Mortgage - I
+2026-06-28 09:22:32,321  INFO        109. Private Equity - FFC LLC
+2026-06-28 09:22:32,321  INFO        110. Rentals - Checking
+2026-06-28 09:22:32,321  INFO        111. Rentals - Repair Fund
+2026-06-28 09:22:32,321  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 09:22:32,321  INFO        113. Roth IRA - AG Edwards
+2026-06-28 09:22:32,321  INFO        114. Roth IRA - Stifel
+2026-06-28 09:22:32,321  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 09:22:32,321  INFO        116. Roth IRA - Vanguard
+2026-06-28 09:22:32,321  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 09:22:32,331  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 09:22:32,331  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 09:22:32,331  INFO        120. Savings - Annual Expenses
+2026-06-28 09:22:32,331  INFO        121. Savings - Annual Expenses 2
+2026-06-28 09:22:32,331  INFO        122. Savings - ETrade (Complete)
+2026-06-28 09:22:32,333  INFO        123. Savings - Emergency Expenses
+2026-06-28 09:22:32,333  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 09:22:32,334  INFO        125. Savings - ING Lori
+2026-06-28 09:22:32,334  INFO        126. Savings - ING Ram
+2026-06-28 09:22:32,334  INFO        127. Savings - Meriwest
+2026-06-28 09:22:32,334  INFO        128. Savings - Premier One
+2026-06-28 09:22:32,334  INFO        129. Savings - Recession Readiness
+2026-06-28 09:22:32,334  INFO        130. Savings - Repair Fund
+2026-06-28 09:22:32,334  INFO        131. Savings - Repair Fund 2
+2026-06-28 09:22:32,334  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 09:22:32,334  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 09:22:32,336  INFO        134. Savings - The Alamo
+2026-06-28 09:22:32,336  INFO        135. Savings - The Alamo 2
+2026-06-28 09:22:32,336  INFO        136. Savings-TechCU
+2026-06-28 09:22:32,336  INFO        137. Sears Credit Card
+2026-06-28 09:22:32,336  INFO        138. Secondary Mortgage - 2
+2026-06-28 09:22:32,336  INFO        139. Secondary Mortgage - 3
+2026-06-28 09:22:32,336  INFO        140. Secondary Mortgage - 4
+2026-06-28 09:22:32,336  INFO        141. Secondary Mortgage - 5
+2026-06-28 09:22:32,336  INFO        142. Secondary Mortgage - I
+2026-06-28 09:22:32,338  INFO        143. Smith Barney
+2026-06-28 09:22:32,338  INFO        144. Southwest Securities
+2026-06-28 09:22:32,338  INFO        145. TD Ameritrade
+2026-06-28 09:22:32,338  INFO        146. Tara's 529
+2026-06-28 09:22:32,338  INFO        147. Treasury Direct - Lori
+2026-06-28 09:22:32,338  INFO        148. Treasury Direct - Murthy
+2026-06-28 09:22:32,338  INFO        149. US Bank Relia Card
+2026-06-28 09:22:32,338  INFO        150. Vanguard
+2026-06-28 09:22:32,338  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 09:22:32,338  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 09:22:32,338  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 09:22:32,338  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 09:22:32,338  INFO        155. Vanguard - Trust 1
+2026-06-28 09:22:32,338  INFO        156. Vanguard - Trust 2
+2026-06-28 09:22:32,342  INFO        157. Vanguard - Trust 3
+2026-06-28 09:22:32,342  INFO        158. Visa - Chase - Lori
+2026-06-28 09:22:32,342  INFO        159. Visa - Chase - Ram
+2026-06-28 09:22:32,342  INFO        160. Visa - TechFed
+2026-06-28 09:22:32,361  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 09:22:32,361  INFO      Will export 10 accounts
+2026-06-28 09:22:32,361  INFO      ----------------------------------------
+2026-06-28 09:22:32,361  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 09:22:32,361  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 09:22:35,335  INFO      Found new Quicken window: HWND=856860 title='QIF Export'
+2026-06-28 09:22:36,341  INFO      Account dropdown HWND: 398318
+2026-06-28 09:22:36,341  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:22:36,341  INFO      ComboBox has 160 items
+2026-06-28 09:22:36,646  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 09:22:40,120  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 09:22:56,614  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 09:22:56,614  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 09:22:58,120  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 09:22:58,122  INFO      Quicken idle (no new windows remain)
+2026-06-28 09:22:58,125  INFO      Exported: *Security Deposit Liability* -> _Security Deposit Liability_.qif
+2026-06-28 09:23:00,127  INFO      ----------------------------------------
+2026-06-28 09:23:00,127  INFO      [2/10] 1 Year CD - India Investments
+2026-06-28 09:23:00,127  INFO      Exporting account: 1 Year CD - India Investments
+2026-06-28 09:23:03,427  INFO      Found new Quicken window: HWND=529348 title='QIF Export'
+2026-06-28 09:23:04,407  INFO      Account dropdown HWND: 398368
+2026-06-28 09:23:04,407  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:23:04,407  INFO      ComboBox has 160 items
+2026-06-28 09:23:04,711  INFO      Selected account '1 Year CD - India Investments' at index 1
+2026-06-28 09:23:08,033  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - India Investments.qif
+2026-06-28 09:23:24,279  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 09:23:24,281  INFO      Waiting for QIF file: 1 Year CD - India Investments.qif
+2026-06-28 09:23:25,785  INFO      File stable: 1 Year CD - India Investments.qif (1205 bytes)
+2026-06-28 09:23:25,785  INFO      Quicken idle (no new windows remain)
+2026-06-28 09:23:25,785  INFO      Exported: 1 Year CD - India Investments -> 1 Year CD - India Investments.qif
+2026-06-28 09:23:27,790  INFO      ----------------------------------------
+2026-06-28 09:23:27,790  INFO      [3/10] 1 Year CD - Parents Gift
+2026-06-28 09:23:27,790  INFO      Exporting account: 1 Year CD - Parents Gift
+2026-06-28 09:23:30,671  INFO      Found new Quicken window: HWND=725680 title='QIF Export'
+2026-06-28 09:23:31,663  INFO      Account dropdown HWND: 201772
+2026-06-28 09:23:31,663  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:23:31,663  INFO      ComboBox has 160 items
+2026-06-28 09:23:31,969  INFO      Selected account '1 Year CD - Parents Gift' at index 2
+2026-06-28 09:23:35,111  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - Parents Gift.qif
+2026-06-28 09:23:51,466  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 09:23:51,466  INFO      Waiting for QIF file: 1 Year CD - Parents Gift.qif
+2026-06-28 09:23:52,972  INFO      File stable: 1 Year CD - Parents Gift.qif (2120 bytes)
+2026-06-28 09:23:52,972  INFO      Quicken idle (no new windows remain)
+2026-06-28 09:23:52,972  INFO      Exported: 1 Year CD - Parents Gift -> 1 Year CD - Parents Gift.qif
+2026-06-28 09:23:54,978  INFO      ----------------------------------------
+2026-06-28 09:23:54,978  INFO      [4/10] 1 Year CD - The Alamo
+2026-06-28 09:23:54,978  INFO      Exporting account: 1 Year CD - The Alamo
+2026-06-28 09:23:57,918  INFO      Found new Quicken window: HWND=594882 title='QIF Export'
+2026-06-28 09:23:58,906  INFO      Account dropdown HWND: 529440
+2026-06-28 09:23:58,906  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:23:58,906  INFO      ComboBox has 160 items
+2026-06-28 09:23:59,210  INFO      Selected account '1 Year CD - The Alamo' at index 3
+2026-06-28 09:24:02,559  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - The Alamo.qif
+2026-06-28 09:24:18,740  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 09:24:18,740  INFO      Waiting for QIF file: 1 Year CD - The Alamo.qif
+2026-06-28 09:24:20,256  INFO      File stable: 1 Year CD - The Alamo.qif (2156 bytes)
+2026-06-28 09:24:20,256  INFO      Quicken idle (no new windows remain)
+2026-06-28 09:24:20,256  INFO      Exported: 1 Year CD - The Alamo -> 1 Year CD - The Alamo.qif
+2026-06-28 09:24:22,262  INFO      ----------------------------------------
+2026-06-28 09:24:22,262  INFO      [5/10] 401(K) - Intuit - Fidelity
+2026-06-28 09:24:22,262  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 09:24:25,111  INFO      Found new Quicken window: HWND=463906 title='QIF Export'
+2026-06-28 09:24:26,087  INFO      Account dropdown HWND: 332846
+2026-06-28 09:24:26,087  INFO      Focused control class: 'ComboBox'
+2026-06-28 09:24:26,087  INFO      ComboBox has 160 items
+2026-06-28 09:24:26,407  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 09:24:29,579  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 09:24:41,233  INFO      New Quicken dialog detected (HWND=660416): ''
+2026-06-28 09:24:41,235  INFO      Targeted button not found. Enumerating all buttons in dialog:
+2026-06-28 09:24:41,235  INFO      No buttons found, sending Enter to dialog via SendMessage
+2026-06-28 09:24:44,241  INFO      Dialog still visible, trying Enter key via SendMessage
+2026-06-28 09:24:46,749  INFO      Dialog still visible, trying to click any button
+2026-06-28 09:24:49,254  WARNING   Overwrite dialog (HWND=660416) still visible after all attempts
+2026-06-28 09:24:49,254  INFO      New Quicken dialog detected (HWND=595002): 'Quicken'
+2026-06-28 09:24:49,254  INFO      Targeted button not found. Enumerating all buttons in dialog:
+2026-06-28 09:24:49,254  INFO      No buttons found, sending Enter to dialog via SendMessage
+2026-06-28 09:24:52,273  INFO      Dialog still visible, trying Enter key via SendMessage
+2026-06-28 09:24:54,786  INFO      Dialog still visible, trying to click any button
+2026-06-28 09:24:57,290  WARNING   Overwrite dialog (HWND=595002) still visible after all attempts
+2026-06-28 09:24:57,290  INFO      New Quicken dialog detected (HWND=987812): 'Quicken 2017'
+2026-06-28 09:24:57,290  INFO      Targeted button not found. Enumerating all buttons in dialog:
+2026-06-28 09:24:57,290  INFO        Button: class='QC_button' text='OK' HWND=660512
+2026-06-28 09:24:57,290  INFO        Button: class='QC_button' text='' HWND=987820
+2026-06-28 09:24:57,290  INFO        Button: class='QC_button' text='' HWND=1446636
+2026-06-28 09:24:57,290  INFO        Button: class='QC_button' text='' HWND=463932
+2026-06-28 09:24:57,290  INFO      Clicking button 'OK' (HWND=660512)
+2026-06-28 09:24:57,793  INFO      Dialog still visible after BM_CLICK, trying WM_COMMAND
+2026-06-28 09:24:58,366  INFO      Dialog closed after WM_COMMAND
+2026-06-28 09:24:58,867  INFO      Overwrite dialog dismissed successfully
+2026-06-28 09:24:58,867  INFO      Waiting for QIF file: 401(K) - Intuit - Fidelity.qif
+2026-06-28 09:25:59,074  WARNING   QIF file not found, checking if dialog closed
+2026-06-28 09:25:59,074  INFO      Export dialog gone (but file not found)
+2026-06-28 09:26:01,077  WARNING   Export may have failed for: 401(K) - Intuit - Fidelity
+2026-06-28 09:26:03,081  ERROR     FAILED: 401(K) - Intuit - Fidelity — stopping to keep Quicken stable
+2026-06-28 09:26:03,081  INFO      ============================================================
+2026-06-28 09:26:03,081  INFO      Export complete
+2026-06-28 09:26:03,081  INFO        Exported: 4
+2026-06-28 09:26:03,081  INFO        Failed:   1
+2026-06-28 09:26:03,081  INFO        Failed accounts:
+2026-06-28 09:26:03,081  INFO          - 401(K) - Intuit - Fidelity
+2026-06-28 09:26:03,081  INFO      ============================================================
+2026-06-28 10:58:24,117  INFO      ============================================================
+2026-06-28 10:58:24,117  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 10:58:24,117  INFO      ============================================================
+2026-06-28 10:58:24,117  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 10:58:25,081  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [Bills]')
+2026-06-28 10:58:25,081  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 10:58:28,104  INFO      Found new Quicken window: HWND=400056 title='QIF Export'
+2026-06-28 10:58:28,104  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 10:58:30,054  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 10:58:30,054  INFO      Found ComboBox child: HWND=399878 class='ComboBox'
+2026-06-28 10:58:30,054  INFO      ComboBox item count: 160
+2026-06-28 10:58:32,384  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 10:58:35,422  INFO      Discovered 160 accounts
+2026-06-28 10:58:35,422  INFO      Accounts found: 160
+2026-06-28 10:58:35,422  INFO          1. *Security Deposit Liability*
+2026-06-28 10:58:35,422  INFO          2. 1 Year CD - India Investments
+2026-06-28 10:58:35,422  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 10:58:35,422  INFO          4. 1 Year CD - The Alamo
+2026-06-28 10:58:35,422  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 10:58:35,422  INFO          6. 401(K) - Modus Create
+2026-06-28 10:58:35,422  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 10:58:35,422  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 10:58:35,422  INFO          9. 401(K) - RF - PayChex
+2026-06-28 10:58:35,422  INFO         10. 401(K) - RF - Standard
+2026-06-28 10:58:35,422  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 10:58:35,422  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 10:58:35,422  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 10:58:35,422  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 10:58:35,422  INFO         15. 401(K) Intuit - Empower
+2026-06-28 10:58:35,422  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 10:58:35,429  INFO         17. 401(k) Icon
+2026-06-28 10:58:35,429  INFO         18. 401(k) InfoGain
+2026-06-28 10:58:35,429  INFO         19. 401(k) InfoGain - ING
+2026-06-28 10:58:35,429  INFO         20. 401(k) LogicWorx
+2026-06-28 10:58:35,429  INFO         21. 401(k) NetApp
+2026-06-28 10:58:35,431  INFO         22. <All account>
+2026-06-28 10:58:35,431  INFO         23. Brokerage - AG Edwards
+2026-06-28 10:58:35,431  INFO         24. CD - Meriwest
+2026-06-28 10:58:35,431  INFO         25. CD Ladder - Lori
+2026-06-28 10:58:35,431  INFO         26. CD Ladder - Ram
+2026-06-28 10:58:35,431  INFO         27. CD1@E*TradeBank
+2026-06-28 10:58:35,431  INFO         28. CD2@E*TradeBank
+2026-06-28 10:58:35,433  INFO         29. CD3@E*TradeBank
+2026-06-28 10:58:35,433  INFO         30. CDs
+2026-06-28 10:58:35,433  INFO         31. CDs - India ($s)
+2026-06-28 10:58:35,433  INFO         32. CDs - India (Rs)
+2026-06-28 10:58:35,433  INFO         33. Car - Eclipse
+2026-06-28 10:58:35,433  INFO         34. Car - Prius v2
+2026-06-28 10:58:35,433  INFO         35. Car - Prius v3
+2026-06-28 10:58:35,433  INFO         36. Car Loan
+2026-06-28 10:58:35,433  INFO         37. Cash - India
+2026-06-28 10:58:35,436  INFO         38. Cash - Lori
+2026-06-28 10:58:35,436  INFO         39. Cash - Pet Transactions
+2026-06-28 10:58:35,436  INFO         40. Cash - Ram
+2026-06-28 10:58:35,436  INFO         41. Cash - Tara
+2026-06-28 10:58:35,436  INFO         42. Checking - Annual Expenses
+2026-06-28 10:58:35,436  INFO         43. Checking - BOTS
+2026-06-28 10:58:35,436  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 10:58:35,436  INFO         45. Checking - National Mortgage
+2026-06-28 10:58:35,436  INFO         46. Checking - PremierOne - Lori
+2026-06-28 10:58:35,436  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 10:58:35,436  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 10:58:35,436  INFO         49. Checking - Tara
+2026-06-28 10:58:35,436  INFO         50. Checking - TechCU
+2026-06-28 10:58:35,436  INFO         51. Citi - MasterCard - Lori
+2026-06-28 10:58:35,436  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 10:58:35,436  INFO         53. Discover - Rentals
+2026-06-28 10:58:35,436  INFO         54. ESOP - Intuit
+2026-06-28 10:58:35,436  INFO         55. ESOP - Oracle
+2026-06-28 10:58:35,436  INFO         56. ESPP - Intuit
+2026-06-28 10:58:35,436  INFO         57. ESPP - NetApp
+2026-06-28 10:58:35,436  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 10:58:35,436  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 10:58:35,436  INFO         60. Eddie Bauer - Ram
+2026-06-28 10:58:35,436  INFO         61. Equity - eBay
+2026-06-28 10:58:35,436  INFO         62. FSA - Intuit
+2026-06-28 10:58:35,436  INFO         63. FSA - Oracle
+2026-06-28 10:58:35,436  INFO         64. FSA - RF Medical
+2026-06-28 10:58:35,436  INFO         65. FSA - RF Transit
+2026-06-28 10:58:35,436  INFO         66. FSA - eBay
+2026-06-28 10:58:35,436  INFO         67. Flex Spending Ac
+2026-06-28 10:58:35,436  INFO         68. Home - Alma
+2026-06-28 10:58:35,436  INFO         69. Home - Alma Loan
+2026-06-28 10:58:35,436  INFO         70. Home - Maitland
+2026-06-28 10:58:35,436  INFO         71. Home - Maitland Loan
+2026-06-28 10:58:35,436  INFO         72. Home - Maitland Loan 2
+2026-06-28 10:58:35,436  INFO         73. Home - Maitland Loan 3
+2026-06-28 10:58:35,436  INFO         74. Home - Maitland Loan 4
+2026-06-28 10:58:35,436  INFO         75. Home - Maitland Loan 5
+2026-06-28 10:58:35,436  INFO         76. Home - Maitland Loan 6
+2026-06-28 10:58:35,436  INFO         77. Home - Maitland Loan 7
+2026-06-28 10:58:35,436  INFO         78. Home - Nino
+2026-06-28 10:58:35,436  INFO         79. Home - Nino Loan
+2026-06-28 10:58:35,436  INFO         80. Home - Nino Loan 2
+2026-06-28 10:58:35,436  INFO         81. Home - Nino Loan 3
+2026-06-28 10:58:35,436  INFO         82. Home - Roan
+2026-06-28 10:58:35,436  INFO         83. Home - Roan Loan
+2026-06-28 10:58:35,436  INFO         84. Home - Roan Loan 2
+2026-06-28 10:58:35,436  INFO         85. Home - Roan Loan 3
+2026-06-28 10:58:35,436  INFO         86. Home - Roan Loan 4
+2026-06-28 10:58:35,436  INFO         87. Home - Roan Loan 5
+2026-06-28 10:58:35,436  INFO         88. Home - Roan Loan 6
+2026-06-28 10:58:35,436  INFO         89. Home - Roan Loan 7
+2026-06-28 10:58:35,436  INFO         90. House - India
+2026-06-28 10:58:35,436  INFO         91. IRA - Metlife Annuity
+2026-06-28 10:58:35,436  INFO         92. IRA - Vanguard - Lori
+2026-06-28 10:58:35,436  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 10:58:35,436  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 10:58:35,436  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 10:58:35,436  INFO         96. India - SBI NRE Account
+2026-06-28 10:58:35,452  INFO         97. India - SBI NRO Debit Card
+2026-06-28 10:58:35,452  INFO         98. Kohl's Card
+2026-06-28 10:58:35,452  INFO         99. Line of Credit - Premier One
+2026-06-28 10:58:35,452  INFO        100. Master Card
+2026-06-28 10:58:35,453  INFO        101. Master Card - Citi
+2026-06-28 10:58:35,453  INFO        102. Mervyn's - Lori
+2026-06-28 10:58:35,453  INFO        103. Mervyn's - Ram
+2026-06-28 10:58:35,453  INFO        104. Primary Mortgage - 2
+2026-06-28 10:58:35,453  INFO        105. Primary Mortgage - 3
+2026-06-28 10:58:35,453  INFO        106. Primary Mortgage - 4
+2026-06-28 10:58:35,453  INFO        107. Primary Mortgage - 5
+2026-06-28 10:58:35,453  INFO        108. Primary Mortgage - I
+2026-06-28 10:58:35,453  INFO        109. Private Equity - FFC LLC
+2026-06-28 10:58:35,453  INFO        110. Rentals - Checking
+2026-06-28 10:58:35,453  INFO        111. Rentals - Repair Fund
+2026-06-28 10:58:35,453  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 10:58:35,453  INFO        113. Roth IRA - AG Edwards
+2026-06-28 10:58:35,455  INFO        114. Roth IRA - Stifel
+2026-06-28 10:58:35,455  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 10:58:35,455  INFO        116. Roth IRA - Vanguard
+2026-06-28 10:58:35,455  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 10:58:35,455  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 10:58:35,455  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 10:58:35,455  INFO        120. Savings - Annual Expenses
+2026-06-28 10:58:35,455  INFO        121. Savings - Annual Expenses 2
+2026-06-28 10:58:35,455  INFO        122. Savings - ETrade (Complete)
+2026-06-28 10:58:35,455  INFO        123. Savings - Emergency Expenses
+2026-06-28 10:58:35,455  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 10:58:35,455  INFO        125. Savings - ING Lori
+2026-06-28 10:58:35,455  INFO        126. Savings - ING Ram
+2026-06-28 10:58:35,455  INFO        127. Savings - Meriwest
+2026-06-28 10:58:35,455  INFO        128. Savings - Premier One
+2026-06-28 10:58:35,455  INFO        129. Savings - Recession Readiness
+2026-06-28 10:58:35,455  INFO        130. Savings - Repair Fund
+2026-06-28 10:58:35,455  INFO        131. Savings - Repair Fund 2
+2026-06-28 10:58:35,455  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 10:58:35,455  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 10:58:35,455  INFO        134. Savings - The Alamo
+2026-06-28 10:58:35,455  INFO        135. Savings - The Alamo 2
+2026-06-28 10:58:35,455  INFO        136. Savings-TechCU
+2026-06-28 10:58:35,455  INFO        137. Sears Credit Card
+2026-06-28 10:58:35,455  INFO        138. Secondary Mortgage - 2
+2026-06-28 10:58:35,455  INFO        139. Secondary Mortgage - 3
+2026-06-28 10:58:35,455  INFO        140. Secondary Mortgage - 4
+2026-06-28 10:58:35,455  INFO        141. Secondary Mortgage - 5
+2026-06-28 10:58:35,455  INFO        142. Secondary Mortgage - I
+2026-06-28 10:58:35,455  INFO        143. Smith Barney
+2026-06-28 10:58:35,455  INFO        144. Southwest Securities
+2026-06-28 10:58:35,455  INFO        145. TD Ameritrade
+2026-06-28 10:58:35,463  INFO        146. Tara's 529
+2026-06-28 10:58:35,463  INFO        147. Treasury Direct - Lori
+2026-06-28 10:58:35,463  INFO        148. Treasury Direct - Murthy
+2026-06-28 10:58:35,463  INFO        149. US Bank Relia Card
+2026-06-28 10:58:35,463  INFO        150. Vanguard
+2026-06-28 10:58:35,463  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 10:58:35,463  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 10:58:35,463  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 10:58:35,463  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 10:58:35,463  INFO        155. Vanguard - Trust 1
+2026-06-28 10:58:35,463  INFO        156. Vanguard - Trust 2
+2026-06-28 10:58:35,463  INFO        157. Vanguard - Trust 3
+2026-06-28 10:58:35,463  INFO        158. Visa - Chase - Lori
+2026-06-28 10:58:35,463  INFO        159. Visa - Chase - Ram
+2026-06-28 10:58:35,463  INFO        160. Visa - TechFed
+2026-06-28 10:58:35,479  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 10:58:35,479  INFO      Will export 10 accounts
+2026-06-28 10:58:35,479  INFO      ----------------------------------------
+2026-06-28 10:58:35,483  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 10:58:35,483  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 10:58:38,338  INFO      Found new Quicken window: HWND=400056 title='QIF Export'
+2026-06-28 10:58:39,357  INFO      Account dropdown HWND: 399878
+2026-06-28 10:58:39,357  INFO      Focused control class: 'ComboBox'
+2026-06-28 10:58:39,357  INFO      ComboBox has 160 items
+2026-06-28 10:58:39,662  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 10:58:42,863  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 10:58:59,315  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 10:58:59,315  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 10:59:00,822  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 10:59:00,822  INFO      Quicken idle (no new windows remain)
+2026-06-28 10:59:00,822  INFO      Exported: *Security Deposit Liability* -> _Security Deposit Liability_.qif
+2026-06-28 10:59:02,829  INFO      ----------------------------------------
+2026-06-28 10:59:02,829  INFO      [2/10] 1 Year CD - India Investments
+2026-06-28 10:59:02,829  INFO      Exporting account: 1 Year CD - India Investments
+2026-06-28 10:59:05,880  INFO      Found new Quicken window: HWND=400074 title='QIF Export'
+2026-06-28 10:59:06,860  INFO      Account dropdown HWND: 1054998
+2026-06-28 10:59:06,860  INFO      Focused control class: 'ComboBox'
+2026-06-28 10:59:06,860  INFO      ComboBox has 160 items
+2026-06-28 10:59:07,166  INFO      Selected account '1 Year CD - India Investments' at index 1
+2026-06-28 10:59:10,370  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - India Investments.qif
+2026-06-28 10:59:26,727  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 10:59:26,729  INFO      Waiting for QIF file: 1 Year CD - India Investments.qif
+2026-06-28 10:59:28,233  INFO      File stable: 1 Year CD - India Investments.qif (1205 bytes)
+2026-06-28 10:59:28,234  INFO      Quicken idle (no new windows remain)
+2026-06-28 10:59:28,234  INFO      Exported: 1 Year CD - India Investments -> 1 Year CD - India Investments.qif
+2026-06-28 10:59:30,240  INFO      ----------------------------------------
+2026-06-28 10:59:30,240  INFO      [3/10] 1 Year CD - Parents Gift
+2026-06-28 10:59:30,240  INFO      Exporting account: 1 Year CD - Parents Gift
+2026-06-28 10:59:33,430  INFO      Found new Quicken window: HWND=531012 title='QIF Export'
+2026-06-28 10:59:34,415  INFO      Account dropdown HWND: 793126
+2026-06-28 10:59:34,415  INFO      Focused control class: 'ComboBox'
+2026-06-28 10:59:34,418  INFO      ComboBox has 160 items
+2026-06-28 10:59:34,723  INFO      Selected account '1 Year CD - Parents Gift' at index 2
+2026-06-28 10:59:37,837  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - Parents Gift.qif
+2026-06-28 10:59:54,304  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 10:59:54,304  INFO      Waiting for QIF file: 1 Year CD - Parents Gift.qif
+2026-06-28 10:59:55,808  INFO      File stable: 1 Year CD - Parents Gift.qif (2120 bytes)
+2026-06-28 10:59:55,808  INFO      Quicken idle (no new windows remain)
+2026-06-28 10:59:55,808  INFO      Exported: 1 Year CD - Parents Gift -> 1 Year CD - Parents Gift.qif
+2026-06-28 10:59:57,827  INFO      ----------------------------------------
+2026-06-28 10:59:57,827  INFO      [4/10] 1 Year CD - The Alamo
+2026-06-28 10:59:57,827  INFO      Exporting account: 1 Year CD - The Alamo
+2026-06-28 11:00:00,942  INFO      Found new Quicken window: HWND=596680 title='QIF Export'
+2026-06-28 11:00:01,915  INFO      Account dropdown HWND: 1514426
+2026-06-28 11:00:01,915  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:00:01,915  INFO      ComboBox has 160 items
+2026-06-28 11:00:02,220  INFO      Selected account '1 Year CD - The Alamo' at index 3
+2026-06-28 11:00:05,342  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - The Alamo.qif
+2026-06-28 11:00:21,589  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:00:21,591  INFO      Waiting for QIF file: 1 Year CD - The Alamo.qif
+2026-06-28 11:00:23,108  INFO      File stable: 1 Year CD - The Alamo.qif (2156 bytes)
+2026-06-28 11:00:23,108  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:00:23,112  INFO      Exported: 1 Year CD - The Alamo -> 1 Year CD - The Alamo.qif
+2026-06-28 11:00:25,114  INFO      ----------------------------------------
+2026-06-28 11:00:25,114  INFO      [5/10] 401(K) - Intuit - Fidelity
+2026-06-28 11:00:25,116  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 11:00:28,232  INFO      Found new Quicken window: HWND=727754 title='QIF Export'
+2026-06-28 11:00:29,219  INFO      Account dropdown HWND: 924098
+2026-06-28 11:00:29,219  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:00:29,219  INFO      ComboBox has 160 items
+2026-06-28 11:00:29,525  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 11:00:32,662  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 11:00:49,042  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:00:49,042  INFO      Waiting for QIF file: 401(K) - Intuit - Fidelity.qif
+2026-06-28 11:01:49,211  WARNING   QIF file not found, checking if dialog closed
+2026-06-28 11:01:49,212  INFO      Export dialog gone (but file not found)
+2026-06-28 11:01:51,215  WARNING   Export may have failed for: 401(K) - Intuit - Fidelity
+2026-06-28 11:01:53,224  ERROR     FAILED: 401(K) - Intuit - Fidelity — stopping to keep Quicken stable
+2026-06-28 11:01:53,224  INFO      ============================================================
+2026-06-28 11:01:53,224  INFO      Export complete
+2026-06-28 11:01:53,224  INFO        Exported: 4
+2026-06-28 11:01:53,224  INFO        Failed:   1
+2026-06-28 11:01:53,224  INFO        Failed accounts:
+2026-06-28 11:01:53,224  INFO          - 401(K) - Intuit - Fidelity
+2026-06-28 11:01:53,224  INFO      ============================================================
+2026-06-28 11:19:55,018  INFO      ============================================================
+2026-06-28 11:19:55,018  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 11:19:55,018  INFO      ============================================================
+2026-06-28 11:19:55,018  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 11:19:56,002  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [401(K) - Intuit - Fidelity]')
+2026-06-28 11:19:56,002  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 11:19:59,139  INFO      Found new Quicken window: HWND=924342 title='QIF Export'
+2026-06-28 11:19:59,147  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 11:20:01,092  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 11:20:01,094  INFO      Found ComboBox child: HWND=727558 class='ComboBox'
+2026-06-28 11:20:01,094  INFO      ComboBox item count: 160
+2026-06-28 11:20:03,276  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 11:20:06,307  INFO      Discovered 160 accounts
+2026-06-28 11:20:06,307  INFO      Accounts found: 160
+2026-06-28 11:20:06,307  INFO          1. *Security Deposit Liability*
+2026-06-28 11:20:06,307  INFO          2. 1 Year CD - India Investments
+2026-06-28 11:20:06,307  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 11:20:06,307  INFO          4. 1 Year CD - The Alamo
+2026-06-28 11:20:06,307  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 11:20:06,307  INFO          6. 401(K) - Modus Create
+2026-06-28 11:20:06,307  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 11:20:06,307  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 11:20:06,307  INFO          9. 401(K) - RF - PayChex
+2026-06-28 11:20:06,307  INFO         10. 401(K) - RF - Standard
+2026-06-28 11:20:06,307  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 11:20:06,307  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 11:20:06,307  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 11:20:06,307  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 11:20:06,313  INFO         15. 401(K) Intuit - Empower
+2026-06-28 11:20:06,313  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 11:20:06,313  INFO         17. 401(k) Icon
+2026-06-28 11:20:06,313  INFO         18. 401(k) InfoGain
+2026-06-28 11:20:06,313  INFO         19. 401(k) InfoGain - ING
+2026-06-28 11:20:06,313  INFO         20. 401(k) LogicWorx
+2026-06-28 11:20:06,313  INFO         21. 401(k) NetApp
+2026-06-28 11:20:06,313  INFO         22. <All account>
+2026-06-28 11:20:06,313  INFO         23. Brokerage - AG Edwards
+2026-06-28 11:20:06,313  INFO         24. CD - Meriwest
+2026-06-28 11:20:06,313  INFO         25. CD Ladder - Lori
+2026-06-28 11:20:06,313  INFO         26. CD Ladder - Ram
+2026-06-28 11:20:06,313  INFO         27. CD1@E*TradeBank
+2026-06-28 11:20:06,313  INFO         28. CD2@E*TradeBank
+2026-06-28 11:20:06,313  INFO         29. CD3@E*TradeBank
+2026-06-28 11:20:06,313  INFO         30. CDs
+2026-06-28 11:20:06,313  INFO         31. CDs - India ($s)
+2026-06-28 11:20:06,313  INFO         32. CDs - India (Rs)
+2026-06-28 11:20:06,313  INFO         33. Car - Eclipse
+2026-06-28 11:20:06,313  INFO         34. Car - Prius v2
+2026-06-28 11:20:06,313  INFO         35. Car - Prius v3
+2026-06-28 11:20:06,313  INFO         36. Car Loan
+2026-06-28 11:20:06,313  INFO         37. Cash - India
+2026-06-28 11:20:06,313  INFO         38. Cash - Lori
+2026-06-28 11:20:06,313  INFO         39. Cash - Pet Transactions
+2026-06-28 11:20:06,313  INFO         40. Cash - Ram
+2026-06-28 11:20:06,313  INFO         41. Cash - Tara
+2026-06-28 11:20:06,313  INFO         42. Checking - Annual Expenses
+2026-06-28 11:20:06,313  INFO         43. Checking - BOTS
+2026-06-28 11:20:06,313  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 11:20:06,313  INFO         45. Checking - National Mortgage
+2026-06-28 11:20:06,313  INFO         46. Checking - PremierOne - Lori
+2026-06-28 11:20:06,313  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 11:20:06,313  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 11:20:06,313  INFO         49. Checking - Tara
+2026-06-28 11:20:06,313  INFO         50. Checking - TechCU
+2026-06-28 11:20:06,313  INFO         51. Citi - MasterCard - Lori
+2026-06-28 11:20:06,313  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 11:20:06,313  INFO         53. Discover - Rentals
+2026-06-28 11:20:06,313  INFO         54. ESOP - Intuit
+2026-06-28 11:20:06,313  INFO         55. ESOP - Oracle
+2026-06-28 11:20:06,313  INFO         56. ESPP - Intuit
+2026-06-28 11:20:06,313  INFO         57. ESPP - NetApp
+2026-06-28 11:20:06,313  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 11:20:06,313  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 11:20:06,313  INFO         60. Eddie Bauer - Ram
+2026-06-28 11:20:06,313  INFO         61. Equity - eBay
+2026-06-28 11:20:06,313  INFO         62. FSA - Intuit
+2026-06-28 11:20:06,313  INFO         63. FSA - Oracle
+2026-06-28 11:20:06,313  INFO         64. FSA - RF Medical
+2026-06-28 11:20:06,313  INFO         65. FSA - RF Transit
+2026-06-28 11:20:06,313  INFO         66. FSA - eBay
+2026-06-28 11:20:06,313  INFO         67. Flex Spending Ac
+2026-06-28 11:20:06,313  INFO         68. Home - Alma
+2026-06-28 11:20:06,313  INFO         69. Home - Alma Loan
+2026-06-28 11:20:06,313  INFO         70. Home - Maitland
+2026-06-28 11:20:06,313  INFO         71. Home - Maitland Loan
+2026-06-28 11:20:06,313  INFO         72. Home - Maitland Loan 2
+2026-06-28 11:20:06,329  INFO         73. Home - Maitland Loan 3
+2026-06-28 11:20:06,329  INFO         74. Home - Maitland Loan 4
+2026-06-28 11:20:06,329  INFO         75. Home - Maitland Loan 5
+2026-06-28 11:20:06,329  INFO         76. Home - Maitland Loan 6
+2026-06-28 11:20:06,329  INFO         77. Home - Maitland Loan 7
+2026-06-28 11:20:06,329  INFO         78. Home - Nino
+2026-06-28 11:20:06,329  INFO         79. Home - Nino Loan
+2026-06-28 11:20:06,329  INFO         80. Home - Nino Loan 2
+2026-06-28 11:20:06,329  INFO         81. Home - Nino Loan 3
+2026-06-28 11:20:06,329  INFO         82. Home - Roan
+2026-06-28 11:20:06,329  INFO         83. Home - Roan Loan
+2026-06-28 11:20:06,329  INFO         84. Home - Roan Loan 2
+2026-06-28 11:20:06,329  INFO         85. Home - Roan Loan 3
+2026-06-28 11:20:06,329  INFO         86. Home - Roan Loan 4
+2026-06-28 11:20:06,329  INFO         87. Home - Roan Loan 5
+2026-06-28 11:20:06,329  INFO         88. Home - Roan Loan 6
+2026-06-28 11:20:06,329  INFO         89. Home - Roan Loan 7
+2026-06-28 11:20:06,329  INFO         90. House - India
+2026-06-28 11:20:06,329  INFO         91. IRA - Metlife Annuity
+2026-06-28 11:20:06,329  INFO         92. IRA - Vanguard - Lori
+2026-06-28 11:20:06,329  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 11:20:06,329  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 11:20:06,329  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 11:20:06,329  INFO         96. India - SBI NRE Account
+2026-06-28 11:20:06,329  INFO         97. India - SBI NRO Debit Card
+2026-06-28 11:20:06,329  INFO         98. Kohl's Card
+2026-06-28 11:20:06,329  INFO         99. Line of Credit - Premier One
+2026-06-28 11:20:06,329  INFO        100. Master Card
+2026-06-28 11:20:06,329  INFO        101. Master Card - Citi
+2026-06-28 11:20:06,329  INFO        102. Mervyn's - Lori
+2026-06-28 11:20:06,329  INFO        103. Mervyn's - Ram
+2026-06-28 11:20:06,329  INFO        104. Primary Mortgage - 2
+2026-06-28 11:20:06,329  INFO        105. Primary Mortgage - 3
+2026-06-28 11:20:06,329  INFO        106. Primary Mortgage - 4
+2026-06-28 11:20:06,329  INFO        107. Primary Mortgage - 5
+2026-06-28 11:20:06,329  INFO        108. Primary Mortgage - I
+2026-06-28 11:20:06,329  INFO        109. Private Equity - FFC LLC
+2026-06-28 11:20:06,329  INFO        110. Rentals - Checking
+2026-06-28 11:20:06,329  INFO        111. Rentals - Repair Fund
+2026-06-28 11:20:06,329  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 11:20:06,329  INFO        113. Roth IRA - AG Edwards
+2026-06-28 11:20:06,329  INFO        114. Roth IRA - Stifel
+2026-06-28 11:20:06,329  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 11:20:06,329  INFO        116. Roth IRA - Vanguard
+2026-06-28 11:20:06,329  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 11:20:06,329  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 11:20:06,345  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 11:20:06,345  INFO        120. Savings - Annual Expenses
+2026-06-28 11:20:06,345  INFO        121. Savings - Annual Expenses 2
+2026-06-28 11:20:06,345  INFO        122. Savings - ETrade (Complete)
+2026-06-28 11:20:06,345  INFO        123. Savings - Emergency Expenses
+2026-06-28 11:20:06,345  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 11:20:06,345  INFO        125. Savings - ING Lori
+2026-06-28 11:20:06,345  INFO        126. Savings - ING Ram
+2026-06-28 11:20:06,345  INFO        127. Savings - Meriwest
+2026-06-28 11:20:06,347  INFO        128. Savings - Premier One
+2026-06-28 11:20:06,347  INFO        129. Savings - Recession Readiness
+2026-06-28 11:20:06,347  INFO        130. Savings - Repair Fund
+2026-06-28 11:20:06,347  INFO        131. Savings - Repair Fund 2
+2026-06-28 11:20:06,347  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 11:20:06,347  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 11:20:06,347  INFO        134. Savings - The Alamo
+2026-06-28 11:20:06,349  INFO        135. Savings - The Alamo 2
+2026-06-28 11:20:06,349  INFO        136. Savings-TechCU
+2026-06-28 11:20:06,349  INFO        137. Sears Credit Card
+2026-06-28 11:20:06,349  INFO        138. Secondary Mortgage - 2
+2026-06-28 11:20:06,349  INFO        139. Secondary Mortgage - 3
+2026-06-28 11:20:06,349  INFO        140. Secondary Mortgage - 4
+2026-06-28 11:20:06,349  INFO        141. Secondary Mortgage - 5
+2026-06-28 11:20:06,349  INFO        142. Secondary Mortgage - I
+2026-06-28 11:20:06,349  INFO        143. Smith Barney
+2026-06-28 11:20:06,349  INFO        144. Southwest Securities
+2026-06-28 11:20:06,349  INFO        145. TD Ameritrade
+2026-06-28 11:20:06,349  INFO        146. Tara's 529
+2026-06-28 11:20:06,349  INFO        147. Treasury Direct - Lori
+2026-06-28 11:20:06,349  INFO        148. Treasury Direct - Murthy
+2026-06-28 11:20:06,349  INFO        149. US Bank Relia Card
+2026-06-28 11:20:06,349  INFO        150. Vanguard
+2026-06-28 11:20:06,349  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 11:20:06,349  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 11:20:06,349  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 11:20:06,349  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 11:20:06,349  INFO        155. Vanguard - Trust 1
+2026-06-28 11:20:06,349  INFO        156. Vanguard - Trust 2
+2026-06-28 11:20:06,349  INFO        157. Vanguard - Trust 3
+2026-06-28 11:20:06,349  INFO        158. Visa - Chase - Lori
+2026-06-28 11:20:06,349  INFO        159. Visa - Chase - Ram
+2026-06-28 11:20:06,349  INFO        160. Visa - TechFed
+2026-06-28 11:20:06,363  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 11:20:06,363  INFO      Will export 10 accounts
+2026-06-28 11:20:06,363  INFO      ----------------------------------------
+2026-06-28 11:20:06,363  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 11:20:06,363  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 11:20:09,375  INFO      Found new Quicken window: HWND=924342 title='QIF Export'
+2026-06-28 11:20:10,386  INFO      Account dropdown HWND: 727558
+2026-06-28 11:20:10,386  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:20:10,386  INFO      ComboBox has 160 items
+2026-06-28 11:20:10,692  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 11:20:13,832  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 11:20:30,200  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:20:30,200  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 11:20:31,704  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 11:20:31,704  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:20:31,709  INFO      Exported: *Security Deposit Liability* -> _Security Deposit Liability_.qif
+2026-06-28 11:20:33,722  INFO      ----------------------------------------
+2026-06-28 11:20:33,722  INFO      [2/10] 1 Year CD - India Investments
+2026-06-28 11:20:33,722  INFO      Exporting account: 1 Year CD - India Investments
+2026-06-28 11:20:36,883  INFO      Found new Quicken window: HWND=858446 title='QIF Export'
+2026-06-28 11:20:37,878  INFO      Account dropdown HWND: 858176
+2026-06-28 11:20:37,878  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:20:37,878  INFO      ComboBox has 160 items
+2026-06-28 11:20:38,183  INFO      Selected account '1 Year CD - India Investments' at index 1
+2026-06-28 11:20:41,396  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - India Investments.qif
+2026-06-28 11:20:57,793  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:20:57,793  INFO      Waiting for QIF file: 1 Year CD - India Investments.qif
+2026-06-28 11:20:59,297  INFO      File stable: 1 Year CD - India Investments.qif (1205 bytes)
+2026-06-28 11:20:59,297  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:20:59,297  INFO      Exported: 1 Year CD - India Investments -> 1 Year CD - India Investments.qif
+2026-06-28 11:21:01,303  INFO      ----------------------------------------
+2026-06-28 11:21:01,303  INFO      [3/10] 1 Year CD - Parents Gift
+2026-06-28 11:21:01,303  INFO      Exporting account: 1 Year CD - Parents Gift
+2026-06-28 11:21:04,386  INFO      Found new Quicken window: HWND=989312 title='QIF Export'
+2026-06-28 11:21:05,374  INFO      Account dropdown HWND: 1841730
+2026-06-28 11:21:05,374  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:21:05,374  INFO      ComboBox has 160 items
+2026-06-28 11:21:05,680  INFO      Selected account '1 Year CD - Parents Gift' at index 2
+2026-06-28 11:21:08,829  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - Parents Gift.qif
+2026-06-28 11:21:25,185  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:21:25,187  INFO      Waiting for QIF file: 1 Year CD - Parents Gift.qif
+2026-06-28 11:21:26,691  INFO      File stable: 1 Year CD - Parents Gift.qif (2120 bytes)
+2026-06-28 11:21:26,691  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:21:26,691  INFO      Exported: 1 Year CD - Parents Gift -> 1 Year CD - Parents Gift.qif
+2026-06-28 11:21:28,695  INFO      ----------------------------------------
+2026-06-28 11:21:28,695  INFO      [4/10] 1 Year CD - The Alamo
+2026-06-28 11:21:28,695  INFO      Exporting account: 1 Year CD - The Alamo
+2026-06-28 11:21:31,792  INFO      Found new Quicken window: HWND=1252022 title='QIF Export'
+2026-06-28 11:21:32,774  INFO      Account dropdown HWND: 1251786
+2026-06-28 11:21:32,774  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:21:32,774  INFO      ComboBox has 160 items
+2026-06-28 11:21:33,085  INFO      Selected account '1 Year CD - The Alamo' at index 3
+2026-06-28 11:21:36,184  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - The Alamo.qif
+2026-06-28 11:21:52,418  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:21:52,420  INFO      Waiting for QIF file: 1 Year CD - The Alamo.qif
+2026-06-28 11:21:53,924  INFO      File stable: 1 Year CD - The Alamo.qif (2156 bytes)
+2026-06-28 11:21:53,927  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:21:53,930  INFO      Exported: 1 Year CD - The Alamo -> 1 Year CD - The Alamo.qif
+2026-06-28 11:21:55,931  INFO      ----------------------------------------
+2026-06-28 11:21:55,931  INFO      [5/10] 401(K) - Intuit - Fidelity
+2026-06-28 11:21:55,931  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 11:21:59,088  INFO      Found new Quicken window: HWND=1186126 title='QIF Export'
+2026-06-28 11:22:00,062  INFO      Account dropdown HWND: 989702
+2026-06-28 11:22:00,062  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:22:00,062  INFO      ComboBox has 160 items
+2026-06-28 11:22:00,365  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 11:22:03,501  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 11:22:19,878  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:22:19,878  INFO      Waiting for QIF file: 401(K) - Intuit - Fidelity.qif
+2026-06-28 11:26:22,527  INFO      ============================================================
+2026-06-28 11:26:22,527  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 11:26:22,527  INFO      ============================================================
+2026-06-28 11:26:22,527  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 11:26:23,502  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [401(K) - Intuit - Fidelity]')
+2026-06-28 11:26:23,502  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 11:26:26,590  INFO      Found new Quicken window: HWND=1841666 title='QIF Export'
+2026-06-28 11:26:26,606  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 11:26:28,566  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 11:26:28,567  INFO      Found ComboBox child: HWND=1382858 class='ComboBox'
+2026-06-28 11:26:28,567  INFO      ComboBox item count: 160
+2026-06-28 11:26:30,988  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 11:26:34,013  INFO      Discovered 160 accounts
+2026-06-28 11:26:34,013  INFO      Accounts found: 160
+2026-06-28 11:26:34,013  INFO          1. *Security Deposit Liability*
+2026-06-28 11:26:34,013  INFO          2. 1 Year CD - India Investments
+2026-06-28 11:26:34,013  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 11:26:34,013  INFO          4. 1 Year CD - The Alamo
+2026-06-28 11:26:34,013  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 11:26:34,013  INFO          6. 401(K) - Modus Create
+2026-06-28 11:26:34,013  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 11:26:34,013  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 11:26:34,013  INFO          9. 401(K) - RF - PayChex
+2026-06-28 11:26:34,013  INFO         10. 401(K) - RF - Standard
+2026-06-28 11:26:34,013  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 11:26:34,013  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 11:26:34,013  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 11:26:34,013  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 11:26:34,019  INFO         15. 401(K) Intuit - Empower
+2026-06-28 11:26:34,019  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 11:26:34,019  INFO         17. 401(k) Icon
+2026-06-28 11:26:34,019  INFO         18. 401(k) InfoGain
+2026-06-28 11:26:34,019  INFO         19. 401(k) InfoGain - ING
+2026-06-28 11:26:34,019  INFO         20. 401(k) LogicWorx
+2026-06-28 11:26:34,019  INFO         21. 401(k) NetApp
+2026-06-28 11:26:34,019  INFO         22. <All account>
+2026-06-28 11:26:34,019  INFO         23. Brokerage - AG Edwards
+2026-06-28 11:26:34,019  INFO         24. CD - Meriwest
+2026-06-28 11:26:34,019  INFO         25. CD Ladder - Lori
+2026-06-28 11:26:34,019  INFO         26. CD Ladder - Ram
+2026-06-28 11:26:34,019  INFO         27. CD1@E*TradeBank
+2026-06-28 11:26:34,019  INFO         28. CD2@E*TradeBank
+2026-06-28 11:26:34,019  INFO         29. CD3@E*TradeBank
+2026-06-28 11:26:34,019  INFO         30. CDs
+2026-06-28 11:26:34,019  INFO         31. CDs - India ($s)
+2026-06-28 11:26:34,019  INFO         32. CDs - India (Rs)
+2026-06-28 11:26:34,019  INFO         33. Car - Eclipse
+2026-06-28 11:26:34,019  INFO         34. Car - Prius v2
+2026-06-28 11:26:34,019  INFO         35. Car - Prius v3
+2026-06-28 11:26:34,019  INFO         36. Car Loan
+2026-06-28 11:26:34,019  INFO         37. Cash - India
+2026-06-28 11:26:34,019  INFO         38. Cash - Lori
+2026-06-28 11:26:34,019  INFO         39. Cash - Pet Transactions
+2026-06-28 11:26:34,019  INFO         40. Cash - Ram
+2026-06-28 11:26:34,019  INFO         41. Cash - Tara
+2026-06-28 11:26:34,019  INFO         42. Checking - Annual Expenses
+2026-06-28 11:26:34,019  INFO         43. Checking - BOTS
+2026-06-28 11:26:34,019  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 11:26:34,019  INFO         45. Checking - National Mortgage
+2026-06-28 11:26:34,019  INFO         46. Checking - PremierOne - Lori
+2026-06-28 11:26:34,019  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 11:26:34,019  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 11:26:34,019  INFO         49. Checking - Tara
+2026-06-28 11:26:34,019  INFO         50. Checking - TechCU
+2026-06-28 11:26:34,019  INFO         51. Citi - MasterCard - Lori
+2026-06-28 11:26:34,019  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 11:26:34,019  INFO         53. Discover - Rentals
+2026-06-28 11:26:34,019  INFO         54. ESOP - Intuit
+2026-06-28 11:26:34,019  INFO         55. ESOP - Oracle
+2026-06-28 11:26:34,019  INFO         56. ESPP - Intuit
+2026-06-28 11:26:34,019  INFO         57. ESPP - NetApp
+2026-06-28 11:26:34,019  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 11:26:34,019  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 11:26:34,019  INFO         60. Eddie Bauer - Ram
+2026-06-28 11:26:34,019  INFO         61. Equity - eBay
+2026-06-28 11:26:34,019  INFO         62. FSA - Intuit
+2026-06-28 11:26:34,019  INFO         63. FSA - Oracle
+2026-06-28 11:26:34,019  INFO         64. FSA - RF Medical
+2026-06-28 11:26:34,019  INFO         65. FSA - RF Transit
+2026-06-28 11:26:34,035  INFO         66. FSA - eBay
+2026-06-28 11:26:34,035  INFO         67. Flex Spending Ac
+2026-06-28 11:26:34,035  INFO         68. Home - Alma
+2026-06-28 11:26:34,035  INFO         69. Home - Alma Loan
+2026-06-28 11:26:34,035  INFO         70. Home - Maitland
+2026-06-28 11:26:34,035  INFO         71. Home - Maitland Loan
+2026-06-28 11:26:34,035  INFO         72. Home - Maitland Loan 2
+2026-06-28 11:26:34,037  INFO         73. Home - Maitland Loan 3
+2026-06-28 11:26:34,037  INFO         74. Home - Maitland Loan 4
+2026-06-28 11:26:34,037  INFO         75. Home - Maitland Loan 5
+2026-06-28 11:26:34,037  INFO         76. Home - Maitland Loan 6
+2026-06-28 11:26:34,037  INFO         77. Home - Maitland Loan 7
+2026-06-28 11:26:34,039  INFO         78. Home - Nino
+2026-06-28 11:26:34,039  INFO         79. Home - Nino Loan
+2026-06-28 11:26:34,039  INFO         80. Home - Nino Loan 2
+2026-06-28 11:26:34,039  INFO         81. Home - Nino Loan 3
+2026-06-28 11:26:34,039  INFO         82. Home - Roan
+2026-06-28 11:26:34,039  INFO         83. Home - Roan Loan
+2026-06-28 11:26:34,041  INFO         84. Home - Roan Loan 2
+2026-06-28 11:26:34,041  INFO         85. Home - Roan Loan 3
+2026-06-28 11:26:34,041  INFO         86. Home - Roan Loan 4
+2026-06-28 11:26:34,041  INFO         87. Home - Roan Loan 5
+2026-06-28 11:26:34,041  INFO         88. Home - Roan Loan 6
+2026-06-28 11:26:34,041  INFO         89. Home - Roan Loan 7
+2026-06-28 11:26:34,041  INFO         90. House - India
+2026-06-28 11:26:34,043  INFO         91. IRA - Metlife Annuity
+2026-06-28 11:26:34,043  INFO         92. IRA - Vanguard - Lori
+2026-06-28 11:26:34,043  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 11:26:34,043  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 11:26:34,043  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 11:26:34,043  INFO         96. India - SBI NRE Account
+2026-06-28 11:26:34,043  INFO         97. India - SBI NRO Debit Card
+2026-06-28 11:26:34,045  INFO         98. Kohl's Card
+2026-06-28 11:26:34,045  INFO         99. Line of Credit - Premier One
+2026-06-28 11:26:34,045  INFO        100. Master Card
+2026-06-28 11:26:34,045  INFO        101. Master Card - Citi
+2026-06-28 11:26:34,048  INFO        102. Mervyn's - Lori
+2026-06-28 11:26:34,048  INFO        103. Mervyn's - Ram
+2026-06-28 11:26:34,048  INFO        104. Primary Mortgage - 2
+2026-06-28 11:26:34,048  INFO        105. Primary Mortgage - 3
+2026-06-28 11:26:34,048  INFO        106. Primary Mortgage - 4
+2026-06-28 11:26:34,048  INFO        107. Primary Mortgage - 5
+2026-06-28 11:26:34,048  INFO        108. Primary Mortgage - I
+2026-06-28 11:26:34,048  INFO        109. Private Equity - FFC LLC
+2026-06-28 11:26:34,048  INFO        110. Rentals - Checking
+2026-06-28 11:26:34,048  INFO        111. Rentals - Repair Fund
+2026-06-28 11:26:34,048  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 11:26:34,051  INFO        113. Roth IRA - AG Edwards
+2026-06-28 11:26:34,051  INFO        114. Roth IRA - Stifel
+2026-06-28 11:26:34,051  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 11:26:34,051  INFO        116. Roth IRA - Vanguard
+2026-06-28 11:26:34,051  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 11:26:34,051  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 11:26:34,051  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 11:26:34,051  INFO        120. Savings - Annual Expenses
+2026-06-28 11:26:34,051  INFO        121. Savings - Annual Expenses 2
+2026-06-28 11:26:34,051  INFO        122. Savings - ETrade (Complete)
+2026-06-28 11:26:34,051  INFO        123. Savings - Emergency Expenses
+2026-06-28 11:26:34,051  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 11:26:34,051  INFO        125. Savings - ING Lori
+2026-06-28 11:26:34,051  INFO        126. Savings - ING Ram
+2026-06-28 11:26:34,051  INFO        127. Savings - Meriwest
+2026-06-28 11:26:34,051  INFO        128. Savings - Premier One
+2026-06-28 11:26:34,051  INFO        129. Savings - Recession Readiness
+2026-06-28 11:26:34,051  INFO        130. Savings - Repair Fund
+2026-06-28 11:26:34,051  INFO        131. Savings - Repair Fund 2
+2026-06-28 11:26:34,051  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 11:26:34,051  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 11:26:34,051  INFO        134. Savings - The Alamo
+2026-06-28 11:26:34,051  INFO        135. Savings - The Alamo 2
+2026-06-28 11:26:34,051  INFO        136. Savings-TechCU
+2026-06-28 11:26:34,051  INFO        137. Sears Credit Card
+2026-06-28 11:26:34,051  INFO        138. Secondary Mortgage - 2
+2026-06-28 11:26:34,051  INFO        139. Secondary Mortgage - 3
+2026-06-28 11:26:34,051  INFO        140. Secondary Mortgage - 4
+2026-06-28 11:26:34,051  INFO        141. Secondary Mortgage - 5
+2026-06-28 11:26:34,051  INFO        142. Secondary Mortgage - I
+2026-06-28 11:26:34,051  INFO        143. Smith Barney
+2026-06-28 11:26:34,051  INFO        144. Southwest Securities
+2026-06-28 11:26:34,051  INFO        145. TD Ameritrade
+2026-06-28 11:26:34,051  INFO        146. Tara's 529
+2026-06-28 11:26:34,051  INFO        147. Treasury Direct - Lori
+2026-06-28 11:26:34,051  INFO        148. Treasury Direct - Murthy
+2026-06-28 11:26:34,051  INFO        149. US Bank Relia Card
+2026-06-28 11:26:34,051  INFO        150. Vanguard
+2026-06-28 11:26:34,051  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 11:26:34,051  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 11:26:34,051  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 11:26:34,051  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 11:26:34,051  INFO        155. Vanguard - Trust 1
+2026-06-28 11:26:34,051  INFO        156. Vanguard - Trust 2
+2026-06-28 11:26:34,051  INFO        157. Vanguard - Trust 3
+2026-06-28 11:26:34,051  INFO        158. Visa - Chase - Lori
+2026-06-28 11:26:34,051  INFO        159. Visa - Chase - Ram
+2026-06-28 11:26:34,051  INFO        160. Visa - TechFed
+2026-06-28 11:26:34,077  INFO      Skipping 4 accounts that already have QIF files (use --no-skip-existing to re-export)
+2026-06-28 11:26:34,077  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 11:26:34,077  INFO      Will export 10 accounts
+2026-06-28 11:26:34,077  INFO      ----------------------------------------
+2026-06-28 11:26:34,077  INFO      [1/10] 401(K) - Intuit - Fidelity
+2026-06-28 11:26:34,077  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 11:26:37,100  INFO      Found new Quicken window: HWND=1841666 title='QIF Export'
+2026-06-28 11:26:38,102  INFO      Account dropdown HWND: 1382858
+2026-06-28 11:26:38,102  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:26:38,102  INFO      ComboBox has 160 items
+2026-06-28 11:26:38,409  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 11:26:40,150  ERROR     Failed to set file path: Unknown code: {{
+2026-06-28 11:26:40,150  ERROR     Failed to set file path: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 11:26:41,157  ERROR     FAILED: 401(K) - Intuit - Fidelity — stopping to keep Quicken stable
+2026-06-28 11:26:41,166  INFO      ============================================================
+2026-06-28 11:26:41,166  INFO      Export complete
+2026-06-28 11:26:41,166  INFO        Exported: 0
+2026-06-28 11:26:41,166  INFO        Failed:   1
+2026-06-28 11:26:41,166  INFO        Failed accounts:
+2026-06-28 11:26:41,166  INFO          - 401(K) - Intuit - Fidelity
+2026-06-28 11:26:41,166  INFO      ============================================================
+2026-06-28 11:30:56,582  INFO      ============================================================
+2026-06-28 11:30:56,582  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 11:30:56,582  INFO      ============================================================
+2026-06-28 11:30:56,582  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 11:30:57,601  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [401(K) - Intuit - Fidelity]')
+2026-06-28 11:30:57,601  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 11:31:00,727  INFO      Found new Quicken window: HWND=858506 title='QIF Export'
+2026-06-28 11:31:00,744  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 11:31:02,690  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 11:31:02,690  INFO      Found ComboBox child: HWND=2955852 class='ComboBox'
+2026-06-28 11:31:02,697  INFO      ComboBox item count: 160
+2026-06-28 11:31:05,063  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 11:31:08,076  WARNING   Dialog still open after Escape — pressing Escape again
+2026-06-28 11:31:08,076  INFO      Discovered 160 accounts
+2026-06-28 11:31:08,076  INFO      Accounts found: 160
+2026-06-28 11:31:08,076  INFO          1. *Security Deposit Liability*
+2026-06-28 11:31:08,076  INFO          2. 1 Year CD - India Investments
+2026-06-28 11:31:08,076  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 11:31:08,076  INFO          4. 1 Year CD - The Alamo
+2026-06-28 11:31:08,076  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 11:31:08,076  INFO          6. 401(K) - Modus Create
+2026-06-28 11:31:08,076  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 11:31:08,076  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 11:31:08,076  INFO          9. 401(K) - RF - PayChex
+2026-06-28 11:31:08,076  INFO         10. 401(K) - RF - Standard
+2026-06-28 11:31:08,076  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 11:31:08,076  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 11:31:08,076  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 11:31:08,076  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 11:31:08,076  INFO         15. 401(K) Intuit - Empower
+2026-06-28 11:31:08,076  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 11:31:08,076  INFO         17. 401(k) Icon
+2026-06-28 11:31:08,076  INFO         18. 401(k) InfoGain
+2026-06-28 11:31:08,076  INFO         19. 401(k) InfoGain - ING
+2026-06-28 11:31:08,076  INFO         20. 401(k) LogicWorx
+2026-06-28 11:31:08,076  INFO         21. 401(k) NetApp
+2026-06-28 11:31:08,076  INFO         22. <All account>
+2026-06-28 11:31:08,076  INFO         23. Brokerage - AG Edwards
+2026-06-28 11:31:08,076  INFO         24. CD - Meriwest
+2026-06-28 11:31:08,076  INFO         25. CD Ladder - Lori
+2026-06-28 11:31:08,076  INFO         26. CD Ladder - Ram
+2026-06-28 11:31:08,076  INFO         27. CD1@E*TradeBank
+2026-06-28 11:31:08,076  INFO         28. CD2@E*TradeBank
+2026-06-28 11:31:08,076  INFO         29. CD3@E*TradeBank
+2026-06-28 11:31:08,076  INFO         30. CDs
+2026-06-28 11:31:08,076  INFO         31. CDs - India ($s)
+2026-06-28 11:31:08,076  INFO         32. CDs - India (Rs)
+2026-06-28 11:31:08,076  INFO         33. Car - Eclipse
+2026-06-28 11:31:08,076  INFO         34. Car - Prius v2
+2026-06-28 11:31:08,076  INFO         35. Car - Prius v3
+2026-06-28 11:31:08,076  INFO         36. Car Loan
+2026-06-28 11:31:08,076  INFO         37. Cash - India
+2026-06-28 11:31:08,076  INFO         38. Cash - Lori
+2026-06-28 11:31:08,076  INFO         39. Cash - Pet Transactions
+2026-06-28 11:31:08,076  INFO         40. Cash - Ram
+2026-06-28 11:31:08,076  INFO         41. Cash - Tara
+2026-06-28 11:31:08,076  INFO         42. Checking - Annual Expenses
+2026-06-28 11:31:08,076  INFO         43. Checking - BOTS
+2026-06-28 11:31:08,076  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 11:31:08,092  INFO         45. Checking - National Mortgage
+2026-06-28 11:31:08,092  INFO         46. Checking - PremierOne - Lori
+2026-06-28 11:31:08,092  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 11:31:08,092  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 11:31:08,092  INFO         49. Checking - Tara
+2026-06-28 11:31:08,092  INFO         50. Checking - TechCU
+2026-06-28 11:31:08,092  INFO         51. Citi - MasterCard - Lori
+2026-06-28 11:31:08,092  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 11:31:08,092  INFO         53. Discover - Rentals
+2026-06-28 11:31:08,092  INFO         54. ESOP - Intuit
+2026-06-28 11:31:08,092  INFO         55. ESOP - Oracle
+2026-06-28 11:31:08,092  INFO         56. ESPP - Intuit
+2026-06-28 11:31:08,092  INFO         57. ESPP - NetApp
+2026-06-28 11:31:08,092  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 11:31:08,092  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 11:31:08,096  INFO         60. Eddie Bauer - Ram
+2026-06-28 11:31:08,096  INFO         61. Equity - eBay
+2026-06-28 11:31:08,096  INFO         62. FSA - Intuit
+2026-06-28 11:31:08,096  INFO         63. FSA - Oracle
+2026-06-28 11:31:08,096  INFO         64. FSA - RF Medical
+2026-06-28 11:31:08,096  INFO         65. FSA - RF Transit
+2026-06-28 11:31:08,096  INFO         66. FSA - eBay
+2026-06-28 11:31:08,096  INFO         67. Flex Spending Ac
+2026-06-28 11:31:08,096  INFO         68. Home - Alma
+2026-06-28 11:31:08,096  INFO         69. Home - Alma Loan
+2026-06-28 11:31:08,096  INFO         70. Home - Maitland
+2026-06-28 11:31:08,096  INFO         71. Home - Maitland Loan
+2026-06-28 11:31:08,096  INFO         72. Home - Maitland Loan 2
+2026-06-28 11:31:08,096  INFO         73. Home - Maitland Loan 3
+2026-06-28 11:31:08,096  INFO         74. Home - Maitland Loan 4
+2026-06-28 11:31:08,096  INFO         75. Home - Maitland Loan 5
+2026-06-28 11:31:08,096  INFO         76. Home - Maitland Loan 6
+2026-06-28 11:31:08,096  INFO         77. Home - Maitland Loan 7
+2026-06-28 11:31:08,096  INFO         78. Home - Nino
+2026-06-28 11:31:08,096  INFO         79. Home - Nino Loan
+2026-06-28 11:31:08,096  INFO         80. Home - Nino Loan 2
+2026-06-28 11:31:08,096  INFO         81. Home - Nino Loan 3
+2026-06-28 11:31:08,096  INFO         82. Home - Roan
+2026-06-28 11:31:08,096  INFO         83. Home - Roan Loan
+2026-06-28 11:31:08,096  INFO         84. Home - Roan Loan 2
+2026-06-28 11:31:08,096  INFO         85. Home - Roan Loan 3
+2026-06-28 11:31:08,096  INFO         86. Home - Roan Loan 4
+2026-06-28 11:31:08,096  INFO         87. Home - Roan Loan 5
+2026-06-28 11:31:08,096  INFO         88. Home - Roan Loan 6
+2026-06-28 11:31:08,096  INFO         89. Home - Roan Loan 7
+2026-06-28 11:31:08,096  INFO         90. House - India
+2026-06-28 11:31:08,096  INFO         91. IRA - Metlife Annuity
+2026-06-28 11:31:08,096  INFO         92. IRA - Vanguard - Lori
+2026-06-28 11:31:08,096  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 11:31:08,096  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 11:31:08,096  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 11:31:08,096  INFO         96. India - SBI NRE Account
+2026-06-28 11:31:08,096  INFO         97. India - SBI NRO Debit Card
+2026-06-28 11:31:08,096  INFO         98. Kohl's Card
+2026-06-28 11:31:08,096  INFO         99. Line of Credit - Premier One
+2026-06-28 11:31:08,096  INFO        100. Master Card
+2026-06-28 11:31:08,096  INFO        101. Master Card - Citi
+2026-06-28 11:31:08,108  INFO        102. Mervyn's - Lori
+2026-06-28 11:31:08,108  INFO        103. Mervyn's - Ram
+2026-06-28 11:31:08,108  INFO        104. Primary Mortgage - 2
+2026-06-28 11:31:08,108  INFO        105. Primary Mortgage - 3
+2026-06-28 11:31:08,108  INFO        106. Primary Mortgage - 4
+2026-06-28 11:31:08,108  INFO        107. Primary Mortgage - 5
+2026-06-28 11:31:08,108  INFO        108. Primary Mortgage - I
+2026-06-28 11:31:08,108  INFO        109. Private Equity - FFC LLC
+2026-06-28 11:31:08,108  INFO        110. Rentals - Checking
+2026-06-28 11:31:08,108  INFO        111. Rentals - Repair Fund
+2026-06-28 11:31:08,108  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 11:31:08,108  INFO        113. Roth IRA - AG Edwards
+2026-06-28 11:31:08,108  INFO        114. Roth IRA - Stifel
+2026-06-28 11:31:08,108  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 11:31:08,108  INFO        116. Roth IRA - Vanguard
+2026-06-28 11:31:08,108  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 11:31:08,108  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 11:31:08,108  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 11:31:08,108  INFO        120. Savings - Annual Expenses
+2026-06-28 11:31:08,108  INFO        121. Savings - Annual Expenses 2
+2026-06-28 11:31:08,114  INFO        122. Savings - ETrade (Complete)
+2026-06-28 11:31:08,114  INFO        123. Savings - Emergency Expenses
+2026-06-28 11:31:08,114  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 11:31:08,114  INFO        125. Savings - ING Lori
+2026-06-28 11:31:08,114  INFO        126. Savings - ING Ram
+2026-06-28 11:31:08,114  INFO        127. Savings - Meriwest
+2026-06-28 11:31:08,116  INFO        128. Savings - Premier One
+2026-06-28 11:31:08,116  INFO        129. Savings - Recession Readiness
+2026-06-28 11:31:08,116  INFO        130. Savings - Repair Fund
+2026-06-28 11:31:08,116  INFO        131. Savings - Repair Fund 2
+2026-06-28 11:31:08,116  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 11:31:08,116  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 11:31:08,116  INFO        134. Savings - The Alamo
+2026-06-28 11:31:08,116  INFO        135. Savings - The Alamo 2
+2026-06-28 11:31:08,116  INFO        136. Savings-TechCU
+2026-06-28 11:31:08,116  INFO        137. Sears Credit Card
+2026-06-28 11:31:08,116  INFO        138. Secondary Mortgage - 2
+2026-06-28 11:31:08,116  INFO        139. Secondary Mortgage - 3
+2026-06-28 11:31:08,116  INFO        140. Secondary Mortgage - 4
+2026-06-28 11:31:08,116  INFO        141. Secondary Mortgage - 5
+2026-06-28 11:31:08,116  INFO        142. Secondary Mortgage - I
+2026-06-28 11:31:08,116  INFO        143. Smith Barney
+2026-06-28 11:31:08,116  INFO        144. Southwest Securities
+2026-06-28 11:31:08,116  INFO        145. TD Ameritrade
+2026-06-28 11:31:08,116  INFO        146. Tara's 529
+2026-06-28 11:31:08,116  INFO        147. Treasury Direct - Lori
+2026-06-28 11:31:08,116  INFO        148. Treasury Direct - Murthy
+2026-06-28 11:31:08,116  INFO        149. US Bank Relia Card
+2026-06-28 11:31:08,116  INFO        150. Vanguard
+2026-06-28 11:31:08,116  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 11:31:08,116  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 11:31:08,116  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 11:31:08,116  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 11:31:08,116  INFO        155. Vanguard - Trust 1
+2026-06-28 11:31:08,116  INFO        156. Vanguard - Trust 2
+2026-06-28 11:31:08,116  INFO        157. Vanguard - Trust 3
+2026-06-28 11:31:08,116  INFO        158. Visa - Chase - Lori
+2026-06-28 11:31:08,116  INFO        159. Visa - Chase - Ram
+2026-06-28 11:31:08,116  INFO        160. Visa - TechFed
+2026-06-28 11:31:08,124  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 11:31:08,124  INFO      Will export 10 accounts
+2026-06-28 11:31:08,124  INFO      ----------------------------------------
+2026-06-28 11:31:08,124  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 11:31:08,124  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 11:31:11,156  INFO      Found new Quicken window: HWND=858506 title='QIF Export'
+2026-06-28 11:31:12,167  INFO      Account dropdown HWND: 2955852
+2026-06-28 11:31:12,167  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:31:12,167  INFO      ComboBox has 160 items
+2026-06-28 11:31:12,473  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 11:31:15,664  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 11:31:32,098  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:31:32,098  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 11:31:33,603  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 11:31:33,606  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:31:33,606  INFO      Exported: *Security Deposit Liability* -> _Security Deposit Liability_.qif
+2026-06-28 11:31:35,610  INFO      ----------------------------------------
+2026-06-28 11:31:35,610  INFO      [2/10] 1 Year CD - India Investments
+2026-06-28 11:31:35,610  INFO      Exporting account: 1 Year CD - India Investments
+2026-06-28 11:31:38,741  INFO      Found new Quicken window: HWND=1316928 title='QIF Export'
+2026-06-28 11:31:39,723  INFO      Account dropdown HWND: 1251904
+2026-06-28 11:31:39,723  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:31:39,723  INFO      ComboBox has 160 items
+2026-06-28 11:31:40,029  INFO      Selected account '1 Year CD - India Investments' at index 1
+2026-06-28 11:31:43,456  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - India Investments.qif
+2026-06-28 11:31:59,923  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:31:59,923  INFO      Waiting for QIF file: 1 Year CD - India Investments.qif
+2026-06-28 11:32:01,429  INFO      File stable: 1 Year CD - India Investments.qif (1205 bytes)
+2026-06-28 11:32:01,433  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:32:01,435  INFO      Exported: 1 Year CD - India Investments -> 1 Year CD - India Investments.qif
+2026-06-28 11:32:03,436  INFO      ----------------------------------------
+2026-06-28 11:32:03,436  INFO      [3/10] 1 Year CD - Parents Gift
+2026-06-28 11:32:03,437  INFO      Exporting account: 1 Year CD - Parents Gift
+2026-06-28 11:32:06,635  INFO      Found new Quicken window: HWND=1776450 title='QIF Export'
+2026-06-28 11:32:07,625  INFO      Account dropdown HWND: 1645238
+2026-06-28 11:32:07,626  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:32:07,626  INFO      ComboBox has 160 items
+2026-06-28 11:32:07,929  INFO      Selected account '1 Year CD - Parents Gift' at index 2
+2026-06-28 11:32:11,343  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - Parents Gift.qif
+2026-06-28 11:32:27,756  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:32:27,756  INFO      Waiting for QIF file: 1 Year CD - Parents Gift.qif
+2026-06-28 11:32:29,261  INFO      File stable: 1 Year CD - Parents Gift.qif (2120 bytes)
+2026-06-28 11:32:29,261  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:32:29,265  INFO      Exported: 1 Year CD - Parents Gift -> 1 Year CD - Parents Gift.qif
+2026-06-28 11:32:31,267  INFO      ----------------------------------------
+2026-06-28 11:32:31,267  INFO      [4/10] 1 Year CD - The Alamo
+2026-06-28 11:32:31,267  INFO      Exporting account: 1 Year CD - The Alamo
+2026-06-28 11:32:34,376  INFO      Found new Quicken window: HWND=2169442 title='QIF Export'
+2026-06-28 11:32:35,370  INFO      Account dropdown HWND: 1514078
+2026-06-28 11:32:35,370  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:32:35,370  INFO      ComboBox has 160 items
+2026-06-28 11:32:35,675  INFO      Selected account '1 Year CD - The Alamo' at index 3
+2026-06-28 11:32:38,752  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - The Alamo.qif
+2026-06-28 11:32:55,098  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:32:55,098  INFO      Waiting for QIF file: 1 Year CD - The Alamo.qif
+2026-06-28 11:32:56,603  INFO      File stable: 1 Year CD - The Alamo.qif (2156 bytes)
+2026-06-28 11:32:56,606  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:32:56,607  INFO      Exported: 1 Year CD - The Alamo -> 1 Year CD - The Alamo.qif
+2026-06-28 11:32:58,610  INFO      ----------------------------------------
+2026-06-28 11:32:58,610  INFO      [5/10] 401(K) - Intuit - Fidelity
+2026-06-28 11:32:58,610  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 11:33:01,769  INFO      Found new Quicken window: HWND=1907344 title='QIF Export'
+2026-06-28 11:33:02,743  INFO      Account dropdown HWND: 1776310
+2026-06-28 11:33:02,743  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:33:02,743  INFO      ComboBox has 160 items
+2026-06-28 11:33:03,046  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 11:33:04,794  ERROR     Failed to set file path: Unknown code: {{
+2026-06-28 11:33:04,794  ERROR     Failed to set file path: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 11:33:06,103  ERROR     FAILED: 401(K) - Intuit - Fidelity — stopping to keep Quicken stable
+2026-06-28 11:33:06,103  INFO      ============================================================
+2026-06-28 11:33:06,103  INFO      Export complete
+2026-06-28 11:33:06,103  INFO        Exported: 4
+2026-06-28 11:33:06,103  INFO        Failed:   1
+2026-06-28 11:33:06,103  INFO        Failed accounts:
+2026-06-28 11:33:06,103  INFO          - 401(K) - Intuit - Fidelity
+2026-06-28 11:33:06,103  INFO      ============================================================
+2026-06-28 11:36:16,531  INFO      ============================================================
+2026-06-28 11:36:16,531  INFO      Quicken QIF Auto-Export (mode: prod)
+2026-06-28 11:36:16,531  INFO      ============================================================
+2026-06-28 11:36:16,531  INFO      Output directory: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files
+2026-06-28 11:36:16,531  INFO      Deleted: 1 Year CD - India Investments.QIF
+2026-06-28 11:36:16,531  INFO      Deleted: 1 Year CD - Parents Gift.QIF
+2026-06-28 11:36:16,531  INFO      Deleted: 1 Year CD - The Alamo.QIF
+2026-06-28 11:36:16,531  INFO      Deleted: _Security Deposit Liability_.QIF
+2026-06-28 11:36:17,485  INFO      Connected to Quicken (backend=uia, title='Quicken 2017 Premier - Pidaparthi-Quicken-Joint - GNU Cash Snapshot - 2026 Jun 15 - [401(K) - Intuit - Fidelity]')
+2026-06-28 11:36:17,485  INFO      Discovering accounts from QIF Export dialog...
+2026-06-28 11:36:20,544  INFO      Found new Quicken window: HWND=1710682 title='QIF Export'
+2026-06-28 11:36:20,544  INFO      Pressing ALT+a to navigate to account dropdown
+2026-06-28 11:36:22,504  INFO      Trying to find ComboBox child windows via Win32...
+2026-06-28 11:36:22,509  INFO      Found ComboBox child: HWND=1448454 class='ComboBox'
+2026-06-28 11:36:22,509  INFO      ComboBox item count: 160
+2026-06-28 11:36:24,881  INFO      Read 160 items from ComboBox via Win32
+2026-06-28 11:36:28,172  WARNING   Dialog still open after Escape — pressing Escape again
+2026-06-28 11:36:28,172  INFO      Discovered 160 accounts
+2026-06-28 11:36:28,172  INFO      Accounts found: 160
+2026-06-28 11:36:28,172  INFO          1. *Security Deposit Liability*
+2026-06-28 11:36:28,172  INFO          2. 1 Year CD - India Investments
+2026-06-28 11:36:28,172  INFO          3. 1 Year CD - Parents Gift
+2026-06-28 11:36:28,172  INFO          4. 1 Year CD - The Alamo
+2026-06-28 11:36:28,172  INFO          5. 401(K) - Intuit - Fidelity
+2026-06-28 11:36:28,172  INFO          6. 401(K) - Modus Create
+2026-06-28 11:36:28,182  INFO          7. 401(K) - Oracle - Fidelity
+2026-06-28 11:36:28,182  INFO          8. 401(K) - Oracle - Roth
+2026-06-28 11:36:28,182  INFO          9. 401(K) - RF - PayChex
+2026-06-28 11:36:28,182  INFO         10. 401(K) - RF - Standard
+2026-06-28 11:36:28,182  INFO         11. 401(K) - eBay - Fidelity
+2026-06-28 11:36:28,182  INFO         12. 401(K) - eBay - Fidelity After Tax IRA
+2026-06-28 11:36:28,182  INFO         13. 401(K) - eBay - Fidelity After Tax Roth
+2026-06-28 11:36:28,182  INFO         14. 401(K) - eBay - Fidelity Roth
+2026-06-28 11:36:28,182  INFO         15. 401(K) Intuit - Empower
+2026-06-28 11:36:28,182  INFO         16. 401(K) Intuit - Schwab(Brokerage Link)
+2026-06-28 11:36:28,182  INFO         17. 401(k) Icon
+2026-06-28 11:36:28,182  INFO         18. 401(k) InfoGain
+2026-06-28 11:36:28,182  INFO         19. 401(k) InfoGain - ING
+2026-06-28 11:36:28,182  INFO         20. 401(k) LogicWorx
+2026-06-28 11:36:28,182  INFO         21. 401(k) NetApp
+2026-06-28 11:36:28,187  INFO         22. <All account>
+2026-06-28 11:36:28,187  INFO         23. Brokerage - AG Edwards
+2026-06-28 11:36:28,187  INFO         24. CD - Meriwest
+2026-06-28 11:36:28,187  INFO         25. CD Ladder - Lori
+2026-06-28 11:36:28,187  INFO         26. CD Ladder - Ram
+2026-06-28 11:36:28,189  INFO         27. CD1@E*TradeBank
+2026-06-28 11:36:28,189  INFO         28. CD2@E*TradeBank
+2026-06-28 11:36:28,189  INFO         29. CD3@E*TradeBank
+2026-06-28 11:36:28,189  INFO         30. CDs
+2026-06-28 11:36:28,189  INFO         31. CDs - India ($s)
+2026-06-28 11:36:28,189  INFO         32. CDs - India (Rs)
+2026-06-28 11:36:28,189  INFO         33. Car - Eclipse
+2026-06-28 11:36:28,189  INFO         34. Car - Prius v2
+2026-06-28 11:36:28,189  INFO         35. Car - Prius v3
+2026-06-28 11:36:28,189  INFO         36. Car Loan
+2026-06-28 11:36:28,189  INFO         37. Cash - India
+2026-06-28 11:36:28,189  INFO         38. Cash - Lori
+2026-06-28 11:36:28,189  INFO         39. Cash - Pet Transactions
+2026-06-28 11:36:28,189  INFO         40. Cash - Ram
+2026-06-28 11:36:28,189  INFO         41. Cash - Tara
+2026-06-28 11:36:28,189  INFO         42. Checking - Annual Expenses
+2026-06-28 11:36:28,189  INFO         43. Checking - BOTS
+2026-06-28 11:36:28,189  INFO         44. Checking - CapitalOne - Regular
+2026-06-28 11:36:28,189  INFO         45. Checking - National Mortgage
+2026-06-28 11:36:28,189  INFO         46. Checking - PremierOne - Lori
+2026-06-28 11:36:28,189  INFO         47. Checking - Regular - E*Trade Bank
+2026-06-28 11:36:28,189  INFO         48. Checking - Rental - E*Trade Bank
+2026-06-28 11:36:28,189  INFO         49. Checking - Tara
+2026-06-28 11:36:28,189  INFO         50. Checking - TechCU
+2026-06-28 11:36:28,189  INFO         51. Citi - MasterCard - Lori
+2026-06-28 11:36:28,189  INFO         52. Citi - MasterCard - Murthy
+2026-06-28 11:36:28,194  INFO         53. Discover - Rentals
+2026-06-28 11:36:28,194  INFO         54. ESOP - Intuit
+2026-06-28 11:36:28,194  INFO         55. ESOP - Oracle
+2026-06-28 11:36:28,194  INFO         56. ESPP - Intuit
+2026-06-28 11:36:28,194  INFO         57. ESPP - NetApp
+2026-06-28 11:36:28,194  INFO         58. ESPP - Oracle - E*Trade
+2026-06-28 11:36:28,194  INFO         59. ESPP - Oracle - Fidelity
+2026-06-28 11:36:28,194  INFO         60. Eddie Bauer - Ram
+2026-06-28 11:36:28,194  INFO         61. Equity - eBay
+2026-06-28 11:36:28,194  INFO         62. FSA - Intuit
+2026-06-28 11:36:28,194  INFO         63. FSA - Oracle
+2026-06-28 11:36:28,194  INFO         64. FSA - RF Medical
+2026-06-28 11:36:28,194  INFO         65. FSA - RF Transit
+2026-06-28 11:36:28,194  INFO         66. FSA - eBay
+2026-06-28 11:36:28,194  INFO         67. Flex Spending Ac
+2026-06-28 11:36:28,194  INFO         68. Home - Alma
+2026-06-28 11:36:28,194  INFO         69. Home - Alma Loan
+2026-06-28 11:36:28,194  INFO         70. Home - Maitland
+2026-06-28 11:36:28,194  INFO         71. Home - Maitland Loan
+2026-06-28 11:36:28,194  INFO         72. Home - Maitland Loan 2
+2026-06-28 11:36:28,194  INFO         73. Home - Maitland Loan 3
+2026-06-28 11:36:28,194  INFO         74. Home - Maitland Loan 4
+2026-06-28 11:36:28,198  INFO         75. Home - Maitland Loan 5
+2026-06-28 11:36:28,198  INFO         76. Home - Maitland Loan 6
+2026-06-28 11:36:28,198  INFO         77. Home - Maitland Loan 7
+2026-06-28 11:36:28,198  INFO         78. Home - Nino
+2026-06-28 11:36:28,198  INFO         79. Home - Nino Loan
+2026-06-28 11:36:28,198  INFO         80. Home - Nino Loan 2
+2026-06-28 11:36:28,198  INFO         81. Home - Nino Loan 3
+2026-06-28 11:36:28,198  INFO         82. Home - Roan
+2026-06-28 11:36:28,198  INFO         83. Home - Roan Loan
+2026-06-28 11:36:28,198  INFO         84. Home - Roan Loan 2
+2026-06-28 11:36:28,198  INFO         85. Home - Roan Loan 3
+2026-06-28 11:36:28,198  INFO         86. Home - Roan Loan 4
+2026-06-28 11:36:28,198  INFO         87. Home - Roan Loan 5
+2026-06-28 11:36:28,198  INFO         88. Home - Roan Loan 6
+2026-06-28 11:36:28,198  INFO         89. Home - Roan Loan 7
+2026-06-28 11:36:28,198  INFO         90. House - India
+2026-06-28 11:36:28,198  INFO         91. IRA - Metlife Annuity
+2026-06-28 11:36:28,198  INFO         92. IRA - Vanguard - Lori
+2026-06-28 11:36:28,198  INFO         93. IRA - Vanguard - Murthy
+2026-06-28 11:36:28,198  INFO         94. IRA 401(K) Rollover - Vanguard - Lori
+2026-06-28 11:36:28,198  INFO         95. IRA Brokerage - Vanguard
+2026-06-28 11:36:28,198  INFO         96. India - SBI NRE Account
+2026-06-28 11:36:28,198  INFO         97. India - SBI NRO Debit Card
+2026-06-28 11:36:28,198  INFO         98. Kohl's Card
+2026-06-28 11:36:28,198  INFO         99. Line of Credit - Premier One
+2026-06-28 11:36:28,198  INFO        100. Master Card
+2026-06-28 11:36:28,198  INFO        101. Master Card - Citi
+2026-06-28 11:36:28,198  INFO        102. Mervyn's - Lori
+2026-06-28 11:36:28,198  INFO        103. Mervyn's - Ram
+2026-06-28 11:36:28,198  INFO        104. Primary Mortgage - 2
+2026-06-28 11:36:28,198  INFO        105. Primary Mortgage - 3
+2026-06-28 11:36:28,198  INFO        106. Primary Mortgage - 4
+2026-06-28 11:36:28,198  INFO        107. Primary Mortgage - 5
+2026-06-28 11:36:28,198  INFO        108. Primary Mortgage - I
+2026-06-28 11:36:28,198  INFO        109. Private Equity - FFC LLC
+2026-06-28 11:36:28,198  INFO        110. Rentals - Checking
+2026-06-28 11:36:28,198  INFO        111. Rentals - Repair Fund
+2026-06-28 11:36:28,198  INFO        112. Rentals - Taxes and Insurance
+2026-06-28 11:36:28,198  INFO        113. Roth IRA - AG Edwards
+2026-06-28 11:36:28,198  INFO        114. Roth IRA - Stifel
+2026-06-28 11:36:28,203  INFO        115. Roth IRA - TD Ameritrade
+2026-06-28 11:36:28,203  INFO        116. Roth IRA - Vanguard
+2026-06-28 11:36:28,203  INFO        117. Roth IRA - Vanguard - Tara
+2026-06-28 11:36:28,203  INFO        118. Roth IRA 2 - Vanguard
+2026-06-28 11:36:28,203  INFO        119. Roth IRA-401(K) Rollover-Vanguard-Lori
+2026-06-28 11:36:28,203  INFO        120. Savings - Annual Expenses
+2026-06-28 11:36:28,203  INFO        121. Savings - Annual Expenses 2
+2026-06-28 11:36:28,203  INFO        122. Savings - ETrade (Complete)
+2026-06-28 11:36:28,203  INFO        123. Savings - Emergency Expenses
+2026-06-28 11:36:28,203  INFO        124. Savings - Emergency Fund Lori
+2026-06-28 11:36:28,203  INFO        125. Savings - ING Lori
+2026-06-28 11:36:28,203  INFO        126. Savings - ING Ram
+2026-06-28 11:36:28,203  INFO        127. Savings - Meriwest
+2026-06-28 11:36:28,203  INFO        128. Savings - Premier One
+2026-06-28 11:36:28,203  INFO        129. Savings - Recession Readiness
+2026-06-28 11:36:28,203  INFO        130. Savings - Repair Fund
+2026-06-28 11:36:28,203  INFO        131. Savings - Repair Fund 2
+2026-06-28 11:36:28,203  INFO        132. Savings - Tara - CapitalOne
+2026-06-28 11:36:28,203  INFO        133. Savings - Tara - PremierOneCU
+2026-06-28 11:36:28,203  INFO        134. Savings - The Alamo
+2026-06-28 11:36:28,203  INFO        135. Savings - The Alamo 2
+2026-06-28 11:36:28,203  INFO        136. Savings-TechCU
+2026-06-28 11:36:28,203  INFO        137. Sears Credit Card
+2026-06-28 11:36:28,203  INFO        138. Secondary Mortgage - 2
+2026-06-28 11:36:28,203  INFO        139. Secondary Mortgage - 3
+2026-06-28 11:36:28,203  INFO        140. Secondary Mortgage - 4
+2026-06-28 11:36:28,203  INFO        141. Secondary Mortgage - 5
+2026-06-28 11:36:28,203  INFO        142. Secondary Mortgage - I
+2026-06-28 11:36:28,203  INFO        143. Smith Barney
+2026-06-28 11:36:28,203  INFO        144. Southwest Securities
+2026-06-28 11:36:28,203  INFO        145. TD Ameritrade
+2026-06-28 11:36:28,203  INFO        146. Tara's 529
+2026-06-28 11:36:28,203  INFO        147. Treasury Direct - Lori
+2026-06-28 11:36:28,203  INFO        148. Treasury Direct - Murthy
+2026-06-28 11:36:28,203  INFO        149. US Bank Relia Card
+2026-06-28 11:36:28,203  INFO        150. Vanguard
+2026-06-28 11:36:28,203  INFO        151. Vanguard - Brokerage - Lori
+2026-06-28 11:36:28,203  INFO        152. Vanguard - Brokerage - Murthy - Sweep
+2026-06-28 11:36:28,203  INFO        153. Vanguard - Indiv. Account - Murthy
+2026-06-28 11:36:28,203  INFO        154. Vanguard - Joint Brokerage Account
+2026-06-28 11:36:28,203  INFO        155. Vanguard - Trust 1
+2026-06-28 11:36:28,203  INFO        156. Vanguard - Trust 2
+2026-06-28 11:36:28,203  INFO        157. Vanguard - Trust 3
+2026-06-28 11:36:28,203  INFO        158. Visa - Chase - Lori
+2026-06-28 11:36:28,203  INFO        159. Visa - Chase - Ram
+2026-06-28 11:36:28,203  INFO        160. Visa - TechFed
+2026-06-28 11:36:28,225  INFO      Limiting to 10 accounts (MAX_EXPORTS=10)
+2026-06-28 11:36:28,225  INFO      Will export 10 accounts
+2026-06-28 11:36:28,225  INFO      ----------------------------------------
+2026-06-28 11:36:28,225  INFO      [1/10] *Security Deposit Liability*
+2026-06-28 11:36:28,231  INFO      Exporting account: *Security Deposit Liability*
+2026-06-28 11:36:31,205  INFO      Found new Quicken window: HWND=1710682 title='QIF Export'
+2026-06-28 11:36:32,228  INFO      Account dropdown HWND: 1448454
+2026-06-28 11:36:32,228  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:36:32,228  INFO      ComboBox has 160 items
+2026-06-28 11:36:32,533  INFO      Selected account '*Security Deposit Liability*' at index 73
+2026-06-28 11:36:35,765  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\_Security Deposit Liability_.qif
+2026-06-28 11:36:52,248  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:36:52,248  INFO      Waiting for QIF file: _Security Deposit Liability_.qif
+2026-06-28 11:36:53,754  INFO      File stable: _Security Deposit Liability_.qif (371 bytes)
+2026-06-28 11:36:53,754  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:36:53,754  INFO      Exported: *Security Deposit Liability* -> _Security Deposit Liability_.qif
+2026-06-28 11:36:55,761  INFO      ----------------------------------------
+2026-06-28 11:36:55,761  INFO      [2/10] 1 Year CD - India Investments
+2026-06-28 11:36:55,761  INFO      Exporting account: 1 Year CD - India Investments
+2026-06-28 11:36:58,945  INFO      Found new Quicken window: HWND=1186510 title='QIF Export'
+2026-06-28 11:36:59,952  INFO      Account dropdown HWND: 2038472
+2026-06-28 11:36:59,952  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:36:59,952  INFO      ComboBox has 160 items
+2026-06-28 11:37:00,258  INFO      Selected account '1 Year CD - India Investments' at index 1
+2026-06-28 11:37:03,428  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - India Investments.qif
+2026-06-28 11:37:19,727  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:37:19,727  INFO      Waiting for QIF file: 1 Year CD - India Investments.qif
+2026-06-28 11:37:21,231  INFO      File stable: 1 Year CD - India Investments.qif (1205 bytes)
+2026-06-28 11:37:21,234  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:37:21,235  INFO      Exported: 1 Year CD - India Investments -> 1 Year CD - India Investments.qif
+2026-06-28 11:37:23,238  INFO      ----------------------------------------
+2026-06-28 11:37:23,238  INFO      [3/10] 1 Year CD - Parents Gift
+2026-06-28 11:37:23,240  INFO      Exporting account: 1 Year CD - Parents Gift
+2026-06-28 11:37:26,441  INFO      Found new Quicken window: HWND=2431400 title='QIF Export'
+2026-06-28 11:37:27,433  INFO      Account dropdown HWND: 1579526
+2026-06-28 11:37:27,433  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:37:27,433  INFO      ComboBox has 160 items
+2026-06-28 11:37:27,745  INFO      Selected account '1 Year CD - Parents Gift' at index 2
+2026-06-28 11:37:30,921  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - Parents Gift.qif
+2026-06-28 11:37:47,282  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:37:47,282  INFO      Waiting for QIF file: 1 Year CD - Parents Gift.qif
+2026-06-28 11:37:48,794  INFO      File stable: 1 Year CD - Parents Gift.qif (2120 bytes)
+2026-06-28 11:37:48,797  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:37:48,799  INFO      Exported: 1 Year CD - Parents Gift -> 1 Year CD - Parents Gift.qif
+2026-06-28 11:37:50,800  INFO      ----------------------------------------
+2026-06-28 11:37:50,800  INFO      [4/10] 1 Year CD - The Alamo
+2026-06-28 11:37:50,800  INFO      Exporting account: 1 Year CD - The Alamo
+2026-06-28 11:37:54,153  INFO      Found new Quicken window: HWND=1972830 title='QIF Export'
+2026-06-28 11:37:55,135  INFO      Account dropdown HWND: 2693804
+2026-06-28 11:37:55,135  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:37:55,135  INFO      ComboBox has 160 items
+2026-06-28 11:37:55,439  INFO      Selected account '1 Year CD - The Alamo' at index 3
+2026-06-28 11:37:58,554  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\1 Year CD - The Alamo.qif
+2026-06-28 11:38:14,887  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:38:14,887  INFO      Waiting for QIF file: 1 Year CD - The Alamo.qif
+2026-06-28 11:38:16,393  INFO      File stable: 1 Year CD - The Alamo.qif (2156 bytes)
+2026-06-28 11:38:16,395  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:38:16,395  INFO      Exported: 1 Year CD - The Alamo -> 1 Year CD - The Alamo.qif
+2026-06-28 11:38:18,400  INFO      ----------------------------------------
+2026-06-28 11:38:18,400  INFO      [5/10] 401(K) - Intuit - Fidelity
+2026-06-28 11:38:18,400  INFO      Exporting account: 401(K) - Intuit - Fidelity
+2026-06-28 11:38:21,567  INFO      Found new Quicken window: HWND=1841728 title='QIF Export'
+2026-06-28 11:38:22,544  INFO      Account dropdown HWND: 1710598
+2026-06-28 11:38:22,544  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:38:22,544  INFO      ComboBox has 160 items
+2026-06-28 11:38:22,848  INFO      Selected account '401(K) - Intuit - Fidelity' at index 108
+2026-06-28 11:38:26,182  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Intuit - Fidelity.qif
+2026-06-28 11:38:42,572  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:38:42,575  INFO      Waiting for QIF file: 401(K) - Intuit - Fidelity.qif
+2026-06-28 11:38:44,088  INFO      File stable: 401(K) - Intuit - Fidelity.qif (195853 bytes)
+2026-06-28 11:38:44,088  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:38:44,088  INFO      Exported: 401(K) - Intuit - Fidelity -> 401(K) - Intuit - Fidelity.qif
+2026-06-28 11:38:46,094  INFO      ----------------------------------------
+2026-06-28 11:38:46,094  INFO      [6/10] 401(K) - Modus Create
+2026-06-28 11:38:46,095  INFO      Exporting account: 401(K) - Modus Create
+2026-06-28 11:38:49,223  INFO      Found new Quicken window: HWND=6298278 title='QIF Export'
+2026-06-28 11:38:50,209  INFO      Account dropdown HWND: 1317514
+2026-06-28 11:38:50,209  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:38:50,209  INFO      ComboBox has 160 items
+2026-06-28 11:38:50,514  INFO      Selected account '401(K) - Modus Create' at index 109
+2026-06-28 11:38:53,662  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Modus Create.qif
+2026-06-28 11:39:09,980  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:39:09,980  INFO      Waiting for QIF file: 401(K) - Modus Create.qif
+2026-06-28 11:39:11,498  INFO      File stable: 401(K) - Modus Create.qif (424 bytes)
+2026-06-28 11:39:11,498  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:39:11,502  INFO      Exported: 401(K) - Modus Create -> 401(K) - Modus Create.qif
+2026-06-28 11:39:13,504  INFO      ----------------------------------------
+2026-06-28 11:39:13,504  INFO      [7/10] 401(K) - Oracle - Fidelity
+2026-06-28 11:39:13,504  INFO      Exporting account: 401(K) - Oracle - Fidelity
+2026-06-28 11:39:17,036  INFO      Found new Quicken window: HWND=2366046 title='QIF Export'
+2026-06-28 11:39:18,014  INFO      Account dropdown HWND: 2104090
+2026-06-28 11:39:18,014  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:39:18,014  INFO      ComboBox has 160 items
+2026-06-28 11:39:18,320  INFO      Selected account '401(K) - Oracle - Fidelity' at index 110
+2026-06-28 11:39:21,475  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Oracle - Fidelity.qif
+2026-06-28 11:39:37,761  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:39:37,761  INFO      Waiting for QIF file: 401(K) - Oracle - Fidelity.qif
+2026-06-28 11:39:39,268  INFO      File stable: 401(K) - Oracle - Fidelity.qif (313283 bytes)
+2026-06-28 11:39:39,268  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:39:39,268  INFO      Exported: 401(K) - Oracle - Fidelity -> 401(K) - Oracle - Fidelity.qif
+2026-06-28 11:39:41,274  INFO      ----------------------------------------
+2026-06-28 11:39:41,274  INFO      [8/10] 401(K) - Oracle - Roth
+2026-06-28 11:39:41,274  INFO      Exporting account: 401(K) - Oracle - Roth
+2026-06-28 11:39:44,374  INFO      Found new Quicken window: HWND=2169408 title='QIF Export'
+2026-06-28 11:39:45,358  INFO      Account dropdown HWND: 2955948
+2026-06-28 11:39:45,358  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:39:45,358  INFO      ComboBox has 160 items
+2026-06-28 11:39:45,663  INFO      Selected account '401(K) - Oracle - Roth' at index 111
+2026-06-28 11:39:48,790  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - Oracle - Roth.qif
+2026-06-28 11:40:05,141  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:40:05,141  INFO      Waiting for QIF file: 401(K) - Oracle - Roth.qif
+2026-06-28 11:40:06,658  INFO      File stable: 401(K) - Oracle - Roth.qif (64367 bytes)
+2026-06-28 11:40:06,660  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:40:06,660  INFO      Exported: 401(K) - Oracle - Roth -> 401(K) - Oracle - Roth.qif
+2026-06-28 11:40:08,663  INFO      ----------------------------------------
+2026-06-28 11:40:08,664  INFO      [9/10] 401(K) - RF - PayChex
+2026-06-28 11:40:08,664  INFO      Exporting account: 401(K) - RF - PayChex
+2026-06-28 11:40:11,764  INFO      Found new Quicken window: HWND=6691494 title='QIF Export'
+2026-06-28 11:40:12,739  INFO      Account dropdown HWND: 1972742
+2026-06-28 11:40:12,739  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:40:12,739  INFO      ComboBox has 160 items
+2026-06-28 11:40:13,043  INFO      Selected account '401(K) - RF - PayChex' at index 112
+2026-06-28 11:40:16,144  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - RF - PayChex.qif
+2026-06-28 11:40:32,601  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:40:32,603  INFO      Waiting for QIF file: 401(K) - RF - PayChex.qif
+2026-06-28 11:40:34,105  INFO      File stable: 401(K) - RF - PayChex.qif (23715 bytes)
+2026-06-28 11:40:34,105  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:40:34,109  INFO      Exported: 401(K) - RF - PayChex -> 401(K) - RF - PayChex.qif
+2026-06-28 11:40:36,112  INFO      ----------------------------------------
+2026-06-28 11:40:36,112  INFO      [10/10] 401(K) - RF - Standard
+2026-06-28 11:40:36,112  INFO      Exporting account: 401(K) - RF - Standard
+2026-06-28 11:40:39,264  INFO      Found new Quicken window: HWND=2693726 title='QIF Export'
+2026-06-28 11:40:40,252  INFO      Account dropdown HWND: 1579658
+2026-06-28 11:40:40,252  INFO      Focused control class: 'ComboBox'
+2026-06-28 11:40:40,252  INFO      ComboBox has 160 items
+2026-06-28 11:40:40,557  INFO      Selected account '401(K) - RF - Standard' at index 113
+2026-06-28 11:40:43,634  INFO      File path set to: C:\Pidaparthi\My Software\Python\QIFTools\quicken_export_files\401(K) - RF - Standard.qif
+2026-06-28 11:40:59,952  INFO      No overwrite dialog needed — export proceeding
+2026-06-28 11:40:59,952  INFO      Waiting for QIF file: 401(K) - RF - Standard.qif
+2026-06-28 11:41:01,458  INFO      File stable: 401(K) - RF - Standard.qif (8217 bytes)
+2026-06-28 11:41:01,458  INFO      Quicken idle (no new windows remain)
+2026-06-28 11:41:01,458  INFO      Exported: 401(K) - RF - Standard -> 401(K) - RF - Standard.qif
+2026-06-28 11:41:03,464  INFO      ============================================================
+2026-06-28 11:41:03,464  INFO      Export complete
+2026-06-28 11:41:03,464  INFO        Exported: 10
+2026-06-28 11:41:03,464  INFO        Failed:   0
+2026-06-28 11:41:03,464  INFO      ============================================================
