@@ -1237,12 +1237,6 @@ def main():
     output_path.mkdir(parents=True, exist_ok=True)
     logging.info("Output directory: %s", output_path.resolve())
 
-    # Clean up existing QIF files to avoid overwrite dialogs
-    if not dry_run:
-        for qif_file in output_path.glob("*.[qQ][iI][fF]"):
-            qif_file.unlink()
-            logging.info("Deleted: %s", qif_file.name)
-
     # Initialize exporter
     exporter = QuickenQIFExporter(config)
 
@@ -1260,6 +1254,15 @@ def main():
     logging.info("Accounts found: %d", len(accounts))
     for i, acct in enumerate(accounts, 1):
         logging.info("  %3d. %s", i, acct)
+
+    # Filter out excluded accounts
+    exclude_str = config.get("EXCLUDE_ACCOUNTS", "")
+    if exclude_str:
+        excluded = [a.strip() for a in exclude_str.split(",") if a.strip()]
+        before = len(accounts)
+        accounts = [a for a in accounts if a not in excluded]
+        if before - len(accounts):
+            logging.info("Excluded %d account(s): %s", before - len(accounts), excluded)
 
     # Filter accounts if --accounts specified
     if args.accounts:
