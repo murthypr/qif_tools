@@ -227,15 +227,6 @@ def extract_transfer_target_from_lines(transaction_lines):
     return None
 
 
-def is_salary_transaction(transaction_lines):
-    """Check if transaction is a salary payment (L-line contains Salary)."""
-    for line in transaction_lines:
-        stripped = line.strip()
-        if stripped.startswith('L') and 'Salary' in stripped:
-            return True
-    return False
-
-
 def is_split_transfer_transaction(transaction_lines, source_account,
                                    current_account, split_transfer_map):
     """
@@ -297,7 +288,10 @@ def is_split_transfer_transaction(transaction_lines, source_account,
     if txn_amount is None:
         return False
 
-    # Check for matching split transfer (date + target + absolute amount)
+    # Match the transfer against the split-transfer map using date, target and
+    # absolute amount. This also covers paycheck-originated splits, which are
+    # represented as regular split entries in the source account and a transfer
+    # in the target account.
     for transfer in transfers:
         if (transfer["target"] == current_account and
             transfer.get("date") == txn_date and
@@ -879,7 +873,9 @@ def apply_mappings_to_qif(qif_content, mappings, security_suffixes=None,
             txn, mappings, replacement_counts, security_suffixes, suffix_counts
         )
 
-        # Phase 2a: Check for split transfer suppression
+        # Phase 2a: Check for split transfer suppression. Paycheck-originated
+        # splits are treated the same as other split transactions here so that
+        # the mirrored transfer in the target account is suppressed correctly.
         if split_transfer_map and current_account:
             source_account = extract_transfer_target_from_lines(processed_lines)
             if source_account and is_split_transfer_transaction(

@@ -4,8 +4,6 @@ Split Transfer Scanner
 
 Scans QIF files to identify split transactions that transfer money
 between accounts. Outputs a JSON map for use by qif_sanitizer.py.
-
-Salary transactions are excluded as GnuCash handles them properly.
 """
 
 import os
@@ -53,19 +51,6 @@ def get_qif_files(input_dir):
     return sorted(qif_files)
 
 
-def is_salary_transaction(transaction_lines):
-    """Check if transaction is a salary payment (L-line contains Salary).
-
-    Note: This function is duplicated from qif_sanitizer.py to keep the
-    scanner script standalone. Any changes should be made in both places.
-    """
-    for line in transaction_lines:
-        stripped = line.strip()
-        if stripped.startswith("L") and "Salary" in stripped:
-            return True
-    return False
-
-
 def scan_file_for_split_transfers(file_path):
     """
     Scan a single QIF file for split transfers.
@@ -77,10 +62,6 @@ def scan_file_for_split_transfers(file_path):
     split_transfers = []
 
     for txn in transactions:
-        # Skip salary transactions - GnuCash handles these properly
-        if is_salary_transaction(txn):
-            continue
-
         # Extract date from transaction (D line)
         date = ""
         for line in txn:
@@ -92,10 +73,13 @@ def scan_file_for_split_transfers(file_path):
         for i, line in enumerate(txn):
             stripped = line.strip()
             if stripped.startswith("S[") and "]" in stripped:
-                # Extract target account from S[TargetAccount]
+                # Paycheck-originated splits use the same S[...] split syntax as
+                # regular split transactions, so we capture them in the same way.
                 target = stripped[2 : stripped.index("]")].strip()
 
-                # Extract amount from next lines (look for $ line after S[...])
+                # Extract amount from the split lines that follow S[...].
+                # This covers the standard split-entry pattern used for paycheck
+                # deductions and transfers.
                 for j in range(i + 1, len(txn)):
                     next_line = txn[j].strip()
                     if next_line.startswith("$"):

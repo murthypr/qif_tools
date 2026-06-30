@@ -133,15 +133,15 @@ class TestSplitTransferSuppression(unittest.TestCase):
         self.assertEqual(skipped, 0)
         self.assertEqual(transactions_processed, 1)
 
-    def test_salary_transfer_not_suppressed(self):
-        """Salary splits should NOT be suppressed (GnuCash handles them properly)."""
+    def test_salary_paycheck_in_source_not_suppressed(self):
+        """Paycheck in source account (Account 1) should NOT be suppressed."""
         split_map = {
             "Checking - CapitalOne - Regular": [
                 {"target": "401(K) - eBay - Fidelity", "amount": -2157.69, "date": "8/16'19"}
             ]
         }
 
-        # Salary transaction with LSalary
+        # Salary transaction with LSalary (no brackets — not a transfer target)
         qif_content = '\n'.join([
             'D8/16\'19',
             'U2,106.22',
@@ -165,9 +165,35 @@ class TestSplitTransferSuppression(unittest.TestCase):
             current_account="Checking - CapitalOne - Regular"
         )
 
-        # Should NOT be suppressed (salary transaction)
+        # Should NOT be suppressed (paycheck in source account)
         self.assertEqual(skipped, 0)
         self.assertEqual(transactions_processed, 1)
+
+    def test_salary_paycheck_in_target_suppressed(self):
+        """Transfer in target account (401k) should be suppressed when it matches a paycheck split."""
+        split_map = {
+            "Checking - CapitalOne - Regular": [
+                {"target": "401(K) - eBay - Fidelity", "amount": -2157.69, "date": "8/16'19"}
+            ]
+        }
+
+        # Transfer in 401k account (target of paycheck split)
+        qif_content = '\n'.join([
+            'D8/16\'19',
+            'U2,157.69',
+            'T2,157.69',
+            'L[Checking - CapitalOne - Regular]'
+        ]) + '\n^'
+
+        result, _, _, transactions_processed, _, skipped = apply_mappings_to_qif(
+            qif_content, {}, None, [],
+            split_transfer_map=split_map,
+            current_account="401(K) - eBay - Fidelity"
+        )
+
+        # Should be suppressed (paycheck transfer in target account)
+        self.assertEqual(skipped, 1)
+        self.assertEqual(transactions_processed, 0)
 
     def test_is_split_transfer_transaction_match(self):
         """is_split_transfer_transaction returns True for matching split transfer."""
@@ -267,40 +293,6 @@ class TestSplitTransferSuppression(unittest.TestCase):
             current_account="Cash - Ram"
         )
         self.assertEqual(skipped2, 0)
-
-
-class TestSplitTransferScanner(unittest.TestCase):
-
-    def test_salary_transactions_excluded(self):
-        """Salary splits should be excluded from split transfer map."""
-        from qif_sanitizer import is_salary_transaction
-
-        salary_txn = [
-            'D8/16\'19',
-            'U2,106.22',
-            'T2,106.22',
-            'LSalary',
-            'SSalary',
-            'ESalary',
-            '$7,192.31',
-            'S[401(K) - eBay - Fidelity]',
-            '$-2,157.69'
-        ]
-
-        self.assertTrue(is_salary_transaction(salary_txn))
-
-        non_salary_txn = [
-            'D7/ 4\'15',
-            'U-104.59',
-            'T-104.59',
-            'LGroceries',
-            'SGroceries',
-            '$-4.59',
-            'S[Cash - Ram]',
-            '$-100.00'
-        ]
-
-        self.assertFalse(is_salary_transaction(non_salary_txn))
 
 
 class TestSplitTransactionNotSuppressed(unittest.TestCase):
